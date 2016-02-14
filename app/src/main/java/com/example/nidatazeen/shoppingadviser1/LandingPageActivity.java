@@ -85,12 +85,15 @@ public class LandingPageActivity extends AppCompatActivity
 
         if (id == R.id.nav_first_fragment) {
             // Handle thintent = new Intent().setClass(this, Tab1Activity.class);e camera action
-            Intent  thintent = new Intent().setClass(this, MyAccountActivity.class);
+            Intent  thintent = new Intent().setClass(this, MyAccountsActivity.class);
             startActivity(thintent);
         } else if (id == R.id.nav_second_fragment) {
+            Intent  aboutUsintent = new Intent().setClass(this, AboutUsActivity.class);
+            startActivity(aboutUsintent);
 
         } else if (id == R.id.nav_third_fragment) {
-
+            Intent  contactUsintent = new Intent().setClass(this, ContactUsActivity.class);
+            startActivity(contactUsintent);
         }
 
 

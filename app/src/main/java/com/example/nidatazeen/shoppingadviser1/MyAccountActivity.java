@@ -14,7 +14,7 @@ public class MyAccountActivity extends LandingPageActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.myaccount);
+        setContentView(R.layout.activity_my_account_actitvity);
 
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
