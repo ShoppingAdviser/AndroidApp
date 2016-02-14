@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.nidatazeen.shoppingadviser1.AboutUsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="www.ShoppingAdviser.in is a multi-vendor seller platform, which helps seller(s) increase their online and offline sales. And, yes invariably constantly enhancing the platform for shoppers to buy both online and offline. ShoppingAdviser partners with sellers to create the 'wow' and 'delightful' shopping experiences for buyers/shoppers online and offline.
+
+Sellers can now sell online in 15 minutes on www.ShoppingAdviser.in, sellers have to create their free eStore on 'Sell on ShoppingAdviser' . ShoppingAdviser has created a 'Do It Yourself' video which will help sellers manage their eStore, a digital presence of their shop/store. Sellers have to load their products or ShoppingAdviser support team can upload it for them without any charges, also ShoppingAdviser promotion teams will promote their products to the right audience and generate sales. By ordering any of ShoppingAdviser DIGITAL SERVICES sellers can increase their 'Online and Offline Sales' instantly." />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_about_us" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
+
+</android.support.design.widget.CoordinatorLayout>
