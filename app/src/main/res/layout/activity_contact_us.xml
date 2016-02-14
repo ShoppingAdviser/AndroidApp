@@ -22,13 +22,13 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="20dp"
         android:text="#431, Ground Floor, 17th main road, KHB Colony, 5th block, Koramangala, Bangalore - 560095"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"/>+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic1"
+        android:src="@drawable/ic2"
         android:layout_marginTop="130dp"
         />
     <TextView
@@ -39,6 +39,15 @@
         android:layout_marginRight="20dp"
         android:text="+91 9916690003" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/ic3"
+        android:layout_marginTop="160dp"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +57,15 @@
         android:text="support@shoppingadviser.in
 "
         android:textAllCaps="false"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/ic1"
+        android:layout_marginTop="200dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
