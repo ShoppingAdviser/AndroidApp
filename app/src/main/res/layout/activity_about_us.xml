@@ -6,12 +6,19 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.example.nidatazeen.shoppingadviser1.AboutUsActivity">
-
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@drawable/ic1"
+        android:layout_marginTop="85dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginRight="20dp"
         android:text="www.ShoppingAdviser.in is a multi-vendor seller platform, which helps seller(s) increase their online and offline sales. And, yes invariably constantly enhancing the platform for shoppers to buy both online and offline. ShoppingAdviser partners with sellers to create the 'wow' and 'delightful' shopping experiences for buyers/shoppers online and offline.
 
