@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +24,26 @@ public class LandingPageActivity extends AppCompatActivity
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        Button loginbutton = (Button) findViewById(R.id.button2);
+        loginbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent loginIntent = new Intent().setClass(LandingPageActivity.this, LoginActivity.class);
+//                loginIntent.putExtra(Intent.ACTION_EDIT, new String[]{"Username"});
+//                loginIntent.putExtra(Intent.ACTION_EDIT, new String[]{"Password"});
+                startActivity(loginIntent);
+
+            }
+        });
+        Button registerbutton = (Button) findViewById(R.id.button);
+        registerbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent registerIntent = new Intent().setClass(LandingPageActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
