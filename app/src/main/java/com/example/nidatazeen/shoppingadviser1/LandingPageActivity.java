@@ -1,7 +1,9 @@
 package com.example.nidatazeen.shoppingadviser1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,8 +28,19 @@ public class LandingPageActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+        boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn",false);
+
+        editor.clear();
+        editor.commit();
 
         Button loginbutton = (Button) findViewById(R.id.button2);
+        Button regbutton = (Button) findViewById(R.id.button);
+
+        loginbutton.setVisibility(View.VISIBLE);
+        regbutton.setVisibility(View.VISIBLE);
+
         loginbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final Intent loginIntent = new Intent().setClass(LandingPageActivity.this, LoginActivity.class);
@@ -106,14 +120,14 @@ public class LandingPageActivity extends AppCompatActivity
 
         if (id == R.id.nav_first_fragment) {
             // Handle thintent = new Intent().setClass(this, Tab1Activity.class);e camera action
-            Intent  thintent = new Intent().setClass(this, MyAccountsActivity.class);
+            Intent thintent = new Intent().setClass(this, MyAccountsActivity.class);
             startActivity(thintent);
         } else if (id == R.id.nav_second_fragment) {
-            Intent  aboutUsintent = new Intent().setClass(this, AboutUsActivity.class);
+            Intent aboutUsintent = new Intent().setClass(this, AboutUsActivity.class);
             startActivity(aboutUsintent);
 
         } else if (id == R.id.nav_third_fragment) {
-            Intent  contactUsintent = new Intent().setClass(this, ContactUsActivity.class);
+            Intent contactUsintent = new Intent().setClass(this, ContactUsActivity.class);
             startActivity(contactUsintent);
         }
 
@@ -121,5 +135,33 @@ public class LandingPageActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getDelegate().onPostResume();
+
+        //check isloggedIn variable and hide/show buttons
+        Button loginbutton = (Button) findViewById(R.id.button2);
+        Button regbutton = (Button) findViewById(R.id.button);
+
+        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            Toast.makeText(LandingPageActivity.this, "loggedin", Toast.LENGTH_LONG).show();
+            loginbutton.setVisibility(View.GONE);
+            regbutton.setVisibility(View.GONE);
+        } else {
+
+            loginbutton.setVisibility(View.VISIBLE);
+            regbutton.setVisibility(View.VISIBLE);
+        }
+
+    }
+    public void finish()
+    {
+        super.finish();
     }
 }
