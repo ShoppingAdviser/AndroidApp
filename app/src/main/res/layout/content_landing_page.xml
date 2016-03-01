@@ -90,7 +90,7 @@
                         android:layout_centerInParent="true"
                         android:paddingLeft="1dp"
                         android:paddingRight="1dp"
-                        android:id="@+id/imageView1"
+                        android:id="@+id/imageView2"
                         />
                 </RelativeLayout>
 
@@ -122,8 +122,10 @@
                         android:layout_centerInParent="true"
                         android:paddingLeft="1dp"
                         android:paddingRight="1dp"
-                        android:id="@+id/imageView12"
+                        android:id="@+id/imageView1"
                         />
+
+
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
