@@ -3,10 +3,12 @@ package com.example.nidatazeen.shoppingadviser1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,12 +26,12 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    int position = 0;
-
+int position = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,6 @@ public class LandingPageActivity extends AppCompatActivity
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
-
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -208,21 +209,56 @@ public class LandingPageActivity extends AppCompatActivity
         }
 
         // create a new ImageView for each item referenced by the Adapter
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (ImageView) convertView;
+            ViewHolder holder;
+            if(convertView == null){
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.griditem, null, false);
+
+                holder = new ViewHolder();
+                holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
+                holder.icon.setImageResource(mThumbIds[position]);
+                holder.productPrice = (TextView)convertView.findViewById(R.id.price);
+                holder.productPrice.setPaintFlags(holder.productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                holder.addToCartBton = (Button)convertView.findViewById(R.id.addToCartButton);
+
+                holder.addToCartBton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(LandingPageActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewHolder) convertView.getTag();
             }
 
-            imageView.setImageResource(mThumbIds[position]);
-            return imageView;
+            return convertView;
         }
+
+        private class ViewHolder {
+            TextView productTitle;
+            TextView productPrice;
+            TextView productDiscountprice;
+            Button addToCartBton;
+            ImageView icon;
+        }
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            ImageView imageView;
+//            if (convertView == null) {
+//                // if it's not recycled, initialize some attributes
+//                imageView = new ImageView(mContext);
+//                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                imageView.setPadding(8, 8, 8, 8);
+//            } else {
+//                imageView = (ImageView) convertView;
+//            }
+//
+//            imageView.setImageResource(mThumbIds[position]);
+//            return imageView;
+//        }
 
         // references to our images
         private Integer[] mThumbIds = {

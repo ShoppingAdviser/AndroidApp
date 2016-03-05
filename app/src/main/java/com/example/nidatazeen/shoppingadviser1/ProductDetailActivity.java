@@ -11,12 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener{
     NumberPicker np;
     TextView tv1;
+    TextView ratingText;
+
     private Integer[] mThumbIds = {
             R.drawable.sample_2, R.drawable.sample_3,
             R.drawable.sample_4, R.drawable.sample_5,
@@ -39,6 +43,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ratingText = (TextView) findViewById(R.id.rating);
+
+        RatingBar rate=(RatingBar) findViewById(R.id.ratingBar);
+        rate.setOnRatingBarChangeListener(this);
         Intent mIntent = getIntent();
         int intValue = mIntent.getIntExtra("itemSelected", 2);
         ImageView imgView = (ImageView)findViewById(R.id.imageView12);
@@ -86,6 +94,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    public void onRatingChanged(RatingBar ratingBar,float rating,boolean fromTouch) {
+        final int numStars = ratingBar.getNumStars();
+        ratingText.setText(rating + "/" + numStars);
     }
 
 }
