@@ -1,5 +1,6 @@
 package com.example.nidatazeen.shoppingadviser1;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         EditText emailTxt = (EditText) findViewById(R.id.etUsername);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);

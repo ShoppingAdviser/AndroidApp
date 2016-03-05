@@ -45,6 +45,9 @@ public class LandingPageActivity extends AppCompatActivity
                                     int position, long id) {
                 Toast.makeText(LandingPageActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
+                final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
+                productDetailIntent.putExtra("itemSelected", position);
+                startActivity(productDetailIntent);
             }
         });
 
@@ -231,7 +234,11 @@ public class LandingPageActivity extends AppCompatActivity
                 R.drawable.sample_6, R.drawable.sample_7,
                 R.drawable.sample_2, R.drawable.sample_3,
                 R.drawable.sample_4, R.drawable.sample_5,
+                R.drawable.sample_6, R.drawable.sample_7,
                 R.drawable.sample_6, R.drawable.sample_7
+,                R.drawable.sample_6, R.drawable.sample_7
+,                R.drawable.sample_6, R.drawable.sample_7
+,                R.drawable.sample_6, R.drawable.sample_7
         };
     }
 }
