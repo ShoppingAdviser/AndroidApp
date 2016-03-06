@@ -29,6 +29,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 int position = 0;
@@ -193,11 +199,11 @@ int position = 0;
         private Context mContext;
 
         public ImageAdapter(Context c) {
-            mContext = c;
+            mContext = c;parse();
         }
 
         public int getCount() {
-            return mThumbIds.length;
+            return productList.size();
         }
 
         public Object getItem(int position) {
@@ -218,11 +224,18 @@ int position = 0;
                 holder = new ViewHolder();
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
                 holder.icon.setImageResource(mThumbIds[position]);
+
                 holder.productPrice = (TextView)convertView.findViewById(R.id.price);
                 holder.productPrice.setPaintFlags(holder.productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.productPrice.setText(Float.toString(((ModelProducts) productList.get(position)).getProductPrice()));
+
+                holder.productTitle = (TextView)convertView.findViewById(R.id.productTitleView);
+                holder.productTitle.setText(((ModelProducts) productList.get(position)).getProductTitle());
+
+                holder.productDiscountprice = (TextView)convertView.findViewById(R.id.discountprice);
+                holder.productDiscountprice.setText(Float.toString(((ModelProducts) productList.get(position)).getProductDiscountPrice()));
 
                 holder.addToCartBton = (Button)convertView.findViewById(R.id.addToCartButton);
-
                 holder.addToCartBton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(LandingPageActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
@@ -244,22 +257,121 @@ int position = 0;
             Button addToCartBton;
             ImageView icon;
         }
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            ImageView imageView;
-//            if (convertView == null) {
-//                // if it's not recycled, initialize some attributes
-//                imageView = new ImageView(mContext);
-//                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                imageView.setPadding(8, 8, 8, 8);
-//            } else {
-//                imageView = (ImageView) convertView;
-//            }
-//
-//            imageView.setImageResource(mThumbIds[position]);
-//            return imageView;
-//        }
+        public void parse() {
 
+            productList = new ArrayList<Integer>();
+
+            String strJson = " {\n" +
+                    "           \"products\" : [\n" +
+                    "     {\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-yellow-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "        \"product id\" : 1 ,\n" +
+                    "        \"product title\" : \"Ftrendy Yellow Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
+                    "        \"actual price\" : 2500.00 ,\n" +
+                    "        \"discount price\" : 1999.00,\n" +
+                    "        \"SKU\" : \"SM541DVMST65005\" ,\n" +
+                    "        \"rating\" : 5 ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"sold by\" : \"Ftrendy\" ,\n" +
+                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
+                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
+                    "       }," +
+                    "     {\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-light-pink-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "        \"product id\" : 2 ,\n" +
+                    "        \"product title\" : \"Ftrendy Light Pink Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
+                    "        \"actual price\" : 2500.00 ,\n" +
+                    "        \"discount price\" : 1999.00,\n" +
+                    "        \"SKU\" : \"SM541DVMST65007\" ,\n" +
+                    "        \"rating\" : 5 ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"sold by\" : \"Ftrendy\" ,\n" +
+                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
+                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
+                    "       }," +
+                    "     {\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-dark-sea-green-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "        \"product id\" : 3 ,\n" +
+                    "        \"product title\" : \"Ftrendy Dark Sea Green Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
+                    "        \"actual price\" : 2500.00 ,\n" +
+                    "        \"discount price\" : 1999.00,\n" +
+                    "        \"SKU\" : \"SM541DVMST65008\" ,\n" +
+                    "        \"rating\" : 5 ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"sold by\" : \"Ftrendy\" ,\n" +
+                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
+                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
+                    "       }," +
+                    "     {\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-red-off-white-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "        \"product id\" : 4 ,\n" +
+                    "        \"product title\" : \"Ftrendy Red Off White Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
+                    "        \"actual price\" : 2500.00 ,\n" +
+                    "        \"discount price\" : 1999.00,\n" +
+                    "        \"SKU\" : \"SM541DVMST65004\" ,\n" +
+                    "        \"rating\" : 5 ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"sold by\" : \"Ftrendy\" ,\n" +
+                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
+                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
+                    "       }," +
+                    "     {\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-orange-black-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "        \"product id\" :  5,\n" +
+                    "        \"product title\" : \"Ftrendy Orange Black Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
+                    "        \"actual price\" : 2500.00 ,\n" +
+                    "        \"discount price\" : 1999.00,\n" +
+                    "        \"SKU\" : \"SM541DVMST65001\" ,\n" +
+                    "        \"rating\" : 5 ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"sold by\" : \"Ftrendy\" ,\n" +
+                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
+                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
+                    "       }" +
+                    "]}";
+
+            String data = "";
+            try {
+                JSONObject jsonRootObject = new JSONObject(strJson);
+
+                //Get the instance of JSONArray that contains JSONObjects
+                JSONArray jsonArray = jsonRootObject.optJSONArray("products");
+
+                //Iterate the jsonArray and print the info of JSONObjects
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    int productId = Integer.parseInt(jsonObject.optString("product id").toString());
+                    String productTitle = jsonObject.optString("product title").toString();
+                    String productDescription = jsonObject.optString("description").toString();
+                    float actualPrice = Float.parseFloat(jsonObject.optString("actual price").toString());
+                    float discountPrice = Float.parseFloat(jsonObject.optString("discount price").toString());
+                    String soldBy = jsonObject.optString("sold by").toString();
+                    String category = jsonObject.optString("category").toString();
+                    String tag = jsonObject.optString("tag").toString();
+                    String size = jsonObject.optString("available size").toString();
+                    String SKU = jsonObject.optString("SKU").toString();
+                    int rating = Integer.parseInt(jsonObject.optString("rating").toString());
+                    String url = jsonObject.optString("image url").toString();
+
+                    data += "Node" + i + " : \n id= " + productId + " \n Title= " + productTitle + " \n Price= " + actualPrice + " \n Description = " + productDescription + " \n Price= " + discountPrice + " \n Sold By= " + soldBy + " \n Category= " + category + " \n Tag= " + tag + " \n url= " + url + " \n SKU= " + SKU + " \n Rating= " + rating + "\n";
+
+                   ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url);
+                    productList.add(product);
+
+                }
+//                Toast.makeText(LandingPageActivity.this, "" + productList.size(),
+//                        Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        private ArrayList productList;
         // references to our images
         private Integer[] mThumbIds = {
                 R.drawable.sample_2, R.drawable.sample_3,
