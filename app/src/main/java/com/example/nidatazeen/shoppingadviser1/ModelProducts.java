@@ -1,5 +1,7 @@
 package com.example.nidatazeen.shoppingadviser1;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Len on 06-03-2016.
  */
@@ -32,6 +34,7 @@ public class ModelProducts {
         this.productImageUrl = imgUrl;
         this.productId = prodID;
     }
+
 
     public String getProductTitle() {
 

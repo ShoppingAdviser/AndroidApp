@@ -17,8 +17,10 @@ android:orientation="vertical" >
         android:layout_height="wrap_content"
         android:paddingLeft="1dp"
         android:paddingRight="1dp"
+        android:src="@drawable/sample_1"
         android:id="@+id/productimageView"
         android:focusable="false"
+        android:background="#ffeef7f0"
         android:focusableInTouchMode="false"
         />
 

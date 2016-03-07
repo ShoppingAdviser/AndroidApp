@@ -1,9 +1,13 @@
 package com.example.nidatazeen.shoppingadviser1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -33,11 +37,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 int position = 0;
+    Bitmap bitmap;
+    ProgressDialog pDialog;
+    Bitmap imageObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,7 +208,8 @@ int position = 0;
         private Context mContext;
 
         public ImageAdapter(Context c) {
-            mContext = c;parse();
+            mContext = c;
+            parse();
         }
 
         public int getCount() {
@@ -223,7 +233,9 @@ int position = 0;
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
-                holder.icon.setImageResource(mThumbIds[position]);
+                holder.icon.setImageBitmap(bitmap);
+                new LoadImage(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
+//                holder.icon.setImageResource(mThumbIds[position]);
 
                 holder.productPrice = (TextView)convertView.findViewById(R.id.price);
                 holder.productPrice.setPaintFlags(holder.productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -242,6 +254,7 @@ int position = 0;
 
                     }
                 });
+
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
@@ -264,7 +277,7 @@ int position = 0;
             String strJson = " {\n" +
                     "           \"products\" : [\n" +
                     "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-yellow-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65001-600x600.jpg\" ,\n" +
                     "        \"product id\" : 1 ,\n" +
                     "        \"product title\" : \"Ftrendy Yellow Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
                     "        \"actual price\" : 2500.00 ,\n" +
@@ -278,7 +291,7 @@ int position = 0;
                     "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
                     "       }," +
                     "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-light-pink-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65004-600x600.jpg\" ,\n" +
                     "        \"product id\" : 2 ,\n" +
                     "        \"product title\" : \"Ftrendy Light Pink Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
                     "        \"actual price\" : 2500.00 ,\n" +
@@ -292,7 +305,7 @@ int position = 0;
                     "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
                     "       }," +
                     "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-dark-sea-green-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65006-600x600.jpg\" ,\n" +
                     "        \"product id\" : 3 ,\n" +
                     "        \"product title\" : \"Ftrendy Dark Sea Green Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
                     "        \"actual price\" : 2500.00 ,\n" +
@@ -306,7 +319,7 @@ int position = 0;
                     "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
                     "       }," +
                     "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-red-off-white-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65008-600x600.jpg\" ,\n" +
                     "        \"product id\" : 4 ,\n" +
                     "        \"product title\" : \"Ftrendy Red Off White Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
                     "        \"actual price\" : 2500.00 ,\n" +
@@ -320,7 +333,7 @@ int position = 0;
                     "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
                     "       }," +
                     "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/shop/womens/ftrendy-orange-black-embroidered-printed-bhagalpuri-silk-semi-stitched-anarkali-churidar-dress-material/\" ,\n" +
+                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65005-600x600.jpg\" ,\n" +
                     "        \"product id\" :  5,\n" +
                     "        \"product title\" : \"Ftrendy Orange Black Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
                     "        \"actual price\" : 2500.00 ,\n" +
@@ -345,6 +358,8 @@ int position = 0;
                 //Iterate the jsonArray and print the info of JSONObjects
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String url = jsonObject.optString("image url").toString();
+//                    new LoadImage().execute(url);
 
                     int productId = Integer.parseInt(jsonObject.optString("product id").toString());
                     String productTitle = jsonObject.optString("product title").toString();
@@ -357,10 +372,8 @@ int position = 0;
                     String size = jsonObject.optString("available size").toString();
                     String SKU = jsonObject.optString("SKU").toString();
                     int rating = Integer.parseInt(jsonObject.optString("rating").toString());
-                    String url = jsonObject.optString("image url").toString();
 
                     data += "Node" + i + " : \n id= " + productId + " \n Title= " + productTitle + " \n Price= " + actualPrice + " \n Description = " + productDescription + " \n Price= " + discountPrice + " \n Sold By= " + soldBy + " \n Category= " + category + " \n Tag= " + tag + " \n url= " + url + " \n SKU= " + SKU + " \n Rating= " + rating + "\n";
-
                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url);
                     productList.add(product);
 
@@ -388,5 +401,46 @@ int position = 0;
 ,                R.drawable.sample_6, R.drawable.sample_7
 ,                R.drawable.sample_6, R.drawable.sample_7
         };
+
+
+        private class LoadImage extends AsyncTask<String, String, Bitmap> {
+            ImageView bmImage = (ImageView)findViewById(R.id.productimageView);
+
+            public LoadImage(ImageView bmImage) {
+                this.bmImage = bmImage;
+            }
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+//                pDialog = new ProgressDialog(LandingPageActivity.this);
+//                pDialog.setMessage("Loading Image ....");
+//                pDialog.show();
+
+            }
+            protected Bitmap doInBackground(String... args) {
+                try {
+                    bitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            protected void onPostExecute(Bitmap image) {
+
+                if(image != null){
+                    bmImage.setImageBitmap(image);
+//                    pDialog.dismiss();
+
+                }else{
+
+//                    pDialog.dismiss();
+                    Toast.makeText(LandingPageActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }
+
     }
-}
+    }
