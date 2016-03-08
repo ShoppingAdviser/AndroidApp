@@ -1,11 +1,15 @@
 package com.example.nidatazeen.shoppingadviser1;
 
 import android.graphics.Bitmap;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * Created by Len on 06-03-2016.
  */
-public class ModelProducts {
+public class ModelProducts implements Serializable {
+
     private String productTitle;
     private String productDescription;
     private float productPrice;
@@ -18,6 +22,7 @@ public class ModelProducts {
     private String productSKU;
     private int rating;
     private String productImageUrl;
+
 
     public ModelProducts(String productName,String productDesc,float productPrice, float productDiscount, int ratingValue, String soldbySeller, String productCategory, String prodTag, int prodID, String SKU, String productSizes, String imgUrl)
     {

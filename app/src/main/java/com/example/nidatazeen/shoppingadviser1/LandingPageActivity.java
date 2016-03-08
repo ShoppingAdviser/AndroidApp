@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -47,6 +49,8 @@ int position = 0;
     Bitmap bitmap;
     ProgressDialog pDialog;
     Bitmap imageObj;
+    ArrayList productsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +65,12 @@ int position = 0;
                                     int position, long id) {
                 Toast.makeText(LandingPageActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
+
+
                 final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
-                productDetailIntent.putExtra("itemSelected", position);
+                Bundle b = new Bundle();
+                b.putSerializable("product", (ModelProducts)productsArrayList.get(position));
+                productDetailIntent.putExtras( b);
                 startActivity(productDetailIntent);
             }
         });
@@ -233,7 +241,6 @@ int position = 0;
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
-                holder.icon.setImageBitmap(bitmap);
                 new LoadImage(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
 //                holder.icon.setImageResource(mThumbIds[position]);
 
@@ -378,6 +385,7 @@ int position = 0;
                     productList.add(product);
 
                 }
+                productsArrayList = productList;
 //                Toast.makeText(LandingPageActivity.this, "" + productList.size(),
 //                        Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
@@ -404,17 +412,17 @@ int position = 0;
 
 
         private class LoadImage extends AsyncTask<String, String, Bitmap> {
-            ImageView bmImage = (ImageView)findViewById(R.id.productimageView);
-
+            ImageView bmImage; //= (ImageView)findViewById(R.id.productimageView);
+ProgressDialog pDialog;
             public LoadImage(ImageView bmImage) {
                 this.bmImage = bmImage;
             }
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                pDialog = new ProgressDialog(LandingPageActivity.this);
-//                pDialog.setMessage("Loading Image ....");
-//                pDialog.show();
+                pDialog = new ProgressDialog(LandingPageActivity.this);
+                pDialog.setMessage("Loading Image ....");
+                pDialog.show();
 
             }
             protected Bitmap doInBackground(String... args) {
@@ -431,11 +439,11 @@ int position = 0;
 
                 if(image != null){
                     bmImage.setImageBitmap(image);
-//                    pDialog.dismiss();
+                    pDialog.dismiss();
 
                 }else{
 
-//                    pDialog.dismiss();
+                    pDialog.dismiss();
                     Toast.makeText(LandingPageActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
 
                 }
