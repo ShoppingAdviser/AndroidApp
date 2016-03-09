@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -47,6 +48,8 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
     List<String> listDataHeader;
     ScrollView containerScrollView;
     ModelProducts product;
+    ArrayList productsArrayList;
+
     HashMap<String, List<String>> listDataChild;
     private Integer[] mThumbIds = {
             R.drawable.sample_2, R.drawable.sample_3,
@@ -70,6 +73,9 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         setContentView(R.layout.activity_product_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
 
         Bundle b = this.getIntent().getExtras();
         if(b!=null)
@@ -158,10 +164,11 @@ expListView.expandGroup(0);
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, ProductDetailActivity.class);
-                Toast.makeText(ProductDetailActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
-                // startActivity(cartIntent);
-            }
+
+                    Toast.makeText(ProductDetailActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
+                    final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
+                    startActivity(cartIntent);
+                }
         });
 
 
@@ -223,6 +230,7 @@ expListView.expandGroup(0);
         final int numStars = ratingBar.getNumStars();
         ratingText.setText(rating + "/" + numStars);
     }
+
 
     private  class ExpandableListAdapter extends BaseExpandableListAdapter {
 

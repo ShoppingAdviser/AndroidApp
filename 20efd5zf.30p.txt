@@ -1,0 +1,22 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   .idea/gradle.xml
+#	modified:   .idea/misc.xml
+#	new file:   2pkrexb1.ox1.txt
+#	modified:   app/src/main/AndroidManifest.xml
+#	new file:   app/src/main/java/com/example/nidatazeen/shoppingadviser1/CartActivity.java
+#	new file:   app/src/main/java/com/example/nidatazeen/shoppingadviser1/CartActivityFragment.java
+#	modified:   app/src/main/java/com/example/nidatazeen/shoppingadviser1/ProductDetailActivity.java
+#	new file:   app/src/main/res/drawable/shoppingadviser.jpg
+#	new file:   app/src/main/res/layout/activity_cart.xml
+#	new file:   app/src/main/res/layout/content_cart.xml
+#	new file:   app/src/main/res/layout/fragment_cart.xml
+#	new file:   app/src/main/res/menu/menu_cart.xml
+#	modified:   app/src/main/res/values/strings.xml
+#
+
