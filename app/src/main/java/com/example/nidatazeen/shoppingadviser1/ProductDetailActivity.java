@@ -74,9 +74,6 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
         Bundle b = this.getIntent().getExtras();
         if(b!=null)
             product = (ModelProducts)b.getSerializable("product");
@@ -165,9 +162,15 @@ expListView.expandGroup(0);
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                    Toast.makeText(ProductDetailActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
-                    final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
-                    startActivity(cartIntent);
+//                    Toast.makeText(ProductDetailActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
+//                    final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
+//                    startActivity(cartIntent);
+
+                final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("singleproduct", product);
+                cartIntent .putExtras( b);
+                startActivity(cartIntent);
                 }
         });
 

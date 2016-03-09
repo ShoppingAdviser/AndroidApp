@@ -9,12 +9,17 @@ import android.view.View;
 
 public class CartActivity extends AppCompatActivity {
 
+    ModelProducts singlePdt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle b = this.getIntent().getExtras();
+        if(b!=null)
+            singlePdt = (ModelProducts)b.getSerializable("singleproduct");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
