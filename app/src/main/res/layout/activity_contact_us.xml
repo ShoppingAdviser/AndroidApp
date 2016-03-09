@@ -8,12 +8,12 @@
     tools:context="com.example.nidatazeen.shoppingadviser1.ContactUsActivity">
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/locationimageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic1"
-        android:layout_marginTop="80dp"
+        android:src="@drawable/location"
+        android:layout_marginTop="70dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -22,13 +22,13 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="20dp"
         android:text="#431, Ground Floor, 17th main road, KHB Colony, 5th block, Koramangala, Bangalore - 560095"
-        android:textAllCaps="true"/>+
+        android:textAllCaps="true"/>
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/contactImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic2"
+        android:src="@drawable/contact"
         android:layout_marginTop="130dp"
         />
     <TextView
@@ -42,12 +42,12 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/emailImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic3"
-        android:layout_marginTop="160dp"
+        android:src="@drawable/email"
+        android:layout_marginTop="175dp"
         />
 
 
@@ -58,15 +58,15 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="180dp"
         android:text="support@shoppingadviser.in"
-/>
+        />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/worktimingsImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic1"
-        android:layout_marginTop="200dp"
+        android:src="@drawable/work_timings"
+        android:layout_marginTop="220dp"
         />
 
     <TextView

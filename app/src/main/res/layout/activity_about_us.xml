@@ -14,17 +14,23 @@
         android:layout_marginTop="85dp"
         />
     <!--android:src="@drawable/ic1"-->
-
-    <TextView
-        android:layout_width="wrap_content"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container_scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="20dp"
-        android:text="www.ShoppingAdviser.in is a multi-vendor seller platform, which helps seller(s) increase their online and offline sales. And, yes invariably constantly enhancing the platform for shoppers to buy both online and offline. ShoppingAdviser partners with sellers to create the 'wow' and 'delightful' shopping experiences for buyers/shoppers online and offline.
+        android:layout_alignParentTop="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="20dp"
+            android:text="www.ShoppingAdviser.in is a multi-vendor seller platform, which helps seller(s) increase their online and offline sales. And, yes invariably constantly enhancing the platform for shoppers to buy both online and offline. ShoppingAdviser partners with sellers to create the 'wow' and 'delightful' shopping experiences for buyers/shoppers online and offline.
 
-Sellers can now sell online in 15 minutes on www.ShoppingAdviser.in, sellers have to create their free eStore on 'Sell on ShoppingAdviser' . ShoppingAdviser has created a 'Do It Yourself' video which will help sellers manage their eStore, a digital presence of their shop/store. Sellers have to load their products or ShoppingAdviser support team can upload it for them without any charges, also ShoppingAdviser promotion teams will promote their products to the right audience and generate sales. By ordering any of ShoppingAdviser DIGITAL SERVICES sellers can increase their 'Online and Offline Sales' instantly." />
-
+\nSellers can now sell online in 15 minutes on www.ShoppingAdviser.in, sellers have to create their free eStore on 'Sell on ShoppingAdviser' . ShoppingAdviser has created a 'Do It Yourself' video which will help sellers manage their eStore, a digital presence of their shop/store. Sellers have to load their products or ShoppingAdviser support team can upload it for them without any charges, also ShoppingAdviser promotion teams will promote their products to the right audience and generate sales. By ordering any of ShoppingAdviser DIGITAL SERVICES sellers can increase their 'Online and Offline Sales' instantly." />
+    </ScrollView>
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
