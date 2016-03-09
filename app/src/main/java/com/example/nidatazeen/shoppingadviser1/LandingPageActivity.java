@@ -31,6 +31,7 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +46,8 @@ import java.util.ArrayList;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-int position = 0;
-    Bitmap bitmap;
+
+    int position = 0;
     ProgressDialog pDialog;
     Bitmap imageObj;
     ArrayList productsArrayList;
@@ -241,7 +242,7 @@ int position = 0;
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
-                new LoadImage(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
+                new ImageDownloader(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
 //                holder.icon.setImageResource(mThumbIds[position]);
 
                 holder.productPrice = (TextView)convertView.findViewById(R.id.price);
@@ -381,7 +382,7 @@ int position = 0;
                     int rating = Integer.parseInt(jsonObject.optString("rating").toString());
 
                     data += "Node" + i + " : \n id= " + productId + " \n Title= " + productTitle + " \n Price= " + actualPrice + " \n Description = " + productDescription + " \n Price= " + discountPrice + " \n Sold By= " + soldBy + " \n Category= " + category + " \n Tag= " + tag + " \n url= " + url + " \n SKU= " + SKU + " \n Rating= " + rating + "\n";
-                   ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url);
+                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url);
                     productList.add(product);
 
                 }
@@ -405,50 +406,9 @@ int position = 0;
                 R.drawable.sample_4, R.drawable.sample_5,
                 R.drawable.sample_6, R.drawable.sample_7,
                 R.drawable.sample_6, R.drawable.sample_7
-,                R.drawable.sample_6, R.drawable.sample_7
-,                R.drawable.sample_6, R.drawable.sample_7
-,                R.drawable.sample_6, R.drawable.sample_7
+                ,                R.drawable.sample_6, R.drawable.sample_7
+                ,                R.drawable.sample_6, R.drawable.sample_7
+                ,                R.drawable.sample_6, R.drawable.sample_7
         };
-
-
-        private class LoadImage extends AsyncTask<String, String, Bitmap> {
-            ImageView bmImage; //= (ImageView)findViewById(R.id.productimageView);
-ProgressDialog pDialog;
-            public LoadImage(ImageView bmImage) {
-                this.bmImage = bmImage;
-            }
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                pDialog = new ProgressDialog(LandingPageActivity.this);
-                pDialog.setMessage("Loading Image ....");
-                pDialog.show();
-
-            }
-            protected Bitmap doInBackground(String... args) {
-                try {
-                    bitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return bitmap;
-            }
-
-            protected void onPostExecute(Bitmap image) {
-
-                if(image != null){
-                    bmImage.setImageBitmap(image);
-                    pDialog.dismiss();
-
-                }else{
-
-                    pDialog.dismiss();
-                    Toast.makeText(LandingPageActivity.this, "Image Does Not exist or Network Error", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        }
-
     }
-    }
+}

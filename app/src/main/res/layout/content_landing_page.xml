@@ -17,16 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Welcome to ShoppingAdviser"
         android:id="@+id/textView2" />
-    <ImageView
-        android:layout_marginLeft="-25dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:id="@+id/test"
-        android:layout_alignParentTop="true"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,30 +38,30 @@
         android:layout_height="match_parent"
         android:layout_marginTop="90dp"
         android:padding="10dp">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp">
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/gridview"
-            android:layout_width="1000dp"
-            android:layout_height="500dp"
-            android:columnWidth="200dp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="150dp"
-            android:horizontalSpacing="40dp"
-            android:gravity="center"
-            android:scrollbars="horizontal"
-            android:descendantFocusability="blocksDescendants"
-            />
-
-
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gridview"
+                android:layout_width="1000dp"
+                android:layout_height="500dp"
+                android:columnWidth="200dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="150dp"
+                android:horizontalSpacing="40dp"
+                android:gravity="center"
+                android:scrollbars="horizontal"
+                android:descendantFocusability="blocksDescendants"
+                />
 
 
 
-    </LinearLayout>
+
+
+        </LinearLayout>
     </HorizontalScrollView>
 </RelativeLayout>

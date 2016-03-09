@@ -1,39 +1,41 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-        import android.annotation.SuppressLint;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.graphics.AvoidXfermode;
-        import android.graphics.Paint;
-        import android.graphics.Typeface;
-        import android.media.Rating;
-        import android.os.Bundle;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.Snackbar;
-        import android.support.v7.app.ActionBarActivity;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.Toolbar;
-        import android.util.AttributeSet;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.BaseExpandableListAdapter;
-        import android.widget.Button;
-        import android.widget.ExpandableListView;
-        import android.widget.ImageView;
-        import android.widget.NumberPicker;
-        import android.widget.RadioButton;
-        import android.widget.RadioGroup;
-        import android.widget.RatingBar;
-        import android.widget.RatingBar.OnRatingBarChangeListener;
-        import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.AvoidXfermode;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.media.Rating;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
     NumberPicker np;
@@ -43,8 +45,8 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-
-ModelProducts product;
+    ScrollView containerScrollView;
+    ModelProducts product;
     HashMap<String, List<String>> listDataChild;
     private Integer[] mThumbIds = {
             R.drawable.sample_2, R.drawable.sample_3,
@@ -75,14 +77,21 @@ ModelProducts product;
 
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        containerScrollView = (ScrollView) findViewById(R.id.container_scroll_view);
 
         // preparing list data
-            prepareListData(product);
+        prepareListData(product);
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
+expListView.expandGroup(0);
+        expListView.expandGroup(1);
+        expListView.expandGroup(2);
+        expListView.expandGroup(3);
+        expListView.setFocusable(false);
+
 
         // Listview Group click listener
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -90,10 +99,12 @@ ModelProducts product;
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
+
                 // Toast.makeText(getApplicationContext(),
                 // "Group Clicked " + listDataHeader.get(groupPosition),
                 // Toast.LENGTH_SHORT).show();
-                return false;
+                parent.expandGroup(groupPosition);
+                return true;
             }
         });
 
@@ -102,9 +113,7 @@ ModelProducts product;
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -113,9 +122,6 @@ ModelProducts product;
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -147,6 +153,7 @@ ModelProducts product;
 //        int intValue = mIntent.getIntExtra("itemSelected", 2);
         ImageView imgView = (ImageView) findViewById(R.id.productImageViewLarge);
 //        imgView.setImageResource(mThumbIds[intValue]);
+        new ImageDownloader(imgView).execute(product.getProductImageUrl());
 
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
@@ -210,50 +217,13 @@ ModelProducts product;
         listDataChild.put(listDataHeader.get(2), comingSoon);
         listDataChild.put(listDataHeader.get(3), comingSoo2n);
 
+
     }
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
         final int numStars = ratingBar.getNumStars();
         ratingText.setText(rating + "/" + numStars);
     }
 
-
-//    public class SegmentButton extends AppCompatActivity implements OnCheckedChangeListener {
-//
-//        SegmentedRadioGroup segmentText;
-//        Toast mToast;
-//
-//        @SuppressLint("ShowToast")
-//        @Override
-//        public void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_product_detail);
-//
-//
-//
-//        }
-////        @Override
-////        public void onCheckedChanged(RadioGroup group, int checkedId) {
-////            Toast.makeText(ProductDetailActivity.this, "segment", Toast.LENGTH_LONG).show();
-////
-////
-////            if (group == segmentText) {
-////                if (checkedId == R.id.descriptionRadiobutton) {
-////
-////                    mToast.setText("Description");
-////                    mToast.show();
-////                } else if (checkedId == R.id.additionalInfoRadioButton) {
-////                    mToast.setText("Additional info");
-////                    mToast.show();
-////                } else if (checkedId == R.id.productEnquiryRadioButton) {
-////                    mToast.setText("Product Enquiry");
-////                    mToast.show();
-////                } else {
-////                    mToast.setText("Sellers info");
-////                    mToast.show();
-////                }
-////            }
-////        }
-//    }
     private  class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context _context;
