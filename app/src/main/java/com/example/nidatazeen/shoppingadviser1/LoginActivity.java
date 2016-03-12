@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class LoginActivity extends AppCompatActivity
 {
+    DatabaseHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +27,7 @@ public class LoginActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        db = new DatabaseHandler(this);
 
         EditText emailTxt = (EditText) findViewById(R.id.etUsername);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);
@@ -46,28 +51,37 @@ public class LoginActivity extends AppCompatActivity
                 if (usrTxt.length() != 0 && pwdTxt.length() != 0) {
                     //check if email is valid
 
-                    SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    String userNameStr = shoppingAdviserPreferences.getString("username", "username");
-                    String pwdNameStr = shoppingAdviserPreferences.getString("password", "password");
                     String loginusername = usrTxt.getText().toString();
+
+                    List<Contact> usernameList = db.getAllContacts();
+                    for (Contact c: usernameList) {
+if (loginusername.compareToIgnoreCase(c.getName()) == 0) {
+    Toast.makeText(LoginActivity.this, "Welcome Registered user!", Toast.LENGTH_LONG).show();
+    SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+    editor.putBoolean("isLoggedIn", true);
+    editor.commit();
+finish();
+}
+                    }
+//                    String userNameStr = shoppingAdviserPreferences.getString("username", "username");
+//                    String pwdNameStr = shoppingAdviserPreferences.getString("password", "password");
                     String passwordEntered = pwdTxt.getText().toString();
 
-                    if (isValidEmail(usrTxt.getText())&& loginusername.compareToIgnoreCase(userNameStr) == 0)
-                    { if (pwdNameStr.compareToIgnoreCase(passwordEntered) == 0) {
-                        //call that function and pass true to it
-                        shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());// getPreferences(Context.MODE_APPEND);
-                        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.commit();
-                        Toast.makeText(LoginActivity.this, "Welcome Registered user!", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
+//                    if (isValidEmail(usrTxt.getText())&& loginusername.compareToIgnoreCase(userNameStr) == 0)
+//                    { if (pwdNameStr.compareToIgnoreCase(passwordEntered) == 0) {
+//                        //call that function and pass true to it
 
-                    }
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
-                    }
+//                        editor.commit();
+//                        Toast.makeText(LoginActivity.this, "Welcome Registered user!", Toast.LENGTH_LONG).show();
+//                        finish();
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
+//
+//                    }
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
+//                    }
 
 
                 }

@@ -7,14 +7,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    DatabaseHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +24,14 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+         db = new DatabaseHandler(this);
+
         EditText emailTxt = (EditText) findViewById(R.id.etEmail);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);
         emailTxt.setText("taskeenfathima28@gmail.com");
         pwdTxt.setText("taskeen28");
 
-        Button registerbutton = (Button) findViewById(R.id.bRegister);
+        final Button registerbutton = (Button) findViewById(R.id.bRegister);
         registerbutton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -50,14 +54,16 @@ public class RegisterActivity extends AppCompatActivity {
                         String userNameString = emailTxt.getText().toString();
                         String pwdString = pwdTxt.getText().toString();
 
-                        Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
 
 
-                        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());// getPreferences(Context.MODE_APPEND);
-                        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
-                        editor.putString("username", userNameString);
-                        editor.putString("password", pwdString);
-                        editor.commit();
+                        registerUser(userNameString);
+                        Toast.makeText(RegisterActivity.this, "Registration successful!" + userNameString, Toast.LENGTH_LONG).show();
+
+//                        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());// getPreferences(Context.MODE_APPEND);
+//                        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+//                        editor.putString("username", userNameString);
+//                        editor.putString("password", pwdString);
+//                        editor.commit();
 
                         finish();
 
@@ -80,7 +86,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+public void registerUser(String username) {
+    // Inserting Contacts
 
+    db.addContact(new Contact(username.toString()));
+
+//    db.addContact(new Contact("Srinivas"));
+//    db.addContact(new Contact("Tommy"));
+//    db.addContact(new Contact("Karthik"));
+}
 
       //  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         //fab.setOnClickListener(new View.OnClickListener() {

@@ -89,10 +89,9 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
-expListView.expandGroup(0);
+        expListView.expandGroup(0);
         expListView.expandGroup(1);
         expListView.expandGroup(2);
-        expListView.expandGroup(3);
         expListView.setFocusable(false);
 
 
@@ -152,28 +151,30 @@ expListView.expandGroup(0);
         RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
         rate.setOnRatingBarChangeListener(this);
 
-//        Intent mIntent = getIntent();
-//        int intValue = mIntent.getIntExtra("itemSelected", 2);
+
         ImageView imgView = (ImageView) findViewById(R.id.productImageViewLarge);
-//        imgView.setImageResource(mThumbIds[intValue]);
         new ImageDownloader(imgView).execute(product.getProductImageUrl());
 
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-//                    Toast.makeText(ProductDetailActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
-//                    final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
-//                    startActivity(cartIntent);
-
                 final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("singleproduct", product);
-                cartIntent .putExtras( b);
+                cartIntent.putExtras(b);
                 startActivity(cartIntent);
-                }
+            }
         });
 
+        TextView categoryTxtView = (TextView) findViewById(R.id.categoryTextView);
+        categoryTxtView.setText(product.getCategory());
+
+        TextView tagTxtView = (TextView) findViewById(R.id.tagTextView);
+        tagTxtView.setText(product.getTag());
+
+        TextView sku = (TextView) findViewById(R.id.sku);
+        sku.setText(product.getProductSKU());
 
         TextView priceTxtView = (TextView) findViewById(R.id.priceTextView);
         priceTxtView.setText(Float.toString(product.getProductPrice()));
@@ -185,6 +186,15 @@ expListView.expandGroup(0);
         TextView discountTxtView = (TextView) findViewById(R.id.discountPriceTextView);
         discountTxtView.setText(Float.toString(product.getProductDiscountPrice()));
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.productEnquiryButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent abtIntent = new Intent().setClass(ProductDetailActivity.this, AboutUsActivity.class);
+startActivity(abtIntent);
+            }
+        });
+
     }
     private void prepareListData(ModelProducts prodct) {
         listDataHeader = new ArrayList<String>();
@@ -193,40 +203,22 @@ expListView.expandGroup(0);
         // Adding child data
         listDataHeader.add("Description");
         listDataHeader.add("Additional Information");
-        listDataHeader.add("Product Enquiry");
         listDataHeader.add("Seller Info ");
 
         // Adding child data
         List<String> descString = new ArrayList<String>();
         descString.add(prodct.getProductDescription());
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
+        List<String> addInfo = new ArrayList<String>();
+        addInfo.add(product.getAdditionalInfo());
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
+        List<String> sellers = new ArrayList<String>();
+        sellers.add(product.getSellerInfo());
 
-        List<String> comingSoo2n = new ArrayList<String>();
-        comingSoo2n.add("2 Guns");
-        comingSoo2n.add("The Smurfs 2");
-        comingSoo2n.add("The Spectacular Now");
-        comingSoo2n.add("The Canyons");
-        comingSoo2n.add("Europa Report");
 
         listDataChild.put(listDataHeader.get(0), descString); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
-        listDataChild.put(listDataHeader.get(3), comingSoo2n);
-
+        listDataChild.put(listDataHeader.get(1), addInfo);
+        listDataChild.put(listDataHeader.get(2), sellers);
 
     }
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {

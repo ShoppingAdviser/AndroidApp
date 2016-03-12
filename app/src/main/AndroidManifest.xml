@@ -21,10 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyAccountActivity"
-            android:label="@string/title_activity_my_account_actitvity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ContactUsActivity"
             android:label="@string/title_activity_contact_us"
             android:theme="@style/AppTheme.NoActionBar">
@@ -63,6 +59,10 @@
         <activity
             android:name=".CartActivity"
             android:label="@string/title_activity_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

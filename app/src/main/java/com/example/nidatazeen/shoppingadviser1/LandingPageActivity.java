@@ -70,34 +70,17 @@ public class LandingPageActivity extends AppCompatActivity
 
                 final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
                 Bundle b = new Bundle();
-                b.putSerializable("product", (ModelProducts)productsArrayList.get(position));
-                productDetailIntent.putExtras( b);
+                b.putSerializable("product", (ModelProducts) productsArrayList.get(position));
+                productDetailIntent.putExtras(b);
                 startActivity(productDetailIntent);
             }
         });
 
-        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
-        boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn",false);
+        checkIfLoggedIn();
 
-        editor.clear();
-        editor.commit();
-
-        Button loginbutton = (Button) findViewById(R.id.button2);
         Button regbutton = (Button) findViewById(R.id.button);
 
-        loginbutton.setVisibility(View.VISIBLE);
-        regbutton.setVisibility(View.VISIBLE);
 
-        loginbutton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final Intent loginIntent = new Intent().setClass(LandingPageActivity.this, LoginActivity.class);
-//                loginIntent.putExtra(Intent.ACTION_EDIT, new String[]{"Username"});
-//                loginIntent.putExtra(Intent.ACTION_EDIT, new String[]{"Password"});
-                startActivity(loginIntent);
-
-            }
-        });
         Button registerbutton = (Button) findViewById(R.id.button);
         registerbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,15 +89,6 @@ public class LandingPageActivity extends AppCompatActivity
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -125,8 +99,32 @@ public class LandingPageActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
+    private void checkIfLoggedIn() {
+
+        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+        boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn", false);
+
+        Button loginbutton = (Button) findViewById(R.id.button2);
+            Button regbutton = (Button) findViewById(R.id.button);
+            if (isLoggedIn) {
+                loginbutton.setText("Logout");
+                loginbutton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        logoutUser();
+
+                    }
+                });
+                loginbutton.setVisibility(View.VISIBLE);
+                regbutton.setVisibility(View.GONE);
+            } else {
+                logoutUser();
+            }
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,7 +163,6 @@ public class LandingPageActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_first_fragment) {
             // Handle thintent = new Intent().setClass(this, Tab1Activity.class);e camera action
             Intent thintent = new Intent().setClass(this, MyAccountsActivity.class);
@@ -190,28 +187,38 @@ public class LandingPageActivity extends AppCompatActivity
         super.onPostResume();
         getDelegate().onPostResume();
 
-        //check isloggedIn variable and hide/show buttons
+        checkIfLoggedIn();
+    }
+    private void logoutUser() {
         Button loginbutton = (Button) findViewById(R.id.button2);
         Button regbutton = (Button) findViewById(R.id.button);
-
         SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn", false);
+        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.clear();
+        editor.commit();
 
-        if (isLoggedIn) {
-            Toast.makeText(LandingPageActivity.this, "loggedin", Toast.LENGTH_LONG).show();
-            loginbutton.setVisibility(View.GONE);
-            regbutton.setVisibility(View.GONE);
-        } else {
+        loginbutton.setVisibility(View.VISIBLE);
+        loginbutton.setText("Login");
+        loginbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent loginIntent = new Intent().setClass(LandingPageActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
 
-            loginbutton.setVisibility(View.VISIBLE);
-            regbutton.setVisibility(View.VISIBLE);
-        }
+            }
+        });
+        regbutton.setVisibility(View.VISIBLE);
 
     }
+
     public void finish()
     {
         super.finish();
     }
+
+
+
+    //IMAGEADAPTER
 
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
@@ -292,10 +299,13 @@ public class LandingPageActivity extends AppCompatActivity
                     "        \"discount price\" : 1999.00,\n" +
                     "        \"SKU\" : \"SM541DVMST65005\" ,\n" +
                     "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
                     "         \"sold by\" : \"Ftrendy\" ,\n" +
                     "         \"category\" : \"Women's, Women's Clothing\",\n" +
                     "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
+                    "         \"ddescription\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
+                    "         \"additionalInfo\" : \"weight     1999g\",\n" +
+                    "         \"seller info\" : \"Seller Information \n Store Name:Ftrendy \n Seller:Ftrendy \n  \",\n" +
                     "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
                     "       }," +
                     "     {\n" +
@@ -380,9 +390,11 @@ public class LandingPageActivity extends AppCompatActivity
                     String size = jsonObject.optString("available size").toString();
                     String SKU = jsonObject.optString("SKU").toString();
                     int rating = Integer.parseInt(jsonObject.optString("rating").toString());
+                    String productdDescription = jsonObject.optString("ddescription").toString();
+                    String productAdditionalInfo=jsonObject.optString("additionalInfo").toString();
+                    String productSellerInfo=jsonObject.optString("seller info").toString();
 
-                    data += "Node" + i + " : \n id= " + productId + " \n Title= " + productTitle + " \n Price= " + actualPrice + " \n Description = " + productDescription + " \n Price= " + discountPrice + " \n Sold By= " + soldBy + " \n Category= " + category + " \n Tag= " + tag + " \n url= " + url + " \n SKU= " + SKU + " \n Rating= " + rating + "\n";
-                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url);
+                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
                     productList.add(product);
 
                 }
@@ -410,5 +422,6 @@ public class LandingPageActivity extends AppCompatActivity
                 ,                R.drawable.sample_6, R.drawable.sample_7
                 ,                R.drawable.sample_6, R.drawable.sample_7
         };
+
     }
 }

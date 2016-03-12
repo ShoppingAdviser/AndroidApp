@@ -1,201 +1,199 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.tls.sampletwo.CartActivityFragment"
-    tools:showIn="@layout/activity_cart">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.tls.sampletwo.CartActivityFragment"
+        tools:showIn="@layout/activity_cart">
 
-    <ImageView
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/sample_2"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:id="@+id/productImage"
-        android:layout_alignParentTop="true"/>
+        <ImageView
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:id="@+id/cartproductImage"
+            android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_marginRight="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="FTrendy Off White Anaarkali"
-        android:id="@+id/titletextview"
-        android:layout_marginLeft="60dp"
-        android:layout_toEndOf="@+id/productImage" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="FTrendy Off White Anaarkali"
+            android:id="@+id/carttitletextview"
+            android:layout_marginLeft="60dp"
+            android:layout_toEndOf="@+id/cartproductImage" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Sold By : FTrendy"
-        android:id="@+id/soldbytextview"
-        android:paddingRight="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/titletextview"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/titletextview" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Sold By : FTrendy"
+            android:id="@+id/cartsoldbytextview"
+            android:paddingRight="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/carttitletextview"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/carttitletextview" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="SKU : 3e42w4"
-        android:layout_marginTop="15dp"
-        android:id="@+id/sku"
-        android:layout_below="@+id/productImage"
-        android:layout_alignStart="@+id/qtyTextView"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="SKU :"
+            android:layout_marginTop="15dp"
+            android:id="@+id/cartsku"
+            android:layout_below="@+id/cartproductImage"
+            android:layout_alignStart="@+id/cartqtyTextView"
+            />
 
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Price : Rs.1,793"
-        android:textSize="18sp"
-        android:layout_below="@+id/sku"/>
+        <TextView
+            android:id="@+id/cartpriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:text="Price : Rs.1,793"
+            android:textSize="18sp"
+            android:layout_below="@+id/cartsku"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="10dp"
-        android:text="Qty : "
-        android:id="@+id/qtyTextView"
-        android:layout_below="@+id/priceTextView"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="82dp"
+            android:text="Qty : "
+            android:id="@+id/cartqtyTextView"
+            android:layout_below="@+id/cartpriceTextView"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="3"
-        android:id="@+id/editText"
-        android:layout_below="@+id/priceTextView"
-        android:layout_toEndOf="@+id/qtyTextView" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/carteditText"
+            android:layout_alignBottom="@+id/cartqtyTextView"
+            android:layout_alignEnd="@+id/cartZipTextview" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="8dp"
-        android:text="Total : Rs.1,793"
-        android:id="@+id/totalTextView"
-        android:layout_below="@+id/qtyTextView"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Total : Rs.1,793"
+            android:id="@+id/carttotalTextView"
+            android:layout_marginTop="81dp"
+            android:layout_below="@+id/carteditText"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="10dp"
-        android:text="Shipping : "
-        android:id="@+id/shippingTextView"
-        android:layout_below="@+id/totalTextView"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="15dp"
-        android:text="Calculate Shipping"
-        android:layout_marginLeft="145dp"
-        android:id="@+id/calculateshippingTextView"
-        android:layout_below="@+id/totalTextView"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Shipping : "
+            android:id="@+id/cartshippingTextView"
+            android:layout_alignTop="@+id/cartcalculateshippingTextView"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="80dp"
+            android:text="Calculate Shipping"
+            android:layout_marginLeft="145dp"
+            android:id="@+id/cartcalculateshippingTextView"
+            android:layout_below="@+id/carttotalTextView"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Country:"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/countryTextView"
-        android:layout_below="@+id/calculateshippingTextView"
-        android:layout_alignStart="@+id/calculateshippingTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Country:"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/cartcountryTextView"
+            android:layout_below="@+id/cartcalculateshippingTextView"
+            android:layout_alignEnd="@+id/cartStateTextView" />
 
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:id="@+id/countryEdittext"
-        android:layout_below="@+id/calculateshippingTextView"
-        android:layout_toEndOf="@+id/countryTextView" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartcountryEdittext"
+            android:ems="5"
+            android:layout_alignBottom="@+id/cartcountryTextView"
+            android:layout_toEndOf="@+id/cartcountryTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="State:"
-        android:layout_marginLeft="150dp"
-        android:id="@+id/StateTextView"
-        android:layout_below="@+id/countryEdittext"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="State:"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="100dp"
+            android:id="@+id/cartStateTextView"
+            android:layout_below="@+id/cartcountryEdittext"
+            android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:id="@+id/stateEditText"
-        android:layout_alignTop="@+id/StateTextView"
-        android:layout_alignStart="@+id/countryEdittext" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Postcode/ZIP:"
-        android:id="@+id/ZipTextview"
-        android:layout_margin="20dp"
-        android:layout_below="@+id/StateTextView"
-        android:layout_centerHorizontal="true" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartstateEditText"
+            android:ems="5"
+            android:layout_alignBottom="@+id/cartStateTextView"
+            android:layout_toEndOf="@+id/cartStateTextView"
+            android:layout_marginStart="24dp" />
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="3"
-        android:id="@+id/ZipEdittext"
-        android:layout_alignBottom="@+id/ZipTextview"
-        android:layout_alignTop="@+id/ZipTextview"
-        android:layout_alignEnd="@+id/stateEditText"
-        android:layout_toEndOf="@+id/ZipTextview" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Postcode/ZIP:"
+            android:id="@+id/cartZipTextview"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="100dp"
+            android:layout_below="@+id/cartstateEditText"
+            android:layout_toEndOf="@+id/cartproductImage" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="5"
+            android:id="@+id/PostZIPbutton"
+            android:layout_above="@+id/cartcheckoutButton"
+            android:layout_toEndOf="@+id/cartZipTextview" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ContinueShopping"
-        android:id="@+id/continueButton"
-        android:layout_below="@+id/ZipTextview"
-        android:layout_toStartOf="@+id/soldbytextview" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ContinueShopping"
+            android:id="@+id/cartcontinueButton"
+            android:layout_alignTop="@+id/cartcheckoutButton"
+            android:layout_toStartOf="@+id/cartsoldbytextview" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Checkout"
-        android:id="@+id/checkoutButton"
-        android:layout_below="@+id/ZipTextview"
-        android:layout_toEndOf="@+id/StateTextView" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:id="@+id/cartcheckoutButton"
+            android:layout_marginTop="100dp"
+            android:layout_below="@+id/cartZipTextview"
+            android:layout_toEndOf="@+id/cartStateTextView" />
 
 
-    <!-- <ListView
-         android:layout_width="90dp"
-         android:layout_height="90dp"
-         android:id="@+id/listView"
-         android:choiceMode="singleChoice"
-         android:layout_below="@+id/calculateshippingTextView"
-         android:clickable="true"
-         android:fastScrollEnabled="true"
-         android:layout_alignEnd="@+id/calculateshippingTextView"
-         android:layout_alignStart="@+id/stateEditText"
-         />-->
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

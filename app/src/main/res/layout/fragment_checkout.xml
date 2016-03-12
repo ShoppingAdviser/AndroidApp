@@ -1,0 +1,194 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.tls.sampletwo.CheckoutActivityFragment"
+    tools:showIn="@layout/activity_checkout">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enter your address"
+        android:id="@+id/checkoutenteraddresstextview"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="FN: "
+        android:id="@+id/checkoutfirstnametextview"
+        android:layout_below="@+id/checkoutenteraddresstextview"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="6"
+        android:id="@+id/checkoutfnameedittext"
+        android:layout_alignBottom="@+id/checkoutfirstnametextview"
+        android:layout_toEndOf="@+id/checkoutfirstnametextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="LN: "
+        android:id="@+id/checkoutlastnametextview"
+        android:layout_alignBottom="@+id/checkoutfnameedittext"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="6"
+        android:id="@+id/checkoutlnameedittext"
+        android:layout_alignBottom="@+id/checkoutfirstnametextview"
+        android:layout_toEndOf="@+id/checkoutlastnametextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Email-id: "
+        android:id="@+id/checkoutemailtextview"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/checkoutfnameedittext"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/checkoutemailedittext"
+        android:layout_alignBottom="@+id/checkoutemailtextview"
+        android:layout_toEndOf="@+id/checkoutemailtextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Phone: "
+        android:id="@+id/checkoutphonetextview"
+        android:layout_above="@+id/checkoutcountryedittext"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/checkoutphoneedittext"
+        android:layout_alignBottom="@+id/checkoutphonetextview"
+        android:layout_toEndOf="@+id/checkoutphonetextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Country: "
+        android:id="@+id/checkoutcountrytextview"
+        android:layout_above="@+id/checkoutstreetedittext"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkoutcountryedittext"
+        android:layout_alignBottom="@+id/checkoutcountrytextview"
+        android:layout_alignEnd="@+id/checkoutphoneedittext"
+        android:layout_toEndOf="@+id/checkoutemailtextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Street: "
+        android:id="@+id/checkoutstreettextview"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/checkoutstreetedittext"
+        android:layout_alignBottom="@+id/checkoutstreettextview"
+        android:layout_toEndOf="@+id/checkoutstreettextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Town/City: "
+        android:id="@+id/checkouttowntextview"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/checkoutstreettextview"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/checkouttownedittext"
+        android:layout_alignBottom="@+id/checkouttowntextview"
+        android:layout_toEndOf="@+id/checkouttowntextview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="State: "
+        android:id="@+id/checkoutstatetextview"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/checkouttowntextview"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkoutstateedittext"
+        android:layout_alignBottom="@+id/checkoutstatetextview"
+        android:layout_alignStart="@+id/checkoutphoneedittext"
+        android:layout_alignEnd="@+id/checkoutemailedittext" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ZIP: "
+        android:id="@+id/checkoutziptextview"
+        android:layout_alignBottom="@+id/checkoutzipedittext"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/checkoutzipedittext"
+        android:layout_below="@+id/checkoutstatetextview"
+        android:layout_toEndOf="@+id/checkoutziptextview" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay Now"
+        android:id="@+id/checkoutpaynowbutton"
+        android:layout_below="@+id/checkoutzipedittext"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

@@ -22,9 +22,11 @@ public class ModelProducts implements Serializable {
     private String productSKU;
     private int rating;
     private String productImageUrl;
+    private String productDetailedDescription;
+    private String productAdditionalInfo;
+    private String productSellerInfo;
 
-
-    public ModelProducts(String productName,String productDesc,float productPrice, float productDiscount, int ratingValue, String soldbySeller, String productCategory, String prodTag, int prodID, String SKU, String productSizes, String imgUrl)
+    public ModelProducts(String productName,String productDesc,float productPrice, float productDiscount, int ratingValue, String soldbySeller, String productCategory, String prodTag, int prodID, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;
@@ -38,6 +40,9 @@ public class ModelProducts implements Serializable {
         this.rating = ratingValue;
         this.productImageUrl = imgUrl;
         this.productId = prodID;
+        this.productDetailedDescription=productDetailDesc;
+        this.productAdditionalInfo=productAddInfo;
+        this.productSellerInfo=prodSeller;
     }
 
 
@@ -87,5 +92,19 @@ public class ModelProducts implements Serializable {
     public int getProductId() {
 
         return productId;
+    }
+
+    public String getProductDetailedDescription()
+    {
+        return productDetailedDescription;
+    }
+
+    public String getAdditionalInfo()
+    {
+        return productAdditionalInfo;
+    }
+    public String getSellerInfo()
+    {
+        return productSellerInfo;
     }
 }
