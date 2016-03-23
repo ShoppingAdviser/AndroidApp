@@ -8,186 +8,205 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.tls.sampletwo.ProductDetailActivity.SegmentedRadioGroup"
-    tools:showIn="@layout/activity_product_detail">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="com.example.tls.sampletwo.ProductDetailActivity.SegmentedRadioGroup"
+            tools:showIn="@layout/activity_product_detail">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_marginRight="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="FTrendy Off White Anaarkali"
-        android:id="@+id/titletextview"
-        android:layout_marginLeft="0dp"/>
-        <!--android:layout_toEndOf="@+id/productImageViewLarge" -->
-        <!--/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="FTrendy Off White Anaarkali"
+                android:id="@+id/titletextview"
+                android:layout_marginLeft="0dp"/>
+            <!--android:layout_toEndOf="@+id/productImageViewLarge" -->
+            <!--/>-->
 
-    <ImageView
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/productImageViewLarge"
-        android:layout_below="@+id/titletextview"
-        android:layout_marginTop="20dp"
-        />
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_marginEnd="156dp"
-             android:scaleType ="fitXY"
--->
+            <ImageView
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/productImageViewLarge"
+                android:scaleType="fitCenter"
+                android:layout_below="@+id/titletextview"
+                android:layout_marginTop="20dp"
+                />
 
-
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_below="@id/productImageViewLarge"
-        android:numColumns="5"
-        android:verticalSpacing="0dp"
-        android:horizontalSpacing="10dp"
-        android:id="@+id/gridView"></GridView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Sold By:FTrendy"
-        android:id="@+id/soldbytextview"
-        android:paddingRight="0dp"
-        android:layout_below="@+id/gridView"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/titletextview"
-        android:layout_marginTop="40dp"
-        />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:paddingLeft="-10dp"
-        android:numStars="5"
-        android:layout_below="@+id/soldbytextview"
-        android:layout_alignStart="@+id/soldbytextview"
-        android:layerType="hardware"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/soldbytextview"
-        android:layout_marginTop="40dp"
-        android:textSize="18sp"
-        />
-
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rs.2,999"
-        android:textSize="18sp"
-        android:layout_alignStart="@+id/ratingBar"
-        android:layout_below="@+id/ratingBar"
-        android:layout_marginTop="20dp"
-        />
-    <TextView
-        android:id="@+id/discountPriceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rs.1,793"
-        android:textSize="18sp"
-        android:layout_below="@+id/ratingBar"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="220dp"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="20dp"
-        android:text="Qty"
-        android:id="@+id/qtyTextView"
-        android:layout_below="@+id/priceTextView"
-        android:layout_alignStart="@+id/ratingBar" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="5"
-        android:id="@+id/editText"
-        android:layout_below="@+id/priceTextView"
-        android:layout_toEndOf="@+id/qtyTextView"
-        android:focusable = "false"
-        android:layout_marginLeft="50dp"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buy Now"
-        android:layout_marginTop="20dp"
-        android:id="@+id/buyNowbtn"
-        android:layout_below="@+id/qtyTextView"
-        android:background="#157cf9"
-        />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:padding="10dp"
+                android:id="@+id/horscrollview"
+                android:layout_below="@+id/productImageViewLarge">
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="SKU:3e42w4"
-        android:layout_marginTop="20dp"
-        android:id="@+id/sku"
-        android:layout_below="@+id/buyNowbtn"
-        android:layout_alignStart="@+id/qtyTextView"
-        />
+                    <GridView
+                        android:layout_width="500dp"
+                        android:layout_height="400dp"
+                        android:numColumns="8"
+                        android:verticalSpacing="0dp"
+                        android:horizontalSpacing="10dp"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:columnWidth="200dp"
+                        android:scrollbars="horizontal"
+                        android:layout_below="@+id/productImageViewLarge"
+                        android:id="@+id/extraimagesgridView">
+
+                    </GridView>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sold By:FTrendy"
+                android:id="@+id/soldbytextview"
+                android:paddingRight="0dp"
+                android:layout_below="@+id/horscrollview"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/titletextview"
+                android:layout_marginTop="40dp"
+                />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:paddingLeft="-10dp"
+                android:numStars="5"
+                android:layout_below="@+id/soldbytextview"
+                android:layout_alignStart="@+id/soldbytextview"
+                android:layerType="hardware"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/soldbytextview"
+                android:layout_marginTop="40dp"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs.2,999"
+                android:textSize="18sp"
+                android:layout_alignStart="@+id/ratingBar"
+                android:layout_below="@+id/ratingBar"
+                android:layout_marginTop="20dp"
+                />
+            <TextView
+                android:id="@+id/discountPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs.1,793"
+                android:textSize="18sp"
+                android:layout_below="@+id/ratingBar"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="220dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginTop="20dp"
+                android:text="Qty"
+                android:id="@+id/qtyTextView"
+                android:layout_below="@+id/priceTextView"
+                android:layout_alignStart="@+id/ratingBar" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="5"
+                android:id="@+id/editText"
+                android:layout_below="@+id/priceTextView"
+                android:layout_toEndOf="@+id/qtyTextView"
+                android:focusable = "false"
+                android:layout_marginLeft="50dp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy Now"
+                android:layout_marginTop="20dp"
+                android:id="@+id/buyNowbtn"
+                android:layout_below="@+id/qtyTextView"
+                android:background="#157cf9"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="SKU:3e42w4"
+                android:layout_marginTop="20dp"
+                android:id="@+id/sku"
+                android:layout_below="@+id/buyNowbtn"
+                android:layout_alignStart="@+id/qtyTextView"
+                />
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Category:Indian Dress"
-        android:layout_marginTop="20dp"
-        android:id="@+id/categoryTextView"
-        android:layout_below="@+id/sku"
-        android:layout_alignStart="@+id/sku"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Category:Indian Dress"
+                android:layout_marginTop="20dp"
+                android:id="@+id/categoryTextView"
+                android:layout_below="@+id/sku"
+                android:layout_alignStart="@+id/sku"
+                />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Tag:Women"
-        android:id="@+id/tagTextView"
-        android:layout_below="@+id/categoryTextView"
-        android:layout_alignStart="@+id/categoryTextView"
-        android:layout_marginBottom="0dp"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Tag:Women"
+                android:id="@+id/tagTextView"
+                android:layout_below="@+id/categoryTextView"
+                android:layout_alignStart="@+id/categoryTextView"
+                android:layout_marginBottom="0dp"
+                />
 
 
-    <ExpandableListView
-        android:id="@+id/lvExp"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/tagTextView"
-        android:layout_height="1000dp"
-        android:layout_width="match_parent"/>
+            <ExpandableListView
+                android:id="@+id/lvExp"
+                android:layout_marginTop="50dp"
+                android:layout_below="@id/tagTextView"
+                android:layout_height="1000dp"
+                android:layout_width="match_parent"/>
 
-    <!--</ScrollView>-->
-</RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+            <!--</ScrollView>-->
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

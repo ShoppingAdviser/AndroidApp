@@ -18,9 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -155,6 +157,21 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         ImageView imgView = (ImageView) findViewById(R.id.productImageViewLarge);
         new ImageDownloader(imgView).execute(product.getProductImageUrl());
 
+        GridView gridview = (GridView) findViewById(R.id.extraimagesgridView);
+
+        gridview.setAdapter(new ImageAdapter(this));
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView parent, View v,
+                                    int position, long id) {
+                ImageView imageView = (ImageView) findViewById(R.id.productImageViewLarge);
+                imageView.setImageResource(mThumbIds[position]);
+                Toast.makeText(ProductDetailActivity.this, "" + position,
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -186,7 +203,7 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         TextView discountTxtView = (TextView) findViewById(R.id.discountPriceTextView);
         discountTxtView.setText(product.getProductDiscountPrice());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.productEnquiryButton);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.enquirybtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,7 +242,62 @@ startActivity(abtIntent);
         ratingText.setText(rating + "/" + numStars);
     }
 
+    private class ImageAdapter extends BaseAdapter {
+        private Context mContext;
 
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return mThumbIds.length;
+        }
+
+        public Object getItem(int position) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.collectiongriditem, null, false);
+
+                holder = new ViewHolder();
+                holder.icon = (ImageView) convertView.findViewById(R.id.newimage);
+                //  new ImageDownloader(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
+                //      holder.icon.setImageResource(R.drawable.sample_2);
+                holder.icon.setImageResource(mThumbIds[position]);
+
+
+
+
+
+
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            return convertView;
+        }
+
+        private class ViewHolder {
+            ImageView icon;
+        }
+
+
+        private ArrayList productList;
+
+    }
     private  class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Context _context;

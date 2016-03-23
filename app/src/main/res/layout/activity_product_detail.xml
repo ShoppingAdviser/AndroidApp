@@ -24,11 +24,12 @@
     <include layout="@layout/content_product_detail" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/productEnquiryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/enquirybtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:backgroundTint="#08a0c6"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/questionmark"
+        />
 
 </android.support.design.widget.CoordinatorLayout>
