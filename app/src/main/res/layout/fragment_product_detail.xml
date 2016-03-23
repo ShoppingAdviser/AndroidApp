@@ -36,12 +36,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/productImageViewLarge"
-        android:scaleType="fitXY"
         android:layout_below="@+id/titletextview"
         android:layout_marginTop="20dp"
         />
     <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_marginEnd="156dp" -->
+    <!--android:layout_marginEnd="156dp"
+             android:scaleType ="fitXY"
+-->
 
 
     <GridView

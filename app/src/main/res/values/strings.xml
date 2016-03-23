@@ -14,4 +14,6 @@
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="title_activity_cart">CartActivity</string>
     <string name="title_activity_checkout">CheckoutActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_product_enquiry">ProductEnquiryActivity</string>
 </resources>

@@ -34,7 +34,7 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         TextView totalTxtView = (TextView) findViewById(R.id.carttotalTextView);
-        totalTxtView.setText(Float.toString(singlePdt.getProductDiscountPrice()));
+        totalTxtView.setText(singlePdt.getProductDiscountPrice());
 // priceTxtView.setPaintFlags(priceTxtView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         TextView titleTxtView = (TextView) findViewById(R.id.carttitletextview);
@@ -42,12 +42,11 @@ public class CartActivity extends AppCompatActivity {
 
 
         TextView priceTxtView = (TextView) findViewById(R.id.cartpriceTextView);
-        priceTxtView.setText(Float.toString(singlePdt.getProductPrice()));
+        priceTxtView.setText(singlePdt.getProductPrice());
 
 
         TextView sellingTxtView = (TextView) findViewById(R.id.cartsoldbytextview);
         sellingTxtView.setText(singlePdt.getSoldby());
-
 
 
         TextView sku = (TextView) findViewById(R.id.cartsku);

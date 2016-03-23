@@ -177,20 +177,20 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         sku.setText(product.getProductSKU());
 
         TextView priceTxtView = (TextView) findViewById(R.id.priceTextView);
-        priceTxtView.setText(Float.toString(product.getProductPrice()));
+        priceTxtView.setText(product.getProductPrice());
         priceTxtView.setPaintFlags(priceTxtView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         TextView prodTxtView = (TextView) findViewById(R.id.titletextview);
         prodTxtView.setText(product.getProductTitle());
 
         TextView discountTxtView = (TextView) findViewById(R.id.discountPriceTextView);
-        discountTxtView.setText(Float.toString(product.getProductDiscountPrice()));
+        discountTxtView.setText(product.getProductDiscountPrice());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.productEnquiryButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent abtIntent = new Intent().setClass(ProductDetailActivity.this, AboutUsActivity.class);
+                final Intent abtIntent = new Intent().setClass(ProductDetailActivity.this, ProductEnquiryActivity.class);
 startActivity(abtIntent);
             }
         });
@@ -211,7 +211,6 @@ startActivity(abtIntent);
 
         List<String> addInfo = new ArrayList<String>();
         addInfo.add(product.getAdditionalInfo());
-
         List<String> sellers = new ArrayList<String>();
         sellers.add(product.getSellerInfo());
 

@@ -1,12 +1,8 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Message;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,16 +12,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Len on 09-03-2016.
- */
-public class ImageDownloader extends AsyncTask<String, Void, String> {
+public class WebRequest extends AsyncTask<String, Void, String> {
 
-    ImageView bmImage;
-    Bitmap bitmap;
+    Handler handler;
 
-    public ImageDownloader(ImageView bmImage) {
-        this.bmImage = bmImage;
+
+    public WebRequest(Handler handler) {
+        this.handler = handler;
     }
     @Override
     protected String doInBackground(String... urls) {
@@ -36,14 +29,21 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
         }
     }
 
+    @Override
+    protected void onPostExecute(String result)
+    {
+        Message msg = Message.obtain();
+        msg.obj = result;
+        this.handler.sendMessage(msg);
+    }
+
+
+
     /**
      * Uses the logging framework to display the output of the fetch
      * operation in the log fragment.
      */
-    @Override
-    protected void onPostExecute(String result) {
-        this.bmImage.setImageBitmap(bitmap);
-    }
+
     /** Initiates the fetch operation. */
     private String loadFromNetwork(String urlString) throws IOException {
         InputStream stream = null;
@@ -51,7 +51,7 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
 
         try {
             stream = downloadUrl(urlString);
-            str = readIt(stream, 450000);
+            str = readIt(stream, 145500);
         } finally {
             if (stream != null) {
                 stream.close();
@@ -71,19 +71,22 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
         // BEGIN_INCLUDE(get_inputstream)
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(100000 /* milliseconds */);
-        conn.setConnectTimeout(150000 /* milliseconds */);
-//        conn.setRequestMethod("GET");
+        conn.setReadTimeout(1000000000 /* milliseconds */);
+        conn.setConnectTimeout(1500000000 /* milliseconds */);
+        conn.setRequestMethod("GET");
         conn.setDoInput(true);
         // Start the query
         conn.connect();
         InputStream stream = conn.getInputStream();
-        bitmap = BitmapFactory.decodeStream(stream);
         return stream;
-
-
         // END_INCLUDE(get_inputstream)
     }
+
+
+
+
+//            Log.i(TAG, result);
+
 
     /** Reads an InputStream and converts it to a String.
      * @param stream InputStream containing HTML from targeted site.
@@ -100,3 +103,4 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
         return new String(buffer);
     }
 }
+

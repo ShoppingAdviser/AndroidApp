@@ -12,8 +12,8 @@ public class ModelProducts implements Serializable {
 
     private String productTitle;
     private String productDescription;
-    private float productPrice;
-    private float productDiscountPrice;
+    private String productPrice;
+    private String productDiscountPrice;
     private int productId;
     private String soldby;
     private String category;
@@ -26,7 +26,7 @@ public class ModelProducts implements Serializable {
     private String productAdditionalInfo;
     private String productSellerInfo;
 
-    public ModelProducts(String productName,String productDesc,float productPrice, float productDiscount, int ratingValue, String soldbySeller, String productCategory, String prodTag, int prodID, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller)
+    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int ratingValue, String soldbySeller, String productCategory, String prodTag, int prodID, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;
@@ -56,12 +56,12 @@ public class ModelProducts implements Serializable {
         return productDescription;
     }
 
-    public float getProductPrice() {
+    public String getProductPrice() {
 
         return productPrice;
     }
 
-    public float getProductDiscountPrice() {
+    public String getProductDiscountPrice() {
 
         return productDiscountPrice;
     }

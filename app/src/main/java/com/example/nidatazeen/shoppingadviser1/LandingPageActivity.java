@@ -1,6 +1,7 @@
 package com.example.nidatazeen.shoppingadviser1;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,10 +10,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,22 +31,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filterable;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Filter;
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,6 +64,20 @@ public class LandingPageActivity extends AppCompatActivity
     ProgressDialog pDialog;
     Bitmap imageObj;
     ArrayList productsArrayList;
+    ImageAdapter myAdapter;
+    WebRequest web;
+    String jsonstr = "";
+
+    private Handler activityHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // Do something with msg.obj
+            jsonstr = msg.obj.toString();
+
+            parse();
+            setUpGrid();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,32 +85,20 @@ public class LandingPageActivity extends AppCompatActivity
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(LandingPageActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+            web = new WebRequest(activityHandler);
+            web.execute("https://shoppingadviser.in/wc-api/v3/products?consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8");
 
 
-                final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
-                Bundle b = new Bundle();
-                b.putSerializable("product", (ModelProducts) productsArrayList.get(position));
-                productDetailIntent.putExtras(b);
-                startActivity(productDetailIntent);
-            }
-        });
-
-        checkIfLoggedIn();
-
-        Button regbutton = (Button) findViewById(R.id.button);
+            checkIfLoggedIn();
 
 
-        Button registerbutton = (Button) findViewById(R.id.button);
-        registerbutton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            Button registerbutton = (Button) findViewById(R.id.button);
+            registerbutton.setOnClickListener(new View.OnClickListener()
+
+            {
+                public void onClick (View v){
+
+
                 final Intent registerIntent = new Intent().setClass(LandingPageActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
             }
@@ -95,13 +110,34 @@ public class LandingPageActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(true);
         drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
+
     }
 
+private void setUpGrid() {
+    myAdapter = new ImageAdapter(this);
+    GridView gridview = (GridView) findViewById(R.id.gridview);
+    gridview.setAdapter(myAdapter);
+    gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View v,
+                                int position, long id) {
+
+
+            final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
+            Bundle b = new Bundle();
+            b.putSerializable("product", (ModelProducts) productsArrayList.get(position));
+            productDetailIntent.putExtras(b);
+            startActivity(productDetailIntent);
+        }
+    });
+
+}
     private void checkIfLoggedIn() {
 
         SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -139,8 +175,9 @@ public class LandingPageActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.landing_page, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -215,9 +252,58 @@ public class LandingPageActivity extends AppCompatActivity
     {
         super.finish();
     }
+    public void parse() {
+
+        productsArrayList = new ArrayList<Integer>();
+        String strJson = jsonstr;
+
+        try
+        {
+            JSONObject jsonRootObject = new JSONObject(strJson);
+
+            //Get the instance of JSONArray that contains JSONObjects
+            JSONArray jsonArray = jsonRootObject.getJSONArray("products");
+            Toast.makeText(LandingPageActivity.this, "jsonArray  " + jsonArray.length(), Toast.LENGTH_LONG).show();
 
 
+            //Iterate the jsonArray and print the info of JSONObjects
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String url = "";
+                url = jsonObject.optString("featured_src").toString();
 
+                int productId = Integer.parseInt(jsonObject.optString("id").toString());
+                String productTitle = jsonObject.optString("title").toString();
+                String productDescription = jsonObject.optString("description").toString();
+                String actualPrice = jsonObject.optString("price").toString();
+                String discountPrice = "10000";//jsonObject.optString("sale_price").toString();
+                String soldBy = "Ftrendy";//jsonObject.optString("sold by").toString();// to be removed
+                String category = "category";//jsonObject.optString("categories").toString();// array setting
+                String tag = "item";//jsonObject.optString("tags").toString();// ARRAY SETTING
+                String size = "xl, xxl";//jsonObject.optString("available size").toString();// to be removed
+                String SKU = jsonObject.optString("sku").toString();
+                int rating = Integer.parseInt(jsonObject.optString("rating_count").toString());
+                String productdDescription = jsonObject.optString("short_description").toString();
+                String productAdditionalInfo="additional info";//jsonObject.optString("additionalInfo").toString();// to be removed
+                String productSellerInfo="seller info";//jsonObject.optString("seller info").toString(); to be removed
+
+                ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
+                productsArrayList.add(product);
+//                Toast.makeText(LandingPageActivity.this, "product title is  " + product.getProductTitle(), Toast.LENGTH_LONG).show();
+
+
+            }
+//            Toast.makeText(LandingPageActivity.this, "productsArrayList size is  " + productsArrayList.size(), Toast.LENGTH_LONG).show();
+
+
+        }
+        catch (JSONException e)
+        {
+            Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
+
+            e.printStackTrace();
+        }
+    }
     //IMAGEADAPTER
 
     public class ImageAdapter extends BaseAdapter {
@@ -225,11 +311,10 @@ public class LandingPageActivity extends AppCompatActivity
 
         public ImageAdapter(Context c) {
             mContext = c;
-            parse();
         }
 
         public int getCount() {
-            return productList.size();
+            return productsArrayList.size();
         }
 
         public Object getItem(int position) {
@@ -240,27 +325,31 @@ public class LandingPageActivity extends AppCompatActivity
             return 0;
         }
 
+        public ImageAdapter getFilter() {
+            // TODO Auto-generated method stub
+            return null;
+        }
         // create a new ImageView for each item referenced by the Adapter
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if(convertView == null){
+
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.griditem, null, false);
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
-                new ImageDownloader(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
-//                holder.icon.setImageResource(mThumbIds[position]);
+                new ImageDownloader(holder.icon).execute(((ModelProducts) productsArrayList.get(position)).getProductImageUrl());
 
                 holder.productPrice = (TextView)convertView.findViewById(R.id.price);
                 holder.productPrice.setPaintFlags(holder.productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                holder.productPrice.setText(Float.toString(((ModelProducts) productList.get(position)).getProductPrice()));
+                holder.productPrice.setText((((ModelProducts) productsArrayList.get(position)).getProductPrice()));
 
                 holder.productTitle = (TextView)convertView.findViewById(R.id.productTitleView);
-                holder.productTitle.setText(((ModelProducts) productList.get(position)).getProductTitle());
+                holder.productTitle.setText(((ModelProducts) productsArrayList.get(position)).getProductTitle());
 
                 holder.productDiscountprice = (TextView)convertView.findViewById(R.id.discountprice);
-                holder.productDiscountprice.setText(Float.toString(((ModelProducts) productList.get(position)).getProductDiscountPrice()));
+                holder.productDiscountprice.setText((((ModelProducts) productsArrayList.get(position)).getProductDiscountPrice()));
 
                 holder.addToCartBton = (Button)convertView.findViewById(R.id.addToCartButton);
                 holder.addToCartBton.setOnClickListener(new View.OnClickListener() {
@@ -285,143 +374,7 @@ public class LandingPageActivity extends AppCompatActivity
             Button addToCartBton;
             ImageView icon;
         }
-        public void parse() {
-
-            productList = new ArrayList<Integer>();
-
-            String strJson = " {\n" +
-                    "           \"products\" : [\n" +
-                    "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65001-600x600.jpg\" ,\n" +
-                    "        \"product id\" : 1 ,\n" +
-                    "        \"product title\" : \"Ftrendy Yellow Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
-                    "        \"actual price\" : 2500.00 ,\n" +
-                    "        \"discount price\" : 1999.00,\n" +
-                    "        \"SKU\" : \"SM541DVMST65005\" ,\n" +
-                    "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"sold by\" : \"Ftrendy\" ,\n" +
-                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
-                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
-                    "         \"ddescription\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"additionalInfo\" : \"weight     1999g\",\n" +
-                    "         \"seller info\" : \"Seller Information \n Store Name:Ftrendy \n Seller:Ftrendy \n  \",\n" +
-                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
-                    "       }," +
-                    "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65004-600x600.jpg\" ,\n" +
-                    "        \"product id\" : 2 ,\n" +
-                    "        \"product title\" : \"Ftrendy Light Pink Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
-                    "        \"actual price\" : 2500.00 ,\n" +
-                    "        \"discount price\" : 1999.00,\n" +
-                    "        \"SKU\" : \"SM541DVMST65007\" ,\n" +
-                    "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"sold by\" : \"Ftrendy\" ,\n" +
-                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
-                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
-                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
-                    "       }," +
-                    "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65006-600x600.jpg\" ,\n" +
-                    "        \"product id\" : 3 ,\n" +
-                    "        \"product title\" : \"Ftrendy Dark Sea Green Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
-                    "        \"actual price\" : 2500.00 ,\n" +
-                    "        \"discount price\" : 1999.00,\n" +
-                    "        \"SKU\" : \"SM541DVMST65008\" ,\n" +
-                    "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"sold by\" : \"Ftrendy\" ,\n" +
-                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
-                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
-                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
-                    "       }," +
-                    "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65008-600x600.jpg\" ,\n" +
-                    "        \"product id\" : 4 ,\n" +
-                    "        \"product title\" : \"Ftrendy Red Off White Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
-                    "        \"actual price\" : 2500.00 ,\n" +
-                    "        \"discount price\" : 1999.00,\n" +
-                    "        \"SKU\" : \"SM541DVMST65004\" ,\n" +
-                    "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"sold by\" : \"Ftrendy\" ,\n" +
-                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
-                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
-                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
-                    "       }," +
-                    "     {\n" +
-                    "       \"image url\" : \"http://shoppingadviser.in/wp-content/uploads/2016/02/SM541DVMST65005-600x600.jpg\" ,\n" +
-                    "        \"product id\" :  5,\n" +
-                    "        \"product title\" : \"Ftrendy Orange Black Embroidered & Printed Bhagalpuri Silk Semi Stitched Anarkali Churidar Dress Material\" ,\n" +
-                    "        \"actual price\" : 2500.00 ,\n" +
-                    "        \"discount price\" : 1999.00,\n" +
-                    "        \"SKU\" : \"SM541DVMST65001\" ,\n" +
-                    "        \"rating\" : 5 ,\n" +
-                    "         \"description\" : \"Floor Length Resham Embroidered Semi Stitched Anarkali Suit::2.25 mtr Nazneen Lace Dupatta to enhance the look::Suitable for                                                   Weddings & Parties::High Quality Light Weight Bhagalpuri Silk Fabric ::Trendy Resham Embroidery and embellishments with Patch Border\" ,\n" +
-                    "         \"sold by\" : \"Ftrendy\" ,\n" +
-                    "         \"category\" : \"Women's, Women's Clothing\",\n" +
-                    "          \"tag\" : \"Anarkali Suits, Dress Matrerials\",\n" +
-                    "         \"available size\" : \"S,M,L,XL,XXL,XXXL\"\n" +
-                    "       }" +
-                    "]}";
-
-            String data = "";
-            try {
-                JSONObject jsonRootObject = new JSONObject(strJson);
-
-                //Get the instance of JSONArray that contains JSONObjects
-                JSONArray jsonArray = jsonRootObject.optJSONArray("products");
-
-                //Iterate the jsonArray and print the info of JSONObjects
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String url = jsonObject.optString("image url").toString();
-//                    new LoadImage().execute(url);
-
-                    int productId = Integer.parseInt(jsonObject.optString("product id").toString());
-                    String productTitle = jsonObject.optString("product title").toString();
-                    String productDescription = jsonObject.optString("description").toString();
-                    float actualPrice = Float.parseFloat(jsonObject.optString("actual price").toString());
-                    float discountPrice = Float.parseFloat(jsonObject.optString("discount price").toString());
-                    String soldBy = jsonObject.optString("sold by").toString();
-                    String category = jsonObject.optString("category").toString();
-                    String tag = jsonObject.optString("tag").toString();
-                    String size = jsonObject.optString("available size").toString();
-                    String SKU = jsonObject.optString("SKU").toString();
-                    int rating = Integer.parseInt(jsonObject.optString("rating").toString());
-                    String productdDescription = jsonObject.optString("ddescription").toString();
-                    String productAdditionalInfo=jsonObject.optString("additionalInfo").toString();
-                    String productSellerInfo=jsonObject.optString("seller info").toString();
-
-                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
-                    productList.add(product);
-
-                }
-                productsArrayList = productList;
-//                Toast.makeText(LandingPageActivity.this, "" + productList.size(),
-//                        Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        private ArrayList productList;
-        // references to our images
-        private Integer[] mThumbIds = {
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_6, R.drawable.sample_7
-                ,                R.drawable.sample_6, R.drawable.sample_7
-                ,                R.drawable.sample_6, R.drawable.sample_7
-                ,                R.drawable.sample_6, R.drawable.sample_7
-        };
 
     }
+
 }

@@ -18,7 +18,7 @@ android:orientation="vertical" >
         android:id="@+id/productimageView"
         android:focusable="false"
         android:background="#ffeef7f0"
-        android:scaleType="fitCenter"
+        android:scaleType = "fitStart"
         android:focusableInTouchMode="false"
         />
 

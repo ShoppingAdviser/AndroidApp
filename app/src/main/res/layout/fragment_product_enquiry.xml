@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <!--Put form controls here-->
+
+    <TextView
+        android:id="@+id/ProductEnquiryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Enquiry"
+        android:layout_weight="0.25"
+        android:textSize="15pt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+    </TextView>
+
+    <EditText
+        android:id="@+id/EditName"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+
+        android:hint="Your Name"
+        android:ems="10"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/ProductEnquiryTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="33dp">
+
+    </EditText>
+
+
+    <EditText
+        android:id="@+id/EditEmail"
+        android:layout_height="wrap_content"
+        android:hint="you@example.com"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/EditName"
+        android:layout_alignParentStart="true">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditEnquiry"
+        android:layout_height="wrap_content"
+        android:hint="Details about your enquiry"
+        android:lines="10"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/EditEmail"
+        android:layout_alignParentStart="true">
+    </EditText>
+
+    <Button
+        android:id="@+id/ButtonSendEnquiry"
+        android:layout_height="wrap_content"
+        android:text="Submit Enquiry"
+        android:onClick="sendEnquiry"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/EditEnquiry"
+        android:layout_alignParentStart="true"
+        >
+    </Button>
+</RelativeLayout>

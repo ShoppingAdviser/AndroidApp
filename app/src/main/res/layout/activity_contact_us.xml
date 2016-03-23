@@ -31,13 +31,14 @@
         android:src="@drawable/contact"
         android:layout_marginTop="130dp"
         />
-    <TextView
+    <Button
+        android:id="@+id/callbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="20dp"
-        android:text="+91 9916690003" />
+        android:layout_marginTop="130dp"
+        android:text="+91 9916690003"
+        />
 
 
 
