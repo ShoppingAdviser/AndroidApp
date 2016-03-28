@@ -29,8 +29,9 @@ public class ModelProducts implements Serializable {
     private String productDetailedDescription;
     private String productAdditionalInfo;
     private String productSellerInfo;
+    private String productGridImages;
 
-    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller)
+    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;
@@ -47,11 +48,12 @@ public class ModelProducts implements Serializable {
         this.productDetailedDescription=productDetailDesc;
         this.productAdditionalInfo=productAddInfo;
         this.productSellerInfo=prodSeller;
+        this.productGridImages=prodImages;
     }
 public ModelProducts () {
 
 }
-//    public ModelProducts( String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String productCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller, JSONArray prodCategories)
+//    public ModelProducts( String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String productCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller, JSONArray prodCategories,)
 //    {
 //        this.productTitle  = productName;
 //        this.productDescription  = productDesc;
@@ -194,5 +196,13 @@ public ModelProducts () {
     public void setProductSellerInfo(String productSellerInfo){
         this.productSellerInfo = productSellerInfo;
     }
+   public String getProductGridImages()
+   {
+       return productGridImages;
+   }
 
+    public void setProductGridImages(String productGridImages)
+    {
+        this.productGridImages = productGridImages;
+    }
 }

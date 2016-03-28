@@ -55,17 +55,17 @@
 
 
                     <GridView
-                        android:layout_width="500dp"
+                        android:layout_width="1100dp"
                         android:layout_height="400dp"
-                        android:numColumns="8"
                         android:verticalSpacing="0dp"
                         android:horizontalSpacing="10dp"
-                        android:padding="10dp"
                         android:gravity="center"
                         android:columnWidth="200dp"
+                        android:numColumns="auto_fit"
                         android:scrollbars="horizontal"
                         android:layout_below="@+id/productImageViewLarge"
-                        android:id="@+id/extraimagesgridView">
+                        android:id="@+id/extraimagesgridView"
+                        >
 
                     </GridView>
                 </LinearLayout>

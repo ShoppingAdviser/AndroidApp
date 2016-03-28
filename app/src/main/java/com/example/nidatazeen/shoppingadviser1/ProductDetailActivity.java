@@ -52,23 +52,10 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
     ScrollView containerScrollView;
     ModelProducts product;
     ArrayList productsArrayList;
+    String[] imgurllist;
 
     HashMap<String, List<String>> listDataChild;
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_6, R.drawable.sample_7,
-    };
+int urlcount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +71,7 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
         containerScrollView = (ScrollView) findViewById(R.id.container_scroll_view);
-
+urlcount = imageurlcount();
         // preparing list data
         prepareListData(product);
 
@@ -166,10 +153,12 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
             public void onItemClick(AdapterView parent, View v,
                                     int position, long id) {
                 ImageView imageView = (ImageView) findViewById(R.id.productImageViewLarge);
-                imageView.setImageResource(mThumbIds[position]);
+                new ImageDownloader(imageView).execute(imgurllist[position]);
                 Toast.makeText(ProductDetailActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
-
+//
+//                ImageView img = (ImageView)
+//                        img.setImageResource(prodImage);
             }
         });
 
@@ -216,6 +205,14 @@ startActivity(abtIntent);
         });
 
     }
+
+    int imageurlcount() {
+        String data = product.getProductGridImages();
+        String[] items = data.split(",");
+        imgurllist = items;
+        return items.length - 1;
+    }
+
     private void prepareListData(ModelProducts prodct) {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
@@ -255,7 +252,7 @@ startActivity(abtIntent);
         }
 
         public int getCount() {
-            return mThumbIds.length;
+            return urlcount;
         }
 
         public Object getItem(int position) {
@@ -277,10 +274,13 @@ startActivity(abtIntent);
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.newimage);
-                //  new ImageDownloader(holder.icon).execute(((ModelProducts) productList.get(position)).getProductImageUrl());
                 //      holder.icon.setImageResource(R.drawable.sample_2);
-                holder.icon.setImageResource(mThumbIds[position]);
+//                holder.icon.setImageResource(mThumbIds[position]);
 
+
+                    new ImageDownloader(holder.icon).execute(imgurllist[position]);
+
+               //allImages= product.getProductGridImages().toString();
 
                /* ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, category, tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
                 value = db.addProduct(product);

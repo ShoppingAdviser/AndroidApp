@@ -270,8 +270,9 @@ long value = 0;
         String strJson = jsonstr.replace("&amp;", " &");
 
         JSONArray arr = null;
+        JSONArray prodImages=null;
         ArrayList categoryArraylist = new ArrayList<String>();
-
+        ArrayList allImages = new ArrayList<String>();
         try
         {
             JSONObject jsonRootObject = new JSONObject(strJson);
@@ -284,12 +285,15 @@ long value = 0;
             //Iterate the jsonArray and print the info of JSONObjects
             for (int i = 0; i < jsonArray.length(); i++) {
                 StringBuilder category = new StringBuilder();
+                StringBuilder images = new StringBuilder();
 
 
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String url = "";
                 url = jsonObject.optString("featured_src").toString();
+
+                //Response with keys that we have got
 
                 int productId = (i + 1);//Integer.parseInt(jsonObject.optString("id").toString());
                 String productTitle = jsonObject.optString("title").toString();
@@ -305,19 +309,37 @@ long value = 0;
                 String productAdditionalInfo="additional info";//jsonObject.optString("additionalInfo").toString();// to be removed
                 String productSellerInfo="seller info";//jsonObject.optString("seller info").toString(); to be removed
                 arr  =  jsonObject.getJSONArray("categories");
+                prodImages = jsonObject.getJSONArray("images");
 
-                for( i=0;i<arr.length();i++)
+
+                for (int k = 0; k < prodImages.length(); k++) {
+
+                    try {
+                        JSONObject Src = prodImages.getJSONObject(k);
+                        String src = Src.getString("src");
+//                        images.append(src);
+//                        images.append(", ");
+                        allImages.add(src);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+
+
+
+                for(int l=0;l<arr.length();l++)
                 {
                     String categories = null;
 
 
                     try {
 
-                        categories = arr.getString(i).toString();
-                        category.append(arr.getString(i));
+                        categories = arr.getString(l).toString();
+                        category.append(arr.getString(l));
                         category.append(", ");
-//                            categoryArraylist.clear();
                         categoryArraylist.add(categories);
+
 
                     } catch (JSONException e) {
 
@@ -325,13 +347,21 @@ long value = 0;
 
                 }
 
-                for( i=0;i < categoryArraylist.size();i++) {
-//                    category.append(categoryArraylist.get(i) + ",");
+                for(int m=0;m<allImages.size();m++)
+                {
+                        images.append(allImages.get(m).toString());
+                        images.append(", ");
+
                 }
                 String s= category.toString();
                 category.setLength(0);
 
-                ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
+                String j = images.toString();
+                images.setLength(0);
+allImages.clear();
+
+
+                ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo,j);
                 value = db.addProduct(product);
 
             }
@@ -402,6 +432,9 @@ long value = 0;
                 holder.addToCartBton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(LandingPageActivity.this, "Added to cart", Toast.LENGTH_LONG).show();
+
+
+
 
                     }
                 });
