@@ -12,10 +12,19 @@
     tools:context="com.example.tls.sampletwo.LandingPageActivity"
     tools:showIn="@layout/app_bar_landing_page">
 
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/shoppingadviserlogo" /> 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:text="Welcome to ShoppingAdviser"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="12dp"
         android:id="@+id/textView2" />
 
     <Button

@@ -1,10 +1,12 @@
 package com.example.nidatazeen.shoppingadviser1;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
@@ -16,6 +18,7 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,19 +58,21 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Filter;
 
-public class LandingPageActivity extends AppCompatActivity
+public class LandingPageActivity extends Activity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     int position = 0;
     ProgressDialog pDialog;
     Bitmap imageObj;
-    ArrayList productsArrayList;
+    List<ModelProducts> productsArrayList = new ArrayList<ModelProducts>();
+
     ImageAdapter myAdapter;
     WebRequest web;
     String jsonstr = "";
-
+DatabaseHandler db;
     private Handler activityHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -84,8 +89,10 @@ public class LandingPageActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-            web = new WebRequest(activityHandler);
+//        setSupportActionBar(toolbar);
+
+        db = new DatabaseHandler(this);
+        web = new WebRequest(activityHandler);
             web.execute("https://shoppingadviser.in/wc-api/v3/products?consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8");
 
 
@@ -96,13 +103,17 @@ public class LandingPageActivity extends AppCompatActivity
             registerbutton.setOnClickListener(new View.OnClickListener()
 
             {
-                public void onClick (View v){
+                public void onClick(View v) {
 
 
-                final Intent registerIntent = new Intent().setClass(LandingPageActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
-            }
-        });
+                    final Intent registerIntent = new Intent().setClass(LandingPageActivity.this, RegisterActivity.class);
+                    startActivity(registerIntent);
+                }
+            });
+
+       /* Singleton.getInstance().setString("Singleton");
+        Intent intent = new Intent(getApplicationContext(),ProductDetailActivity.class);
+        this.startActivity(intent);*/
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -129,9 +140,11 @@ private void setUpGrid() {
                                 int position, long id) {
 
 
+
+
             final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
             Bundle b = new Bundle();
-            b.putSerializable("product", (ModelProducts) productsArrayList.get(position));
+            b.putSerializable("product", (ModelProducts)productsArrayList.get(position));
             productDetailIntent.putExtras(b);
             startActivity(productDetailIntent);
         }
@@ -222,7 +235,6 @@ private void setUpGrid() {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        getDelegate().onPostResume();
 
         checkIfLoggedIn();
     }
@@ -253,9 +265,12 @@ private void setUpGrid() {
         super.finish();
     }
     public void parse() {
+long value = 0;
 
-        productsArrayList = new ArrayList<Integer>();
-        String strJson = jsonstr;
+        String strJson = jsonstr.replace("&amp;", " &");
+
+        JSONArray arr = null;
+        ArrayList categoryArraylist = new ArrayList<String>();
 
         try
         {
@@ -268,17 +283,20 @@ private void setUpGrid() {
 
             //Iterate the jsonArray and print the info of JSONObjects
             for (int i = 0; i < jsonArray.length(); i++) {
+                StringBuilder category = new StringBuilder();
+
+
+
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String url = "";
                 url = jsonObject.optString("featured_src").toString();
 
-                int productId = Integer.parseInt(jsonObject.optString("id").toString());
+                int productId = (i + 1);//Integer.parseInt(jsonObject.optString("id").toString());
                 String productTitle = jsonObject.optString("title").toString();
                 String productDescription = jsonObject.optString("description").toString();
-                String actualPrice = jsonObject.optString("price").toString();
-                String discountPrice = "10000";//jsonObject.optString("sale_price").toString();
+                String actualPrice = jsonObject.optString("regular_price").toString();
+                String discountPrice = jsonObject.optString("price").toString();
                 String soldBy = "Ftrendy";//jsonObject.optString("sold by").toString();// to be removed
-                String category = "category";//jsonObject.optString("categories").toString();// array setting
                 String tag = "item";//jsonObject.optString("tags").toString();// ARRAY SETTING
                 String size = "xl, xxl";//jsonObject.optString("available size").toString();// to be removed
                 String SKU = jsonObject.optString("sku").toString();
@@ -286,14 +304,41 @@ private void setUpGrid() {
                 String productdDescription = jsonObject.optString("short_description").toString();
                 String productAdditionalInfo="additional info";//jsonObject.optString("additionalInfo").toString();// to be removed
                 String productSellerInfo="seller info";//jsonObject.optString("seller info").toString(); to be removed
+                arr  =  jsonObject.getJSONArray("categories");
 
-                ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,rating, soldBy, category, tag, productId, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
-                productsArrayList.add(product);
-//                Toast.makeText(LandingPageActivity.this, "product title is  " + product.getProductTitle(), Toast.LENGTH_LONG).show();
+                for( i=0;i<arr.length();i++)
+                {
+                    String categories = null;
 
+
+                    try {
+
+                        categories = arr.getString(i).toString();
+                        category.append(arr.getString(i));
+                        category.append(", ");
+//                            categoryArraylist.clear();
+                        categoryArraylist.add(categories);
+
+                    } catch (JSONException e) {
+
+                    }
+
+                }
+
+                for( i=0;i < categoryArraylist.size();i++) {
+//                    category.append(categoryArraylist.get(i) + ",");
+                }
+                String s= category.toString();
+                category.setLength(0);
+
+                ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
+                value = db.addProduct(product);
 
             }
-//            Toast.makeText(LandingPageActivity.this, "productsArrayList size is  " + productsArrayList.size(), Toast.LENGTH_LONG).show();
+
+            productsArrayList = db.getAllProducts();
+
+
 
 
         }
@@ -314,7 +359,8 @@ private void setUpGrid() {
         }
 
         public int getCount() {
-            return productsArrayList.size();
+           return db.getProductsCount();
+
         }
 
         public Object getItem(int position) {
@@ -346,10 +392,11 @@ private void setUpGrid() {
                 holder.productPrice.setText((((ModelProducts) productsArrayList.get(position)).getProductPrice()));
 
                 holder.productTitle = (TextView)convertView.findViewById(R.id.productTitleView);
-                holder.productTitle.setText(((ModelProducts) productsArrayList.get(position)).getProductTitle());
+               holder.productTitle.setText(((ModelProducts) productsArrayList.get(position)).getProductTitle());
+
 
                 holder.productDiscountprice = (TextView)convertView.findViewById(R.id.discountprice);
-                holder.productDiscountprice.setText((((ModelProducts) productsArrayList.get(position)).getProductDiscountPrice()));
+               holder.productDiscountprice.setText((((ModelProducts) productsArrayList.get(position)).getProductDiscountPrice()));
 
                 holder.addToCartBton = (Button)convertView.findViewById(R.id.addToCartButton);
                 holder.addToCartBton.setOnClickListener(new View.OnClickListener() {

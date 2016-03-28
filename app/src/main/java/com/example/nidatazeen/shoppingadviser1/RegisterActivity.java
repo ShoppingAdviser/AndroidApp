@@ -25,6 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
          db = new DatabaseHandler(this);
+//        Bundle b = this.getIntent().getExtras();
+//        if(b!=null)
+//            db = (DatabaseHandler)b.getSerializable("database");
 
         EditText emailTxt = (EditText) findViewById(R.id.etEmail);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);
@@ -59,11 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                         registerUser(userNameString);
                         Toast.makeText(RegisterActivity.this, "Registration successful!" + userNameString, Toast.LENGTH_LONG).show();
 
-//                        SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());// getPreferences(Context.MODE_APPEND);
-//                        SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
-//                        editor.putString("username", userNameString);
-//                        editor.putString("password", pwdString);
-//                        editor.commit();
+
 
                         finish();
 

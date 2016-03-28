@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -203,6 +204,8 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
         TextView discountTxtView = (TextView) findViewById(R.id.discountPriceTextView);
         discountTxtView.setText(product.getProductDiscountPrice());
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.enquirybtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,10 +227,12 @@ startActivity(abtIntent);
 
         // Adding child data
         List<String> descString = new ArrayList<String>();
-        descString.add(prodct.getProductDescription());
+       // Toast.makeText(ProductDetailActivity.this, Html.fromHtml(prodct.getProductDescription()).toString(), Toast.LENGTH_LONG).show();
+        descString.add( Html.fromHtml(prodct.getProductDescription()).toString());
 
         List<String> addInfo = new ArrayList<String>();
-        addInfo.add(product.getAdditionalInfo());
+        addInfo.add( Html.fromHtml(prodct.getProductDetailedDescription()).toString());
+
         List<String> sellers = new ArrayList<String>();
         sellers.add(product.getSellerInfo());
 
@@ -277,6 +282,12 @@ startActivity(abtIntent);
                 holder.icon.setImageResource(mThumbIds[position]);
 
 
+               /* ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, category, tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
+                value = db.addProduct(product);
+                productsArrayList.add(product);
+
+               holder.productTitle = (TextView)convertView.findViewById(R.id.productTitleView);
+                holder.productTitle.setText(((ModelProducts) productsArrayList.get(position)).getProductTitle());*/
 
 
 
