@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.SearchView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,13 +37,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.SearchView;
+//import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,25 +63,34 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Filter;
 
-public class LandingPageActivity extends Activity
+public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    int progressStatus=0;
     int position = 0;
     ProgressDialog pDialog;
     Bitmap imageObj;
     List<ModelProducts> productsArrayList = new ArrayList<ModelProducts>();
+    ProgressDialog pd;
 
     ImageAdapter myAdapter;
     WebRequest web;
     String jsonstr = "";
 DatabaseHandler db;
+    Handler handler=new Handler();
+
     private Handler activityHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // Do something with msg.obj
-            jsonstr = msg.obj.toString();
+            Map<String, Object> map = (Map<String, Object>)msg.obj;
+            jsonstr = map.get("json").toString();
+            pd.dismiss();
+            String pagecount = map.get("pagecount").toString();
+
 
             parse();
             setUpGrid();
@@ -89,14 +102,61 @@ DatabaseHandler db;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
+
 
         db = new DatabaseHandler(this);
+        pd = new ProgressDialog(LandingPageActivity.this);
+       // handleIntent(getIntent());
+
         web = new WebRequest(activityHandler);
-            web.execute("https://shoppingadviser.in/wc-api/v3/products?consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8");
+        web.execute("https://shoppingadviser.in/wc-api/v3/products?fields=title,sku,price,regular_price,description,short_description,rating_count,categories,images,featured_src&consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8");
+
+        // Initialize a new instance of progress dialog
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        pd.setMessage("Loading products.........");
+
+        pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
+
+        pd.setIndeterminate(true);
+
+        pd.show();
 
 
-            checkIfLoggedIn();
+        progressStatus = 0;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(progressStatus < 100){
+
+                    progressStatus +=1;
+
+                    try{
+                        Thread.sleep(20);
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            pd.setProgress(progressStatus);
+
+                            if(progressStatus == 100){
+
+                                pd.dismiss();
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+
+
+        checkIfLoggedIn();
 
 
             Button registerbutton = (Button) findViewById(R.id.button);
@@ -114,7 +174,13 @@ DatabaseHandler db;
        /* Singleton.getInstance().setString("Singleton");
         Intent intent = new Intent(getApplicationContext(),ProductDetailActivity.class);
         this.startActivity(intent);*/
-
+Button searchbutton=  (Button) findViewById(R.id.searchbtn);
+        searchbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchclicked();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -138,9 +204,6 @@ private void setUpGrid() {
     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v,
                                 int position, long id) {
-
-
-
 
             final Intent productDetailIntent = new Intent().setClass(LandingPageActivity.this, ProductDetailActivity.class);
             Bundle b = new Bundle();
@@ -186,10 +249,25 @@ private void setUpGrid() {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.landing_page, menu);
+        //getMenuInflater().inflate(R.menu.landing_page, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
+
+public void searchclicked(){
+    EditText txt = (EditText) findViewById(R.id.search_edit_text);
+    List<ModelProducts> c= db.getWordMatches(txt.getText().toString(),null);
+    Integer i = 0;
+    if(c!=null) {
+        i = c.size();
+        productsArrayList = c;
+        Toast.makeText(LandingPageActivity.this, "Search clicked " + c.size() + txt.getText().toString(), Toast.LENGTH_LONG).show();
+        setUpGrid();
+    }
+    else
+    Toast.makeText(LandingPageActivity.this, "No item found" ,Toast.LENGTH_LONG).show();
+}
+
 
 
     @Override
@@ -264,6 +342,7 @@ private void setUpGrid() {
     {
         super.finish();
     }
+
     public void parse() {
 long value = 0;
 
@@ -273,21 +352,21 @@ long value = 0;
         JSONArray prodImages=null;
         ArrayList categoryArraylist = new ArrayList<String>();
         ArrayList allImages = new ArrayList<String>();
+
         try
         {
             JSONObject jsonRootObject = new JSONObject(strJson);
 
             //Get the instance of JSONArray that contains JSONObjects
             JSONArray jsonArray = jsonRootObject.getJSONArray("products");
-            Toast.makeText(LandingPageActivity.this, "jsonArray  " + jsonArray.length(), Toast.LENGTH_LONG).show();
 
 
             //Iterate the jsonArray and print the info of JSONObjects
-            for (int i = 0; i < jsonArray.length(); i++) {
+//            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = 0; i < 30; i++) {
+
                 StringBuilder category = new StringBuilder();
                 StringBuilder images = new StringBuilder();
-
-
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String url = "";
@@ -380,7 +459,6 @@ allImages.clear();
         }
     }
     //IMAGEADAPTER
-
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
 
@@ -389,7 +467,9 @@ allImages.clear();
         }
 
         public int getCount() {
-           return db.getProductsCount();
+
+            return productsArrayList.size();
+            //return db.getProductsCount();
 
         }
 
@@ -405,6 +485,10 @@ allImages.clear();
             // TODO Auto-generated method stub
             return null;
         }
+
+        private void clear() {
+
+        }
         // create a new ImageView for each item referenced by the Adapter
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -414,6 +498,7 @@ allImages.clear();
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.griditem, null, false);
 
                 holder = new ViewHolder();
+
                 holder.icon = (ImageView)convertView.findViewById(R.id.productimageView);
                 new ImageDownloader(holder.icon).execute(((ModelProducts) productsArrayList.get(position)).getProductImageUrl());
 

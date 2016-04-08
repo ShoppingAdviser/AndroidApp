@@ -3,6 +3,7 @@ package com.example.nidatazeen.shoppingadviser1;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,11 +12,16 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class WebRequest extends AsyncTask<String, Void, String> {
 
     Handler handler;
-
+    String pagecount;
 
     public WebRequest(Handler handler) {
         this.handler = handler;
@@ -25,17 +31,27 @@ public class WebRequest extends AsyncTask<String, Void, String> {
         try {
             return loadFromNetwork(urls[0]);
         } catch (IOException e) {
+
             return "Error";//getString(R.string.connection_error);
         }
     }
 
     @Override
-    protected void onPostExecute(String result)
+    protected void onPostExecute(final String result)
     {
         Message msg = Message.obtain();
-        msg.obj = result;
+        Map<String, Object> map = new HashMap<String, Object>() {{
+        put("pagecount", pagecount);
+        put("json", result);
+    }};
+        if (pagecount != null)
+        msg.obj = map;
+        else
+        msg.obj = "pc";
         this.handler.sendMessage(msg);
     }
+
+
 
 
 
@@ -51,7 +67,7 @@ public class WebRequest extends AsyncTask<String, Void, String> {
 
         try {
             stream = downloadUrl(urlString);
-            str = readIt(stream, 145500);
+            str = readIt(stream, 1048576);
         } finally {
             if (stream != null) {
                 stream.close();
@@ -78,7 +94,22 @@ public class WebRequest extends AsyncTask<String, Void, String> {
         // Start the query
         conn.connect();
         InputStream stream = conn.getInputStream();
+
+        try {
+            Map<String, List<String>> map = conn.getHeaderFields();
+            List<String> pagecountList = map.get("x-wc-totalpages");
+
+            if (pagecountList == null) {
+            } else {
+                for (String header : pagecountList) {
+                    pagecount = header;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return stream;
+
         // END_INCLUDE(get_inputstream)
     }
 
@@ -87,14 +118,6 @@ public class WebRequest extends AsyncTask<String, Void, String> {
 
 //            Log.i(TAG, result);
 
-
-    /** Reads an InputStream and converts it to a String.
-     * @param stream InputStream containing HTML from targeted site.
-     * @param len Length of string that this method returns.
-     * @return String concatenated according to len parameter.
-     * @throws java.io.IOException
-     * @throws java.io.UnsupportedEncodingException
-     */
     private String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
