@@ -5,23 +5,30 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceActivity;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class WebRequest extends AsyncTask<String, Void, String> {
 
     Handler handler;
-    String pagecount;
+    String pagecount = "";
 
     public WebRequest(Handler handler) {
         this.handler = handler;
@@ -40,14 +47,13 @@ public class WebRequest extends AsyncTask<String, Void, String> {
     protected void onPostExecute(final String result)
     {
         Message msg = Message.obtain();
+        if (pagecount == "")
+            pagecount = "1";
         Map<String, Object> map = new HashMap<String, Object>() {{
         put("pagecount", pagecount);
         put("json", result);
     }};
-        if (pagecount != null)
         msg.obj = map;
-        else
-        msg.obj = "pc";
         this.handler.sendMessage(msg);
     }
 
@@ -114,9 +120,6 @@ public class WebRequest extends AsyncTask<String, Void, String> {
     }
 
 
-
-
-//            Log.i(TAG, result);
 
     private String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;

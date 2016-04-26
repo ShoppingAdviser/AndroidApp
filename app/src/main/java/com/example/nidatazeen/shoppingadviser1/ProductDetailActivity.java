@@ -37,6 +37,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +145,7 @@ urlcount = imageurlcount();
 
 
         ImageView imgView = (ImageView) findViewById(R.id.productImageViewLarge);
-        new ImageDownloader(imgView).execute(product.getProductImageUrl());
+        Picasso.with(getApplicationContext()).load(product.getProductImageUrl()).into(imgView);
 
         GridView gridview = (GridView) findViewById(R.id.extraimagesgridView);
 
@@ -153,7 +155,8 @@ urlcount = imageurlcount();
             public void onItemClick(AdapterView parent, View v,
                                     int position, long id) {
                 ImageView imageView = (ImageView) findViewById(R.id.productImageViewLarge);
-                new ImageDownloader(imageView).execute(imgurllist[position]);
+                Picasso.with(getApplicationContext()).load(imgurllist[position]).into(imageView);
+
                 Toast.makeText(ProductDetailActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
 //
@@ -208,9 +211,12 @@ startActivity(abtIntent);
 
     int imageurlcount() {
         String data = product.getProductGridImages();
-        String[] items = data.split(",");
-        imgurllist = items;
-        return items.length - 1;
+        if (data != null) {
+            String[] items = data.split(",");
+            imgurllist = items;
+            return items.length - 1;
+        }
+        return 1;
     }
 
     private void prepareListData(ModelProducts prodct) {
@@ -278,7 +284,9 @@ startActivity(abtIntent);
 //                holder.icon.setImageResource(mThumbIds[position]);
 
 
-                    new ImageDownloader(holder.icon).execute(imgurllist[position]);
+                if(imgurllist!=null) {
+                    Picasso.with(mContext).load(imgurllist[position]).into(holder.icon);
+                }
 
                //allImages= product.getProductGridImages().toString();
 

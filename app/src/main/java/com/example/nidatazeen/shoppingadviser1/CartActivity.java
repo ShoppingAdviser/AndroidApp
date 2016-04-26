@@ -7,9 +7,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -24,6 +27,8 @@ public class CartActivity extends AppCompatActivity {
         Bundle b = this.getIntent().getExtras();
         if(b!=null)
             singlePdt = (ModelProducts)b.getSerializable("singleproduct");
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,12 +58,15 @@ public class CartActivity extends AppCompatActivity {
         sku.setText(singlePdt.getProductSKU());
 
         ImageView imgView = (ImageView) findViewById(R.id.cartproductImage);
-        new ImageDownloader(imgView).execute(singlePdt.getProductImageUrl());
+        Picasso.with(getApplicationContext()).load(singlePdt.getProductImageUrl()).into(imgView);
 
         Button checkoutbutton = (Button) findViewById(R.id.cartcheckoutButton);
         checkoutbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final Intent checkoutIntent = new Intent().setClass(CartActivity.this, CheckoutActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("singleproduct", singlePdt);
+                checkoutIntent.putExtras(b);
                 startActivity(checkoutIntent);
 
             }

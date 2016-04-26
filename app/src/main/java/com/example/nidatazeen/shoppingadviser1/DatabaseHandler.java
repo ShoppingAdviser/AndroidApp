@@ -379,6 +379,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 products.setProductDetailedDescription(cursor.getString(12));
                 products.setProductAdditionalInfo(cursor.getString(13));
                 products.setProductSellerInfo(cursor.getString(14));
+                products.setProductGridImages(cursor.getString(15));
 
 
                 // Adding contact to list
