@@ -73,7 +73,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
         StringBuilder total = new StringBuilder();
-        total.append("product title is:" + singlePdt.getProductTitle() + "\n"+ "product id is:" + singlePdt.getProductId() + "\n"  + "product sku is:" + singlePdt.getProductSKU() + "\n"  + "Product discount price is:" + singlePdt.getProductDiscountPrice() + "\n" +  "\n" +"My first name is:" + messagefn + "\n" + "My last name is:" + messageln + "\n" + "Email is " + emailtxtmessage + "\n" + "Phone is " + phonetxtmessage + "\n" + "Country is:" + countrytxtmessage + "\n" + "Street is:" + streettxtmessage + "\n" + "Town is:" + towntxtmessage + "\n" + "State is:" + statetxtmessage + "\n" + "Zip is:" + ziptxtmessage + "\n");
+        total.append("product title is:" + singlePdt.getProductTitle() + "\n"+ "product id is:" + singlePdt.getProductIdentifier() + "\n"  + "product sku is:" + singlePdt.getProductSKU() + "\n"  + "Product discount price is:" + singlePdt.getProductDiscountPrice() + "\n" +  "\n" +"My first name is:" + messagefn + "\n" + "My last name is:" + messageln + "\n" + "Email is " + emailtxtmessage + "\n" + "Phone is " + phonetxtmessage + "\n" + "Country is:" + countrytxtmessage + "\n" + "Street is:" + streettxtmessage + "\n" + "Town is:" + towntxtmessage + "\n" + "State is:" + statetxtmessage + "\n" + "Zip is:" + ziptxtmessage + "\n");
         String s = total.toString();
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 

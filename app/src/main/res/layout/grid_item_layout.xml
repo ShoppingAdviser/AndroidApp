@@ -18,9 +18,9 @@
         android:layout_marginTop="5dp"
         android:ellipsize="marquee"
         android:gravity="center"
-        android:maxLines="2"
+        android:maxLines="5"
         android:layout_below="@+id/grid_item_image"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:text="product title"
         />
     <TextView

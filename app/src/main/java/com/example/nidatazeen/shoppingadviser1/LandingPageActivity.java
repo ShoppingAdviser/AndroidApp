@@ -148,36 +148,6 @@
 
             progressStatus = 0;
 
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    while(progressStatus < 100){
-//
-//                        progressStatus +=1;
-//
-//                        try{
-//                            Thread.sleep(20);
-//                        }catch(InterruptedException e){
-//                            e.printStackTrace();
-//                        }
-//
-//                        handler.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//
-//                                pd.setProgress(progressStatus);
-//
-//                                if(progressStatus == 100){
-//
-//                                    pd.dismiss();
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            }).start();
-
-
             checkIfLoggedIn();
 
 
@@ -257,7 +227,7 @@
         public void LoadRequest(int pagecnt){
 
             web = new WebRequest(activityHandler);
-            web.execute("https://shoppingadviser.in/wc-api/v3/products?fields=title,sku,price,regular_price,description,short_description,rating_count,categories,images,featured_src&consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8&page="+pagecnt);
+            web.execute("https://shoppingadviser.in/wc-api/v3/products?fields=title,id,sku,price,regular_price,description,short_description,rating_count,categories,images,featured_src&consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8&page="+pagecnt);
         }
     private void setUpGrid() {
 
@@ -293,6 +263,7 @@
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem + visibleItemCount == totalItemCount) {
                     // End has been reached
+                    Toast.makeText(LandingPageActivity.this, "totalItemCount "+totalItemCount,Toast.LENGTH_LONG).show();
 
 
                 }
@@ -300,6 +271,7 @@
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                Toast.makeText(LandingPageActivity.this, "scrollState "+scrollState,Toast.LENGTH_LONG).show();
 
             }
         });
@@ -370,24 +342,60 @@
             setUpGrid();
         }
     public void searchclicked(){
+
+        pd.show();
+
         EditText txt = (EditText) findViewById(R.id.search_edit_text);
         List<ModelProducts> c = db.getWordMatches(txt.getText().toString(),null);
+
         if(c!=null) {
-            productsArrayList = c;
-            mGridData.clear();
-    for (int i = 0; i < c.size(); i++) {
-        GridItem item = new GridItem();
-        item.setTitle(c.get(i).getProductTitle());
-        item.setDiscountPrice(c.get(i).getProductDiscountPrice());
-        item.setPrice(c.get(i).getProductPrice());
-        item.setImage(c.get(i).getProductImageUrl());
-        mGridData.add(item);
-    }
-            setUpGrid();
+                productsArrayList = c;
+                mGridData.clear();
+                for (int i = 0; i < c.size(); i++) {
+                GridItem item = new GridItem();
+                    item.setTitle(c.get(i).getProductTitle());
+                    item.setDiscountPrice(c.get(i).getProductDiscountPrice());
+                    item.setPrice(c.get(i).getProductPrice());
+                    item.setImage(c.get(i).getProductImageUrl());
+                    mGridData.add(item);
+                }
+                setUpGrid();
+                        new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(progressStatus < 100){
+
+                        progressStatus +=1;
+
+                        try{
+                            Thread.sleep(20);
+                        }catch(InterruptedException e){
+                            e.printStackTrace();
+                        }
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                pd.setProgress(progressStatus);
+
+                                if(progressStatus == 50){
+
+                                    pd.dismiss();
+                                }
+                            }
+                        });
+                    }
+                }
+            }).start();
 
         }
-        else
-        Toast.makeText(LandingPageActivity.this, "No item found" ,Toast.LENGTH_LONG).show();
+        else {
+            pd.dismiss();
+
+            Toast.makeText(LandingPageActivity.this, "No item found" ,Toast.LENGTH_LONG).show();
+
+        }
     }
 
 
@@ -498,6 +506,8 @@
                     //Response with keys that we have got
 
                     int productId = identifier + 1;//Integer.parseInt(jsonObject.optString("id").toString());
+                    int productIdentifier = Integer.parseInt(jsonObject.optString("id").toString());
+
                     String productTitle = jsonObject.optString("title").toString();
                     String productDescription = jsonObject.optString("description").toString();
                     String actualPrice = jsonObject.optString("regular_price").toString();
@@ -566,7 +576,7 @@
                     allImages.clear();
 
 
-                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo,j);
+                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo,j,productIdentifier);
                     value = db.addProduct(product);
 
                 }

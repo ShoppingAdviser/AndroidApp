@@ -19,6 +19,7 @@ public class ModelProducts implements Serializable {
     private String productPrice;
     private String productDiscountPrice;
     private int productId;
+    private int productIdentifier;
     private String soldby;
     private String category;
     private String tag;
@@ -31,7 +32,7 @@ public class ModelProducts implements Serializable {
     private String productSellerInfo;
     private String productGridImages;
 
-    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages)
+    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;
@@ -49,28 +50,11 @@ public class ModelProducts implements Serializable {
         this.productAdditionalInfo=productAddInfo;
         this.productSellerInfo=prodSeller;
         this.productGridImages=prodImages;
+        this.productIdentifier = prductIdentifier;
     }
 public ModelProducts () {
 
 }
-//    public ModelProducts( String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String productCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller, JSONArray prodCategories,)
-//    {
-//        this.productTitle  = productName;
-//        this.productDescription  = productDesc;
-//        this.productPrice = productPrice;
-//        this.productDiscountPrice = productDiscount;
-//        this.category = productCategory;
-//        this.tag = prodTag;
-//        this.soldby = soldbySeller;
-//        this.size = productSizes;
-//        this.productSKU = SKU;
-//        this.rating = ratingValue;
-//        this.productImageUrl = imgUrl;
-//        this.productId = prodID;
-//        this.productDetailedDescription=productDetailDesc;
-//        this.productAdditionalInfo=productAddInfo;
-//        this.productSellerInfo=prodSeller;
-//    }
 
 
 
@@ -170,6 +154,16 @@ public ModelProducts () {
     public void setProductId(int id)
     {
         this.productId = id;
+    }
+
+    public int getProductIdentifier() {
+
+        return productIdentifier;
+    }
+
+    public void setProductIdentifier(int id)
+    {
+        this.productIdentifier = id;
     }
 
     public String getProductDetailedDescription()
