@@ -32,7 +32,7 @@ public class ModelProducts implements Serializable {
     private String productSellerInfo;
     private String productGridImages;
 
-    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String SKU, String productSizes, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier)
+    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String productSizes,String SKU, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;

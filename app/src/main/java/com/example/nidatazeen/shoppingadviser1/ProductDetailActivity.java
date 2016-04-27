@@ -83,7 +83,6 @@ urlcount = imageurlcount();
         expListView.setAdapter(listAdapter);
         expListView.expandGroup(0);
         expListView.expandGroup(1);
-        expListView.expandGroup(2);
         expListView.setFocusable(false);
 
 
@@ -178,23 +177,20 @@ urlcount = imageurlcount();
         });
 
         TextView categoryTxtView = (TextView) findViewById(R.id.categoryTextView);
-        categoryTxtView.setText(product.getCategory());
-
-        TextView tagTxtView = (TextView) findViewById(R.id.tagTextView);
-        tagTxtView.setText(product.getTag());
+        categoryTxtView.setText("Categories: "+product.getCategory());
 
         TextView sku = (TextView) findViewById(R.id.sku);
-        sku.setText(product.getProductSKU());
+        sku.setText("SKU: "+product.getProductSKU());
 
         TextView priceTxtView = (TextView) findViewById(R.id.priceTextView);
-        priceTxtView.setText(product.getProductPrice());
+        priceTxtView.setText("Rs."+product.getProductPrice());
         priceTxtView.setPaintFlags(priceTxtView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         TextView prodTxtView = (TextView) findViewById(R.id.titletextview);
         prodTxtView.setText(product.getProductTitle());
 
         TextView discountTxtView = (TextView) findViewById(R.id.discountPriceTextView);
-        discountTxtView.setText(product.getProductDiscountPrice());
+        discountTxtView.setText("Rs."+product.getProductDiscountPrice());
 
 
 
@@ -226,7 +222,6 @@ startActivity(abtIntent);
         // Adding child data
         listDataHeader.add("Description");
         listDataHeader.add("Additional Information");
-        listDataHeader.add("Seller Info ");
 
         // Adding child data
         List<String> descString = new ArrayList<String>();
@@ -236,13 +231,11 @@ startActivity(abtIntent);
         List<String> addInfo = new ArrayList<String>();
         addInfo.add( Html.fromHtml(prodct.getProductDetailedDescription()).toString());
 
-        List<String> sellers = new ArrayList<String>();
-        sellers.add(product.getSellerInfo());
 
 
         listDataChild.put(listDataHeader.get(0), descString); // Header, Child data
         listDataChild.put(listDataHeader.get(1), addInfo);
-        listDataChild.put(listDataHeader.get(2), sellers);
+
 
     }
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {

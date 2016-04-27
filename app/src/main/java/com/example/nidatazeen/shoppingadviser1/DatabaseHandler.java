@@ -255,8 +255,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 products.setSoldby(cursor.getString(6));
                 products.setCategory(cursor.getString(7));
                 products.setTag(cursor.getString(8));
-                products.setProductSKU(cursor.getString(9));
-                products.setSize(cursor.getString(10));
+                products.setSize(cursor.getString(9));
+                products.setProductSKU(cursor.getString(10));
+
                 products.setProductImageUrl(cursor.getString(11));
                 products.setProductDetailedDescription(cursor.getString(12));
                 products.setProductAdditionalInfo(cursor.getString(13));
@@ -379,8 +380,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 products.setSoldby(cursor.getString(6));
                 products.setCategory(cursor.getString(7));
                 products.setTag(cursor.getString(8));
-                products.setProductSKU(cursor.getString(9));
-                products.setSize(cursor.getString(10));
+                products.setSize(cursor.getString(9));
+                products.setProductSKU(cursor.getString(10));
+
                 products.setProductImageUrl(cursor.getString(11));
                 products.setProductDetailedDescription(cursor.getString(12));
                 products.setProductAdditionalInfo(cursor.getString(13));

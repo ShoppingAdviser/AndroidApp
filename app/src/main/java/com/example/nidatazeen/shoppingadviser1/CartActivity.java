@@ -9,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -60,12 +63,18 @@ public class CartActivity extends AppCompatActivity {
         ImageView imgView = (ImageView) findViewById(R.id.cartproductImage);
         Picasso.with(getApplicationContext()).load(singlePdt.getProductImageUrl()).into(imgView);
 
+
+
         Button checkoutbutton = (Button) findViewById(R.id.cartcheckoutButton);
         checkoutbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final Intent checkoutIntent = new Intent().setClass(CartActivity.this, CheckoutActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("singleproduct", singlePdt);
+                EditText qty = (EditText) findViewById(R.id.editqtyText);
+
+                b.putSerializable("quantity",qty.getText().toString());
+
                 checkoutIntent.putExtras(b);
                 startActivity(checkoutIntent);
 

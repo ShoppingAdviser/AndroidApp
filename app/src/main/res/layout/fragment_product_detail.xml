@@ -88,12 +88,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingBar"
-                android:paddingLeft="-10dp"
                 android:numStars="5"
                 android:layout_below="@+id/soldbytextview"
                 android:layout_alignStart="@+id/soldbytextview"
-                android:layerType="hardware"
                 android:layout_marginTop="20dp"
+                android:theme="@style/RatingBar"
                 />
 
             <TextView
@@ -164,6 +163,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginTop="20dp"
                 android:id="@+id/sku"
+                android:text = "sku"
                 android:layout_below="@+id/buyNowbtn"/>
               <!--  android:layout_alignStart="@+id/qtyTextView"-->
 
@@ -180,22 +180,12 @@
                 android:layout_alignStart="@+id/sku"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/tagTextView"
-                android:layout_below="@+id/categoryTextView"
-                android:layout_alignStart="@+id/categoryTextView"
-                android:layout_marginBottom="0dp"
-                />
 
 
             <ExpandableListView
                 android:id="@+id/lvExp"
                 android:layout_marginTop="50dp"
-                android:layout_below="@id/tagTextView"
+                android:layout_below="@id/categoryTextView"
                 android:layout_height="1000dp"
                 android:layout_width="match_parent"/>
 

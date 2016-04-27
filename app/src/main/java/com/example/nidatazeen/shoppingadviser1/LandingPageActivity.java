@@ -512,10 +512,11 @@
                     String productDescription = jsonObject.optString("description").toString();
                     String actualPrice = jsonObject.optString("regular_price").toString();
                     String discountPrice = jsonObject.optString("price").toString();
-                    String soldBy = jsonObject.optString("sold by").toString();// to be removed
-                    String tag = jsonObject.optString("tags").toString();// ARRAY SETTING
-                    String size =jsonObject.optString("available size").toString();// to be removed
+                    String soldBy = "Seller";//jsonObject.optString("sold by").toString();// to be removed
+                    String tag = "product";//jsonObject.optString("tags").toString();// ARRAY SETTING
+                    String size ="size";//jsonObject.optString("available size").toString();// to be removed
                     String SKU = jsonObject.optString("sku").toString();
+
                     int rating = Integer.parseInt(jsonObject.optString("rating_count").toString());
                     String productdDescription = jsonObject.optString("short_description").toString();
                     String productAdditionalInfo="additional info";//jsonObject.optString("additionalInfo").toString();// to be removed
@@ -576,7 +577,7 @@
                     allImages.clear();
 
 
-                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo,j,productIdentifier);
+                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag,size,SKU, url,productdDescription,productAdditionalInfo,productSellerInfo,j,productIdentifier);
                     value = db.addProduct(product);
 
                 }

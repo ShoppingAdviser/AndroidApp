@@ -62,12 +62,13 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         }
 
         GridItem item = mGridData.get(position);
-        holder.titleTextView.setText(Html.fromHtml(item.getTitle()));
+//        holder.titleTextView.setText(Html.fromHtml(item.getTitle()));
+        holder.titleTextView.setText(item.getTitle());
 
         Picasso.with(mContext).load(item.getImage()).into(holder.imageView);
-        holder.priceTextView.setText(Html.fromHtml(item.getPrice()));
+        holder.priceTextView.setText("Rs." + item.getPrice());
         holder.priceTextView.setPaintFlags(holder.priceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.discountTextView.setText(Html.fromHtml(item.getDiscountPrice()));
+        holder.discountTextView.setText("Rs."+item.getDiscountPrice());
         return row;
     }
 
