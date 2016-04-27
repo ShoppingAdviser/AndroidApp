@@ -30,14 +30,14 @@ public class CartActivity extends AppCompatActivity {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });   */
         TextView totalTxtView = (TextView) findViewById(R.id.carttotalTextView);
         totalTxtView.setText(singlePdt.getProductDiscountPrice());
 // priceTxtView.setPaintFlags(priceTxtView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -46,12 +46,12 @@ public class CartActivity extends AppCompatActivity {
         titleTxtView.setText(singlePdt.getProductTitle());
 
 
-        TextView priceTxtView = (TextView) findViewById(R.id.cartpriceTextView);
-        priceTxtView.setText(singlePdt.getProductPrice());
+       /* TextView priceTxtView = (TextView) findViewById(R.id.cartpriceTextView);
+        priceTxtView.setText(singlePdt.getProductPrice());*/
 
 
-        TextView sellingTxtView = (TextView) findViewById(R.id.cartsoldbytextview);
-        sellingTxtView.setText(singlePdt.getSoldby());
+     /*   TextView sellingTxtView = (TextView) findViewById(R.id.cartsoldbytextview);
+        sellingTxtView.setText(singlePdt.getSoldby()); */
 
 
         TextView sku = (TextView) findViewById(R.id.cartsku);

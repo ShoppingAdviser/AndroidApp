@@ -32,17 +32,6 @@
             android:layout_marginLeft="60dp"
             android:layout_toEndOf="@+id/cartproductImage" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sold By : FTrendy"
-            android:id="@+id/cartsoldbytextview"
-            android:paddingRight="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/carttitletextview"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/carttitletextview" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,11 +40,11 @@
             android:text="SKU :"
             android:layout_marginTop="15dp"
             android:id="@+id/cartsku"
-            android:layout_below="@+id/cartproductImage"
-            android:layout_alignStart="@+id/cartqtyTextView"
+            android:layout_below="@+id/carttitletextview"
+            android:layout_alignStart="@+id/carttitletextview"
             />
 
-        <TextView
+      <!--  <TextView
             android:id="@+id/cartpriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,26 +52,9 @@
             android:text="Price : Rs.1,793"
             android:textSize="18sp"
             android:layout_below="@+id/cartsku"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="82dp"
-            android:text="Qty : "
-            android:id="@+id/cartqtyTextView"
-            android:layout_below="@+id/cartpriceTextView"
-            android:layout_alignParentStart="true" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/carteditText"
-            android:layout_alignBottom="@+id/cartqtyTextView"
-            android:layout_alignEnd="@+id/cartZipTextview" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,90 +62,11 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Total : Rs.1,793"
             android:id="@+id/carttotalTextView"
-            android:layout_marginTop="81dp"
-            android:layout_below="@+id/carteditText"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/cartsku"
             android:layout_alignParentStart="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Shipping : "
-            android:id="@+id/cartshippingTextView"
-            android:layout_alignTop="@+id/cartcalculateshippingTextView"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="80dp"
-            android:text="Calculate Shipping"
-            android:layout_marginLeft="145dp"
-            android:id="@+id/cartcalculateshippingTextView"
-            android:layout_below="@+id/carttotalTextView"
-            />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Country:"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginRight="15dp"
-            android:id="@+id/cartcountryTextView"
-            android:layout_below="@+id/cartcalculateshippingTextView"
-            android:layout_alignEnd="@+id/cartStateTextView" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cartcountryEdittext"
-            android:ems="5"
-            android:layout_alignBottom="@+id/cartcountryTextView"
-            android:layout_toEndOf="@+id/cartcountryTextView" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="State:"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="100dp"
-            android:id="@+id/cartStateTextView"
-            android:layout_below="@+id/cartcountryEdittext"
-            android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cartstateEditText"
-            android:ems="5"
-            android:layout_alignBottom="@+id/cartStateTextView"
-            android:layout_toEndOf="@+id/cartStateTextView"
-            android:layout_marginStart="24dp" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Postcode/ZIP:"
-            android:id="@+id/cartZipTextview"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="100dp"
-            android:layout_below="@+id/cartstateEditText"
-            android:layout_toEndOf="@+id/cartproductImage" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="5"
-            android:id="@+id/PostZIPbutton"
-            android:layout_above="@+id/cartcheckoutButton"
-            android:layout_toEndOf="@+id/cartZipTextview" />
 
 
         <Button
@@ -181,17 +74,20 @@
             android:layout_height="wrap_content"
             android:text="ContinueShopping"
             android:id="@+id/cartcontinueButton"
-            android:layout_alignTop="@+id/cartcheckoutButton"
-            android:layout_toStartOf="@+id/cartsoldbytextview" />
+            android:layout_marginTop="31dp"
+
+            android:layout_below="@+id/carttotalTextView" />
+       <!--     android:layout_toStartOf="@+id/cartsoldbytextview" /> -->
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Checkout"
             android:id="@+id/cartcheckoutButton"
-            android:layout_marginTop="100dp"
-            android:layout_below="@+id/cartZipTextview"
-            android:layout_toEndOf="@+id/cartStateTextView" />
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="200dp"
+            android:layout_below="@+id/carttotalTextView" />
+     <!--       android:layout_toEndOf="@+id/cartStateTextView" />-->
 
 
 

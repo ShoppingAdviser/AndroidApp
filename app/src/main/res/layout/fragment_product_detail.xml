@@ -125,7 +125,7 @@
                 android:layout_marginLeft="220dp"
                 />
 
-            <TextView
+           <!-- <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -145,7 +145,7 @@
                 android:layout_toEndOf="@+id/qtyTextView"
                 android:focusable = "false"
                 android:layout_marginLeft="50dp"
-                />
+                />-->
 
             <Button
                 android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                 android:text="Buy Now"
                 android:layout_marginTop="20dp"
                 android:id="@+id/buyNowbtn"
-                android:layout_below="@+id/qtyTextView"
+                android:layout_below="@+id/discountPriceTextView"
                 android:background="#157cf9"
                 />
 
@@ -164,9 +164,9 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginTop="20dp"
                 android:id="@+id/sku"
-                android:layout_below="@+id/buyNowbtn"
-                android:layout_alignStart="@+id/qtyTextView"
-                />
+                android:layout_below="@+id/buyNowbtn"/>
+              <!--  android:layout_alignStart="@+id/qtyTextView"-->
+
 
 
 

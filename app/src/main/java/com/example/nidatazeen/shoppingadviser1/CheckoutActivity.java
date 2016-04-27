@@ -23,7 +23,6 @@ public class CheckoutActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         textMessagefn = (EditText) findViewById(R.id.checkoutfnameedittext);
         textMessageln=(EditText) findViewById(R.id.checkoutlnameedittext);
         emailtextMesage = (EditText)findViewById(R.id.checkoutemailedittext);
@@ -54,14 +53,6 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
     //create a method which will take all details and form a string out of it and pass it to email composer
     public void sendOrderEmail() {
