@@ -29,6 +29,8 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +38,7 @@ import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +52,6 @@ import java.util.List;
 public class ProductDetailActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
     NumberPicker np;
     TextView tv1;
-    DatabaseHandler db;
     RatingBar ratingBar;
     TextView ratingText;
     ExpandableListAdapter listAdapter;
@@ -59,6 +61,7 @@ public class ProductDetailActivity extends AppCompatActivity implements RatingBa
     ModelProducts product;
     ArrayList productsArrayList;
     String[] imgurllist;
+    DatabaseHandler db;
 
     HashMap<String, List<String>> listDataChild;
 int urlcount;
@@ -70,7 +73,9 @@ int urlcount;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        db = new DatabaseHandler(this);
+
+     db= new DatabaseHandler(this);
+
         Bundle b = this.getIntent().getExtras();
         if(b!=null)
             product = (ModelProducts)b.getSerializable("product");
@@ -90,7 +95,7 @@ urlcount = imageurlcount();
         expListView.expandGroup(1);
         expListView.setFocusable(false);
 
-
+        setListViewHeightBasedOnItems(expListView);
         // Listview Group click listener
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
@@ -146,6 +151,8 @@ urlcount = imageurlcount();
 
         RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
         rate.setOnRatingBarChangeListener(this);
+        rate.setRating(product.getRating());
+
 
         final EditText qtytxt = (EditText)findViewById(R.id.qtyeditText);
         qtytxt.setText(product.getProductqty());
@@ -177,6 +184,8 @@ urlcount = imageurlcount();
         GridView gridview = (GridView) findViewById(R.id.extraimagesgridView);
 
         gridview.setAdapter(new ImageAdapter(this));
+
+
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView parent, View v,
@@ -186,11 +195,15 @@ urlcount = imageurlcount();
 
                 Toast.makeText(ProductDetailActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
+
+//                imgurllist.setLayoutParams(new GridView.LayoutParams(150,150));
+
 //
 //                ImageView img = (ImageView)
 //                        img.setImageResource(prodImage);
             }
         });
+
 
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
         if (product.getSelected() == 1) {
@@ -304,7 +317,42 @@ buyNowbutton.setText(txt);
     }
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
         final int numStars = ratingBar.getNumStars();
-        ratingText.setText(rating + "/" + numStars);
+        ratingText.setText((Math.round(rating) + "/" + numStars));
+        product.setRating(Math.round(rating));
+        db.updateProduct(product);
+    }
+
+    public boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems;itemPos++){
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight + 300;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 
     private class ImageAdapter extends BaseAdapter {
@@ -326,13 +374,16 @@ buyNowbutton.setText(txt);
             return 0;
         }
 
+
+
         // create a new ImageView for each item referenced by the Adapter
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
+            GridView gridview = (GridView) findViewById(R.id.extraimagesgridView);
 
             ViewHolder holder;
             if (convertView == null) {
+
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.collectiongriditem, null, false);
 
                 holder = new ViewHolder();
@@ -345,25 +396,19 @@ buyNowbutton.setText(txt);
                     Picasso.with(mContext).load(imgurllist[position]).into(holder.icon);
                 }
 
-               //allImages= product.getProductGridImages().toString();
-
-               /* ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, category, tag, SKU,size, url,productdDescription,productAdditionalInfo,productSellerInfo);
-                value = db.addProduct(product);
-                productsArrayList.add(product);
-
-               holder.productTitle = (TextView)convertView.findViewById(R.id.productTitleView);
-                holder.productTitle.setText(((ModelProducts) productsArrayList.get(position)).getProductTitle());*/
-
-
-
-
 
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
+//            imgurllist.setLayoutParams(new GridView.LayoutParams(
+//                    (int)mContext.getResources().getDimension(R.dimen.width),
+//                    (int)mContext.getResources().getDimension(R.dimen.height)));
+
             return convertView;
+
+
         }
 
         private class ViewHolder {
@@ -387,6 +432,8 @@ buyNowbutton.setText(txt);
             this._listDataHeader = listDataHeader;
             this._listDataChild = listChildData;
         }
+
+
 
         @Override
         public Object getChild(int groupPosition, int childPosititon) {
@@ -416,7 +463,10 @@ buyNowbutton.setText(txt);
 
             txtListChild.setText(childText);
             return convertView;
+
         }
+
+
 
         @Override
         public int getChildrenCount(int groupPosition) {
@@ -466,5 +516,6 @@ buyNowbutton.setText(txt);
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
-    }
+
+       }
 }
