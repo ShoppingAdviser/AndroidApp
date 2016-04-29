@@ -166,6 +166,16 @@
            /* Singleton.getInstance().setString("Singleton");
             Intent intent = new Intent(getApplicationContext(),ProductDetailActivity.class);
             this.startActivity(intent);*/
+            Button viewcartbtn = (Button)findViewById(R.id.ViewcartButton);
+            viewcartbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent cartIntent = new Intent().setClass(LandingPageActivity.this, ShoppingCartActivity.class);
+                    startActivity(cartIntent);
+
+
+                }
+            });
             Button searchbutton=  (Button) findViewById(R.id.searchbtn);
             searchbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -227,7 +237,7 @@
         public void LoadRequest(int pagecnt){
 
             web = new WebRequest(activityHandler);
-            web.execute("https://shoppingadviser.in/wc-api/v3/products?fields=title,id,sku,price,regular_price,description,short_description,rating_count,categories,images,featured_src&consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8&page="+pagecnt);
+            web.execute("https://shoppingadviser.in/wc-api/v3/products?fields=title,id,sku,price,regular_price,description,short_description,rating_count,categories,images,featured_src&consumer_key=ck_4484117b7a8ef2f451a99a7e4920a1412fec2be6&consumer_secret=cs_18d0652d18b7309a407fd5c64255aac3fd9dcae8&page=" + pagecnt);
         }
     private void setUpGrid() {
 
@@ -263,7 +273,7 @@
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem + visibleItemCount == totalItemCount) {
                     // End has been reached
-                    Toast.makeText(LandingPageActivity.this, "totalItemCount "+totalItemCount,Toast.LENGTH_LONG).show();
+//                    Toast.makeText(LandingPageActivity.this, "totalItemCount "+totalItemCount,Toast.LENGTH_LONG).show();
 
 
                 }
@@ -271,7 +281,7 @@
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                Toast.makeText(LandingPageActivity.this, "scrollState "+scrollState,Toast.LENGTH_LONG).show();
+//                Toast.makeText(LandingPageActivity.this, "scrollState "+scrollState,Toast.LENGTH_LONG).show();
 
             }
         });
@@ -284,14 +294,26 @@
     }
 
         protected boolean onLongListItemClick(View v, int pos, long id) {
-            Toast.makeText(LandingPageActivity.this, "Added to cart",Toast.LENGTH_LONG).show();
+            ModelProducts prod = productsArrayList.get(pos);
+            if (prod.getSelected() == 1) {
+                prod.setSelected(0);
+                Toast.makeText(LandingPageActivity.this, "Item Removed from cart",Toast.LENGTH_LONG).show();
+
+            }
+                else
+            {
+                prod.setSelected(1);
+                Toast.makeText(LandingPageActivity.this, "Item Added to cart", Toast.LENGTH_LONG).show();
+
+
+            }
+            db.updateProduct(prod);
             return true;
         }
 
         private void checkIfLoggedIn() {
 
             SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
             boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn", false);
 
             Button loginbutton = (Button) findViewById(R.id.button2);
@@ -577,7 +599,7 @@
                     allImages.clear();
 
 
-                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag,size,SKU, url,productdDescription,productAdditionalInfo,productSellerInfo,j,productIdentifier);
+                    ModelProducts product = new ModelProducts(productTitle, productDescription, actualPrice, discountPrice,productId, rating, soldBy, s,tag,size,SKU, url,productdDescription,productAdditionalInfo,productSellerInfo,j,productIdentifier, 0,"1" );
                     value = db.addProduct(product);
 
                 }

@@ -31,8 +31,10 @@ public class ModelProducts implements Serializable {
     private String productAdditionalInfo;
     private String productSellerInfo;
     private String productGridImages;
+    private int selected;
+    private String productqty;
 
-    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String productSizes,String SKU, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier)
+    public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String productSizes,String SKU, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier, int isSelected, String qty)
     {
         this.productTitle  = productName;
         this.productDescription  = productDesc;
@@ -51,12 +53,22 @@ public class ModelProducts implements Serializable {
         this.productSellerInfo=prodSeller;
         this.productGridImages=prodImages;
         this.productIdentifier = prductIdentifier;
+        this.selected = isSelected;
+        this.productqty = qty;
     }
 public ModelProducts () {
 
 }
 
 
+    public String  getProductqty() {
+        return productqty;
+    }
+    public void setProductqty(String pqty) { this.productqty = pqty; }
+public int getSelected() {
+        return selected;
+    }
+    public void setSelected(int isselected) { this.selected = isselected; }
 
     public String getProductTitle() {
 

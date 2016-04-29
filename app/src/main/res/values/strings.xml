@@ -20,4 +20,5 @@
     <string name="search_title">Search</string>
     <string name="sample_checksum_generation_url">https://pguat.paytm.com/merchant-chksum/ChecksumGenerator</string>
     <string name="sample_checksum_verification_url">https://pguat.paytm.com/merchant-chksum/ValidateChksum</string>
+    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
 </resources>

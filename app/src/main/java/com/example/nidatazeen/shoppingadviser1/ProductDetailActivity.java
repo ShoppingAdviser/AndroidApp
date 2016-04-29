@@ -13,7 +13,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -46,6 +49,7 @@ import java.util.List;
 public class ProductDetailActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
     NumberPicker np;
     TextView tv1;
+    DatabaseHandler db;
     RatingBar ratingBar;
     TextView ratingText;
     ExpandableListAdapter listAdapter;
@@ -66,6 +70,7 @@ int urlcount;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        db = new DatabaseHandler(this);
         Bundle b = this.getIntent().getExtras();
         if(b!=null)
             product = (ModelProducts)b.getSerializable("product");
@@ -142,7 +147,30 @@ urlcount = imageurlcount();
         RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
         rate.setOnRatingBarChangeListener(this);
 
+        final EditText qtytxt = (EditText)findViewById(R.id.qtyeditText);
+        qtytxt.setText(product.getProductqty());
+        qtytxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+//                int qty = Integer.parseInt(s.toString());
+                Toast.makeText(ProductDetailActivity.this, "qty is" + s, Toast.LENGTH_LONG).show();
+                product.setProductqty(s.toString());
+                db.updateProduct(product);
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+        });
         ImageView imgView = (ImageView) findViewById(R.id.productImageViewLarge);
         Picasso.with(getApplicationContext()).load(product.getProductImageUrl()).into(imgView);
 
@@ -165,19 +193,51 @@ urlcount = imageurlcount();
         });
 
         Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
+        if (product.getSelected() == 1) {
+            buyNowbutton.setText("Remove From Cart?");
+qtytxt.setText(product.getProductqty());
+        }
+        else {
+            buyNowbutton.setText("Add to Cart");
+qtytxt.setText("1");
+        }
+
         buyNowbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (product.getSelected() == 1) {
+                    setButtonText("Add to Cart");
+                    product.setSelected(0);
+                    product.setProductqty("1");
+                    db.updateProduct(product);
+                } else {
+                    setButtonText("Remove From Cart?");
+                    product.setSelected(1);
+                    product.setProductqty(qtytxt.getText().toString());
+                    db.updateProduct(product);
 
-                final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
-                Bundle b = new Bundle();
-                b.putSerializable("singleproduct", product);
-                cartIntent.putExtras(b);
-                startActivity(cartIntent);
+                    final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, ShoppingCartActivity.class);
+//                    int value = 0;
+//                    while (value == 0) {
+//                        value = db.
+//
+//
+//
+// updateProduct(product);
+//                        try {
+//                            wait();
+//
+//                        }catch (Exception e) {}
+//                    }
+                    startActivity(cartIntent);
+
+                }
+//                final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
+
             }
         });
 
         TextView categoryTxtView = (TextView) findViewById(R.id.categoryTextView);
-        categoryTxtView.setText("Categories: "+product.getCategory());
+        categoryTxtView.setText("Categories: " + product.getCategory());
 
         TextView sku = (TextView) findViewById(R.id.sku);
         sku.setText("SKU: "+product.getProductSKU());
@@ -205,6 +265,10 @@ startActivity(abtIntent);
 
     }
 
+    public void setButtonText(String txt) {
+        Button buyNowbutton = (Button) findViewById(R.id.buyNowbtn);
+buyNowbutton.setText(txt);
+    }
     int imageurlcount() {
         String data = product.getProductGridImages();
         if (data != null) {
@@ -229,7 +293,7 @@ startActivity(abtIntent);
         descString.add( Html.fromHtml(prodct.getProductDescription()).toString());
 
         List<String> addInfo = new ArrayList<String>();
-        addInfo.add( Html.fromHtml(prodct.getProductDetailedDescription()).toString());
+        addInfo.add(Html.fromHtml(prodct.getProductDetailedDescription()).toString());
 
 
 

@@ -76,56 +76,56 @@ public class CheckoutActivity extends AppCompatActivity {
     }
     //create a method which will take all details and form a string out of it and pass it to email composer
     public void sendOrderEmail() {
-        Bundle b = this.getIntent().getExtras();
-        String quantity = "";
-        if(b!=null) {
-            singlePdt = (ModelProducts)b.getSerializable("singleproduct");
-            quantity = b.getSerializable("quantity").toString();
-        }
-
-
-        String messagefn = textMessagefn.getText().toString();
-        String messageln = textMessageln.getText().toString();
-        String emailtxtmessage = emailtextMesage.getText().toString();
-        String phonetxtmessage = phonetextmessage.getText().toString();
-        String countrytxtmessage = countrytextmessage.getText().toString();
-        String streettxtmessage = streettextmessage.getText().toString();
-        String towntxtmessage = towntextmessage.getText().toString();
-        String statetxtmessage = statetextmessage.getText().toString();
-        String ziptxtmessage = ziptextmessage.getText().toString();
-
-        StringBuilder total = new StringBuilder();
-        total.append("Hi. I would like to place an order for the following product : "+ "\n"+ "The products title is : " + singlePdt.getProductTitle() + "\n"+
-                "The product id is : " + singlePdt.getProductIdentifier() + "\n"  + "The products sku is:" + singlePdt.getProductSKU() + "\n"
-                + "Products price is : " + singlePdt.getProductDiscountPrice() + "\n" +  "\n"
-                + "My details are : " + "\n"
-                + "My first name is : " + messagefn + "\n" + "My last name is : " + messageln + "\n" + "My Email-id is : " + emailtxtmessage + "\n"
-                + "My contact number is : " + phonetxtmessage + "\n" + "My Address is : " + "\n"
-                + "Country : " + countrytxtmessage + "\n"
-                + "Street : " + streettxtmessage + "\n" + "Town  : " + towntxtmessage + "\n"
-                + "State  : " + statetxtmessage + "\n" + "Zip code is :" + ziptxtmessage + "\n"
-                + "I would require a quantity of : " + quantity + "\n");
-        String s = total.toString();
-
-
-        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-
-/* Fill it with Data */
-        emailIntent.setType("text/html");
-        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"support@shoppingadviser.in"});
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, s);
-
-        //emailIntent.setType("application/image");
-        //emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, R.drawable.shoppingadviserlogo);
-
-
-
-
-
-/* Send it off to the Activity-Chooser */
-        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+//        Bundle b = this.getIntent().getExtras();
+//        String quantity = "";
+//        if(b!=null) {
+//            singlePdt = (ModelProducts)b.getSerializable("singleproduct");
+//            quantity = b.getSerializable("quantity").toString();
+//        }
+//
+//
+//        String messagefn = textMessagefn.getText().toString();
+//        String messageln = textMessageln.getText().toString();
+//        String emailtxtmessage = emailtextMesage.getText().toString();
+//        String phonetxtmessage = phonetextmessage.getText().toString();
+//        String countrytxtmessage = countrytextmessage.getText().toString();
+//        String streettxtmessage = streettextmessage.getText().toString();
+//        String towntxtmessage = towntextmessage.getText().toString();
+//        String statetxtmessage = statetextmessage.getText().toString();
+//        String ziptxtmessage = ziptextmessage.getText().toString();
+//
+//        StringBuilder total = new StringBuilder();
+//        total.append("Hi. I would like to place an order for the following product : "+ "\n"+ "The products title is : " + singlePdt.getProductTitle() + "\n"+
+//                "The product id is : " + singlePdt.getProductIdentifier() + "\n"  + "The products sku is:" + singlePdt.getProductSKU() + "\n"
+//                + "Products price is : " + singlePdt.getProductDiscountPrice() + "\n" +  "\n"
+//                + "My details are : " + "\n"
+//                + "My first name is : " + messagefn + "\n" + "My last name is : " + messageln + "\n" + "My Email-id is : " + emailtxtmessage + "\n"
+//                + "My contact number is : " + phonetxtmessage + "\n" + "My Address is : " + "\n"
+//                + "Country : " + countrytxtmessage + "\n"
+//                + "Street : " + streettxtmessage + "\n" + "Town  : " + towntxtmessage + "\n"
+//                + "State  : " + statetxtmessage + "\n" + "Zip code is :" + ziptxtmessage + "\n"
+//                + "I would require a quantity of : " + quantity + "\n");
+//        String s = total.toString();
+//
+//
+//        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+//
+//
+///* Fill it with Data */
+//        emailIntent.setType("text/html");
+//        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"support@shoppingadviser.in"});
+//        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
+//        emailIntent.putExtra(Intent.EXTRA_TEXT, s);
+//
+//        //emailIntent.setType("application/image");
+//        //emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, R.drawable.shoppingadviserlogo);
+//
+//
+//
+//
+//
+///* Send it off to the Activity-Chooser */
+//        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
     }
 }

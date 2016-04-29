@@ -44,6 +44,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     private static final String KEY_PRODUCT_SELLER_INFO = "prodsellerinfo";
     private static final String KEY_PRODUCT_GRID_IMAGES = "prodgridimage";
     private static final String KEY_PRODUCT_IDENTIFIER = "productidentifier";
+    private static final String KEY_PRODUCT_SELECTED = "productisselected";
+    private static final String KEY_PRODUCT_QUANTITY = "productquantity";
 
     //    private DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 //
@@ -70,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 + KEY_PRODUCT_PRICE + " TEXT," + KEY_PRODUCT_DISCOUNTPRICE + " TEXT," + KEY_PRODUCT_ID + " INTEGER PRIMARY KEY," + KEY_PRODUCT_RATING + " INTEGER," + KEY_PRODUCT_SOLDBY + " TEXT,"
                 + KEY_PRODUCT_CATEGORY + " TEXT," + KEY_PRODUCT_TAG + " TEXT," + KEY_PRODUCT_SIZE + " TEXT," + KEY_PRODUCT_SKU + " TEXT,"
                 + KEY_PRODUCT_IMAGEURL + " TEXT," + KEY_PRODUCT_DETAILED_DESCRIPTION + " TEXT,"
-                + KEY_PRODUCT_ADDITIONAL_INFO + " TEXT," + KEY_PRODUCT_SELLER_INFO + " TEXT," + KEY_PRODUCT_GRID_IMAGES + " TEXT," + KEY_PRODUCT_IDENTIFIER + " TEXT" + ")";
+                + KEY_PRODUCT_ADDITIONAL_INFO + " TEXT," + KEY_PRODUCT_SELLER_INFO + " TEXT," + KEY_PRODUCT_GRID_IMAGES + " TEXT," + KEY_PRODUCT_IDENTIFIER + " TEXT," +KEY_PRODUCT_SELECTED + " INTEGER,"+ KEY_PRODUCT_QUANTITY + " TEXT"+")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
@@ -196,7 +198,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         values.put(KEY_PRODUCT_SELLER_INFO, product.getSellerInfo()); //Product sellerinfo
         values.put(KEY_PRODUCT_GRID_IMAGES, product.getProductGridImages());
         values.put(KEY_PRODUCT_IDENTIFIER, product.getProductIdentifier());
-
+        values.put(KEY_PRODUCT_SELECTED, product.getSelected());
+values.put(KEY_PRODUCT_QUANTITY, product.getProductqty());
         // Inserting Row
         long val = db.insert(TABLE_PRODUCTS, null, values);
         //2nd argument is String containing nullColumnHack
@@ -212,7 +215,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         Cursor cursor = db.query(TABLE_PRODUCTS, new String[]{KEY_PRODUCT_TITLE, KEY_PRODUCT_DESCRIPTION, KEY_PRODUCT_PRICE,
                         KEY_PRODUCT_DISCOUNTPRICE, KEY_PRODUCT_ID, KEY_PRODUCT_RATING, KEY_PRODUCT_SOLDBY, KEY_PRODUCT_CATEGORY, KEY_PRODUCT_TAG,
                         KEY_PRODUCT_SIZE, KEY_PRODUCT_SKU, KEY_PRODUCT_IMAGEURL, KEY_PRODUCT_DETAILED_DESCRIPTION
-                        , KEY_PRODUCT_ADDITIONAL_INFO, KEY_PRODUCT_SELLER_INFO, KEY_PRODUCT_GRID_IMAGES, KEY_PRODUCT_IDENTIFIER
+                        , KEY_PRODUCT_ADDITIONAL_INFO, KEY_PRODUCT_SELLER_INFO, KEY_PRODUCT_GRID_IMAGES, KEY_PRODUCT_IDENTIFIER, KEY_PRODUCT_SELECTED, KEY_PRODUCT_QUANTITY
                 }, KEY_PRODUCT_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
@@ -222,7 +225,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 cursor.getString(1), cursor.getString(2),
                 cursor.getString(3), Integer.parseInt(cursor.getString(4)),
                 Integer.parseInt(cursor.getString(5)), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15),Integer.parseInt(cursor.getString(16)));
+                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15),Integer.parseInt(cursor.getString(16)), Integer.parseInt(cursor.getString(17)), cursor.getString(18));
         // return product
         return products;
     }
@@ -264,7 +267,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 products.setProductSellerInfo(cursor.getString(14));
                 products.setProductGridImages(cursor.getString(15));
                 products.setProductIdentifier(Integer.parseInt(cursor.getString(16)));
-
+                products.setSelected(Integer.parseInt(cursor.getString(17)));
+products.setProductqty(cursor.getString(18));
                 // Adding contact to list
                 productList.add(products);
             } while (cursor.moveToNext());
@@ -295,7 +299,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         values.put(KEY_PRODUCT_ADDITIONAL_INFO, product.getAdditionalInfo()); //Product additionalinfo
         values.put(KEY_PRODUCT_SELLER_INFO, product.getSellerInfo()); //Product sellerinfo
         values.put(KEY_PRODUCT_GRID_IMAGES, product.getProductGridImages());
-        values.put(KEY_PRODUCT_GRID_IMAGES, product.getProductIdentifier());
+        values.put(KEY_PRODUCT_IDENTIFIER, product.getProductIdentifier());
+        values.put(KEY_PRODUCT_SELECTED, product.getSelected());
+        values.put(KEY_PRODUCT_QUANTITY, product.getProductqty());
 
         // updating row
         return db.update(TABLE_PRODUCTS, values, KEY_PRODUCT_ID + " = ?",
@@ -348,12 +354,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     }
 
     private List<ModelProducts> query(String selection, String[] selectionArgs, String[] columns) {
+
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(TABLE_PRODUCTS);
+
         List<ModelProducts> productList = new ArrayList<ModelProducts>();
 
-//        Cursor cursor = builder.query(this.getReadableDatabase(),
-//                columns, selection, selectionArgs, null, null, null);
         Cursor cursor = builder.query(this.getReadableDatabase(), null, KEY_PRODUCT_TITLE + " LIKE ?", new String[]{"%" + selection + "%"},
                 null, null, null);
         if (cursor == null) {
@@ -389,7 +395,59 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 products.setProductSellerInfo(cursor.getString(14));
                 products.setProductGridImages(cursor.getString(15));
                 products.setProductIdentifier(Integer.parseInt(cursor.getString(16)));
+                products.setSelected(Integer.parseInt(cursor.getString(17)));
 
+                products.setProductqty(cursor.getString(18));
+
+                // Adding contact to list
+                productList.add(products);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return productList;
+//        return cursor;
+    }
+
+    public List<ModelProducts> getCartproducts(String selection, String[] selectionArgs, String[] columns) {
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(TABLE_PRODUCTS);
+
+        List<ModelProducts> productList = new ArrayList<ModelProducts>();
+
+        Cursor cursor = builder.query(this.getReadableDatabase(), null, KEY_PRODUCT_SELECTED + " LIKE ?", new String[]{"%" + "1" + "%"},
+                null, null, null);
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        if (cursor.moveToFirst()) {
+            do {
+
+                ModelProducts products = new ModelProducts();
+                products.setProductTitle(cursor.getString(0));
+                products.setProductDescription(cursor.getString(1));
+                products.setProductPrice(cursor.getString(2));
+                products.setProductDiscountPrice(cursor.getString(3));
+                products.setProductId(Integer.parseInt(cursor.getString(4)));
+                products.setRating(Integer.parseInt(cursor.getString(5)));
+                products.setSoldby(cursor.getString(6));
+                products.setCategory(cursor.getString(7));
+                products.setTag(cursor.getString(8));
+                products.setSize(cursor.getString(9));
+                products.setProductSKU(cursor.getString(10));
+
+                products.setProductImageUrl(cursor.getString(11));
+                products.setProductDetailedDescription(cursor.getString(12));
+                products.setProductAdditionalInfo(cursor.getString(13));
+                products.setProductSellerInfo(cursor.getString(14));
+                products.setProductGridImages(cursor.getString(15));
+                products.setProductIdentifier(Integer.parseInt(cursor.getString(16)));
+                products.setSelected(Integer.parseInt(cursor.getString(17)));
+                products.setProductqty(cursor.getString(18));
 
                 // Adding contact to list
                 productList.add(products);
