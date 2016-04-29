@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-public class CheckoutActivity extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity
+        implements GeneralDialogFragment.OnDialogFragmentClickListener {
 
     public EditText editText;
     EditText textMessagefn,textMessageln, emailtextMesage, phonetextmessage, countrytextmessage, statetextmessage,streettextmessage, towntextmessage, ziptextmessage;
@@ -53,8 +53,14 @@ public class CheckoutActivity extends AppCompatActivity {
                         if (isValidEmail(emailtextMesage.getText())) {
 
                             String userNameString = emailtextMesage.getText().toString();
-                            CustomDialog cd = new CustomDialog(CheckoutActivity.this);
-                            cd.show();
+                        //    CustomDialog cd = new CustomDialog(CheckoutActivity.this);
+                        //    cd.show();
+
+
+                            GeneralDialogFragment generalDialogFragment =
+                                    GeneralDialogFragment.newInstance("Would you like to place your order with cash on delivery?", "");
+                            generalDialogFragment.show(getFragmentManager(),"dialog");
+
 
                         } else {
                             Toast.makeText(CheckoutActivity.this, "Invalid Email", Toast.LENGTH_LONG).show();
@@ -128,4 +134,18 @@ public class CheckoutActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
     }
+
+    @Override
+    public void onOkClicked(GeneralDialogFragment dialog) {
+        sendOrderEmail();
+        // do your stuff
+    }
+
+
+    @Override
+    public void onCancelClicked(GeneralDialogFragment dialog) {
+        dialog.dismiss();
+        // do your stuff
+    }
+
 }

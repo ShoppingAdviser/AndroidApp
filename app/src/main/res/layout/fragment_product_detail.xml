@@ -37,7 +37,7 @@
                 android:id="@+id/productImageViewLarge"
                 android:scaleType="fitCenter"
                 android:layout_below="@+id/titletextview"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="05dp"
                 />
 
             <HorizontalScrollView
@@ -64,6 +64,7 @@
                         android:scrollbars="horizontal"
                         android:layout_below="@+id/productImageViewLarge"
                         android:id="@+id/extraimagesgridView"
+                        android:stretchMode="columnWidth"
                         >
 
                     </GridView>
@@ -89,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingBar"
                 android:numStars="5"
+                android:stepSize="1"
                 android:layout_below="@+id/soldbytextview"
                 android:layout_alignStart="@+id/soldbytextview"
                 android:layout_marginTop="20dp"
@@ -124,27 +126,6 @@
                 android:layout_marginLeft="220dp"
                 />
 
-           <!-- <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_marginTop="20dp"
-                android:text="Qty"
-                android:id="@+id/qtyTextView"
-                android:layout_below="@+id/priceTextView"
-                android:layout_alignStart="@+id/ratingBar" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="5"
-                android:id="@+id/editText"
-                android:layout_below="@+id/priceTextView"
-                android:layout_toEndOf="@+id/qtyTextView"
-                android:focusable = "false"
-                android:layout_marginLeft="50dp"
-                />-->
 
             <Button
                 android:layout_width="wrap_content"
@@ -187,7 +168,9 @@
                 android:layout_marginTop="50dp"
                 android:layout_below="@id/categoryTextView"
                 android:layout_height="1000dp"
-                android:layout_width="match_parent"/>
+                android:layout_width="match_parent"
+                android:stretchMode="columnWidth"
+                />
 
             <!--</ScrollView>-->
         </RelativeLayout>

@@ -295,7 +295,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         values.put(KEY_PRODUCT_ADDITIONAL_INFO, product.getAdditionalInfo()); //Product additionalinfo
         values.put(KEY_PRODUCT_SELLER_INFO, product.getSellerInfo()); //Product sellerinfo
         values.put(KEY_PRODUCT_GRID_IMAGES, product.getProductGridImages());
-        values.put(KEY_PRODUCT_GRID_IMAGES, product.getProductIdentifier());
+        values.put(KEY_PRODUCT_IDENTIFIER, product.getProductIdentifier());
 
         // updating row
         return db.update(TABLE_PRODUCTS, values, KEY_PRODUCT_ID + " = ?",

@@ -73,7 +73,7 @@
     import java.util.logging.Filter;
 
     public class LandingPageActivity extends AppCompatActivity
-            implements NavigationView.OnNavigationItemSelectedListener {
+            implements NavigationView.OnNavigationItemSelectedListener,GeneralDialogFragment.OnDialogFragmentClickListener {
         private ArrayList<GridItem> mGridData;
         private GridViewAdapter mGridAdapter;
         private GridView mGridView;
@@ -221,6 +221,29 @@
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
+        }
+
+        public void ShowDialog() {
+
+            GeneralDialogFragment generalDialogFragment =
+                    GeneralDialogFragment.newInstance("Network error! Would you like to retry?", "");
+            generalDialogFragment.show(getFragmentManager(), "dialog");
+        }
+
+
+        @Override
+        public void onOkClicked(GeneralDialogFragment dialog) {
+            pd.show();
+            LoadRequest(currentpage);
+
+            // do your stuff
+        }
+
+
+        @Override
+        public void onCancelClicked(GeneralDialogFragment dialog) {
+            dialog.dismiss();
+            // do your stuff
         }
 
 
@@ -588,7 +611,8 @@
             }
             catch (JSONException e)
             {
-                Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
+             //   Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
+                ShowDialog();
 
                 e.printStackTrace();
             }

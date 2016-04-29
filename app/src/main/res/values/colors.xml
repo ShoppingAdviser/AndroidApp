@@ -7,4 +7,6 @@
     <color name="white">#ffffff</color>
     <color name="duskYellow">#fcfc3a</color>
     <color name="lightGrey">#e6e6e4</color>
+    <color name="golden">#CFB53B</color>
+    <color name="yellow">#ffd700</color>
 </resources>
