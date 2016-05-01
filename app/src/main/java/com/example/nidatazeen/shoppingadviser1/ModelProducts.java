@@ -1,6 +1,7 @@
 package com.example.nidatazeen.shoppingadviser1;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONArray;
@@ -33,6 +34,7 @@ public class ModelProducts implements Serializable {
     private String productGridImages;
     private int selected;
     private String productqty;
+
 
     public ModelProducts(String productName,String productDesc,String productPrice, String productDiscount, int prodID,int ratingValue, String soldbySeller, String prodCategory, String prodTag, String productSizes,String SKU, String imgUrl,String productDetailDesc,String productAddInfo,String prodSeller,String prodImages, int prductIdentifier, int isSelected, String qty)
     {

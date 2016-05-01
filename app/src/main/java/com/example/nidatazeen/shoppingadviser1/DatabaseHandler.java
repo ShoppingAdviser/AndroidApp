@@ -238,7 +238,9 @@ values.put(KEY_PRODUCT_QUANTITY, product.getProductqty());
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+if(cursor.getCount() == 0) {
+    return productList;
+}
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {

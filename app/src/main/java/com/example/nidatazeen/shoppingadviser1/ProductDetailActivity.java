@@ -160,8 +160,7 @@ urlcount = imageurlcount();
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-//                int qty = Integer.parseInt(s.toString());
-                Toast.makeText(ProductDetailActivity.this, "qty is" + s, Toast.LENGTH_LONG).show();
+
                 product.setProductqty(s.toString());
                 db.updateProduct(product);
 
@@ -196,11 +195,6 @@ urlcount = imageurlcount();
                 Toast.makeText(ProductDetailActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
 
-//                imgurllist.setLayoutParams(new GridView.LayoutParams(150,150));
-
-//
-//                ImageView img = (ImageView)
-//                        img.setImageResource(prodImage);
             }
         });
 
@@ -229,22 +223,13 @@ qtytxt.setText("1");
                     db.updateProduct(product);
 
                     final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, ShoppingCartActivity.class);
-//                    int value = 0;
-//                    while (value == 0) {
-//                        value = db.
-//
-//
-//
-// updateProduct(product);
-//                        try {
-//                            wait();
-//
-//                        }catch (Exception e) {}
-//                    }
+
+                    Bundle b = new Bundle();
+                    b.putSerializable("quantity", qtytxt.getText().toString());
+                    cartIntent.putExtras(b);
                     startActivity(cartIntent);
 
                 }
-//                final Intent cartIntent = new Intent().setClass(ProductDetailActivity.this, CartActivity.class);
 
             }
         });
@@ -285,6 +270,7 @@ buyNowbutton.setText(txt);
     int imageurlcount() {
         String data = product.getProductGridImages();
         if (data != null) {
+
             String[] items = data.split(",");
             imgurllist = items;
             return items.length - 1;

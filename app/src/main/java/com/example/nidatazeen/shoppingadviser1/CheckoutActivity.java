@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class CheckoutActivity extends AppCompatActivity
         implements GeneralDialogFragment.OnDialogFragmentClickListener {
 
@@ -16,13 +20,14 @@ public class CheckoutActivity extends AppCompatActivity
     EditText textMessagefn,textMessageln, emailtextMesage, phonetextmessage, countrytextmessage, statetextmessage,streettextmessage, towntextmessage, ziptextmessage;
 
     ModelProducts singlePdt;
+    String emailstr= "";
+    String quantity = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         textMessagefn = (EditText) findViewById(R.id.checkoutfnameedittext);
         textMessageln=(EditText) findViewById(R.id.checkoutlnameedittext);
@@ -35,8 +40,15 @@ public class CheckoutActivity extends AppCompatActivity
         ziptextmessage = (EditText)findViewById(R.id.checkoutzipedittext);
 
 
+        Bundle b = this.getIntent().getExtras();
+        if (b != null) {
+            quantity = b.getSerializable("quantity").toString();
+        }
+
+
+
         EditText emailTxt = (EditText) findViewById(R.id.checkoutemailedittext);
-        emailTxt.setText("taskeenfathima28@gmail.com");
+        emailTxt.setText("");
 
         Button ordernowbutton = (Button) findViewById(R.id.checkoutordernowbutton);
         ordernowbutton.setOnClickListener(new View.OnClickListener()
@@ -52,15 +64,18 @@ public class CheckoutActivity extends AppCompatActivity
                         //check if email is valid
                         if (isValidEmail(emailtextMesage.getText())) {
 
-                            String userNameString = emailtextMesage.getText().toString();
-                        //    CustomDialog cd = new CustomDialog(CheckoutActivity.this);
-                        //    cd.show();
 
+                            emailstr = formEmialstring();
+//                            Toast.makeText(CheckoutActivity.this, "emailstr "+emailstr, Toast.LENGTH_LONG).show();
 
-                            GeneralDialogFragment generalDialogFragment =
-                                    GeneralDialogFragment.newInstance("Would you like to place your order with cash on delivery?", "");
-                            generalDialogFragment.show(getFragmentManager(),"dialog");
+                            final Intent ordernowIntent = new Intent().setClass(CheckoutActivity.this, MyOrder.class);
 
+                            Bundle b = new Bundle();
+//
+                            b.putSerializable("quantity", quantity);
+                            b.putSerializable("emailstring", emailstr);
+                            ordernowIntent.putExtras(b);
+                            startActivity(ordernowIntent);
 
                         } else {
                             Toast.makeText(CheckoutActivity.this, "Invalid Email", Toast.LENGTH_LONG).show();
@@ -70,8 +85,9 @@ public class CheckoutActivity extends AppCompatActivity
                 }
             }
         });
-
+//        final Intent sIntent = new Intent().setClass(CheckoutActivity.this, MyAccountsActivity.class);
     }
+
 
     public final static boolean isValidEmail (CharSequence target) {
         if (target == null)
@@ -81,63 +97,36 @@ public class CheckoutActivity extends AppCompatActivity
         }
     }
     //create a method which will take all details and form a string out of it and pass it to email composer
-    public void sendOrderEmail() {
-//        Bundle b = this.getIntent().getExtras();
-//        String quantity = "";
-//        if(b!=null) {
-//            singlePdt = (ModelProducts)b.getSerializable("singleproduct");
-//            quantity = b.getSerializable("quantity").toString();
-//        }
-//
-//
-//        String messagefn = textMessagefn.getText().toString();
-//        String messageln = textMessageln.getText().toString();
-//        String emailtxtmessage = emailtextMesage.getText().toString();
-//        String phonetxtmessage = phonetextmessage.getText().toString();
-//        String countrytxtmessage = countrytextmessage.getText().toString();
-//        String streettxtmessage = streettextmessage.getText().toString();
-//        String towntxtmessage = towntextmessage.getText().toString();
-//        String statetxtmessage = statetextmessage.getText().toString();
-//        String ziptxtmessage = ziptextmessage.getText().toString();
-//
-//        StringBuilder total = new StringBuilder();
-//        total.append("Hi. I would like to place an order for the following product : "+ "\n"+ "The products title is : " + singlePdt.getProductTitle() + "\n"+
-//                "The product id is : " + singlePdt.getProductIdentifier() + "\n"  + "The products sku is:" + singlePdt.getProductSKU() + "\n"
-//                + "Products price is : " + singlePdt.getProductDiscountPrice() + "\n" +  "\n"
-//                + "My details are : " + "\n"
-//                + "My first name is : " + messagefn + "\n" + "My last name is : " + messageln + "\n" + "My Email-id is : " + emailtxtmessage + "\n"
-//                + "My contact number is : " + phonetxtmessage + "\n" + "My Address is : " + "\n"
-//                + "Country : " + countrytxtmessage + "\n"
-//                + "Street : " + streettxtmessage + "\n" + "Town  : " + towntxtmessage + "\n"
-//                + "State  : " + statetxtmessage + "\n" + "Zip code is :" + ziptxtmessage + "\n"
-//                + "I would require a quantity of : " + quantity + "\n");
-//        String s = total.toString();
-//
-//
-//        final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-//
-//
-///* Fill it with Data */
-//        emailIntent.setType("text/html");
-//        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"support@shoppingadviser.in"});
-//        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
-//        emailIntent.putExtra(Intent.EXTRA_TEXT, s);
-//
-//        //emailIntent.setType("application/image");
-//        //emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, R.drawable.shoppingadviserlogo);
-//
-//
-//
-//
-//
-///* Send it off to the Activity-Chooser */
-//        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+    public String formEmialstring() {
+
+        String messagefn = textMessagefn.getText().toString();
+        String messageln = textMessageln.getText().toString();
+        String emailtxtmessage = emailtextMesage.getText().toString();
+        String phonetxtmessage = phonetextmessage.getText().toString();
+        String countrytxtmessage = countrytextmessage.getText().toString();
+        String streettxtmessage = streettextmessage.getText().toString();
+        String towntxtmessage = towntextmessage.getText().toString();
+        String statetxtmessage = statetextmessage.getText().toString();
+        String ziptxtmessage = ziptextmessage.getText().toString();
+
+        StringBuilder total = new StringBuilder();
+
+        total.append("Hi. I would like to place an order for the products. Details are below" + "\n"
+                + "My first name is : " + messagefn + "\n" + "My last name is : " + messageln + "\n" + "My Email-id is : " + emailtxtmessage + "\n"
+                + "My contact number is : " + phonetxtmessage + "\n" + "\n"+"My Address is : " + "\n" +"\n"
+                + "Country : " + countrytxtmessage + "\n"
+                + "Street : " + streettxtmessage + "\n" + "Town  : " + towntxtmessage + "\n"
+                + "State  : " + statetxtmessage + "\n" + "Zip code is :" + ziptxtmessage + "\n");
+
+        String s = total.toString();
+        return s;
 
     }
 
+
     @Override
     public void onOkClicked(GeneralDialogFragment dialog) {
-        sendOrderEmail();
+        formEmialstring();
         // do your stuff
     }
 

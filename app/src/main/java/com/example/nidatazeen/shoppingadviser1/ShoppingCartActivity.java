@@ -1,11 +1,13 @@
 package com.example.nidatazeen.shoppingadviser1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,11 +18,12 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class ShoppingCartActivity extends Activity {
+public class ShoppingCartActivity extends Activity implements GeneralDialogFragment.OnDialogFragmentClickListener {
 
     private List<ModelProducts> mCartList;
     private ProductAdapter mProductAdapter;
     DatabaseHandler db;
+String qty = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class ShoppingCartActivity extends Activity {
             Toast.makeText(ShoppingCartActivity.this, "No items in cart", Toast.LENGTH_LONG).show();
 finish();
         }
+        Bundle b = this.getIntent().getExtras();
+        if(b!=null)
+            qty = b.getSerializable("quantity").toString();
         // Create the list
         final ListView listViewCatalog = (ListView) findViewById(R.id.ListViewCatalog);
         mProductAdapter = new ProductAdapter(mCartList,this, getLayoutInflater(), true);
@@ -63,12 +69,19 @@ finish();
             public void onClick(View v) {
                 SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 boolean isLoggedIn = shoppingAdviserPreferences.getBoolean("isLoggedIn", false);
+                SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
+
                 if (isLoggedIn) {
                     final Intent checkoutIntent = new Intent().setClass(ShoppingCartActivity.this, CheckoutActivity.class);
+
+                    Bundle b = new Bundle();
+                    b.putSerializable("quantity", qty);
+                    checkoutIntent.putExtras(b);
                     startActivity(checkoutIntent);
                 } else {
                     final Intent loginIntent = new Intent().setClass(ShoppingCartActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
+                    Toast.makeText(ShoppingCartActivity.this,"You have to login first in order to proceed. If you haven't registered yourself then register first!",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -85,23 +98,52 @@ finish();
         removeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Loop through and remove all the products that are selected
-                // Loop backwards so that the remove works correctly
-//                for(int i=mCartList.size()-1; i>=0; i--) {
-                for(int i=0; i<mCartList.size(); i++) {
 
-                    int selectedValue = mCartList.get(i).getSelected();
-                    if(selectedValue == 1)
-                    {
-                        mCartList.get(i).setSelected(0);
-                        mCartList.get(i).setProductqty("1");
-                        db.updateProduct(mCartList.get(i));
-                        mCartList.remove(i);
-
-                    }
-                }
-                mProductAdapter.notifyDataSetChanged();
+                GeneralDialogFragment generalDialogFragment =
+                        GeneralDialogFragment.newInstance("Would you like to remove all the items from the cart?", "");
+                generalDialogFragment.show(getFragmentManager(), "dialog");
             }
         });
+    }
+
+
+    public void removed() {
+
+
+        for (int i = 0; i <= mCartList.size(); i++) {
+
+            if (mCartList.size() == 1) i=0;
+
+            int selectedValue = mCartList.get(i).getSelected();
+
+            if (selectedValue == 1) {
+                mCartList.get(i).setSelected(0);
+                mCartList.get(i).setProductqty("1");
+                db.updateProduct(mCartList.get(i));
+                mCartList.remove(i);
+                i=0;
+                if (mCartList.size() == 0) break;
+            }
+
+
+        }
+
+        mProductAdapter.notifyDataSetChanged();
+
+    }
+
+
+
+    @Override
+    public void onOkClicked(GeneralDialogFragment dialog) {
+        removed();
+        // do your stuff
+    }
+
+
+    @Override
+    public void onCancelClicked(GeneralDialogFragment dialog) {
+        dialog.dismiss();
+        // do your stuff
     }
 }

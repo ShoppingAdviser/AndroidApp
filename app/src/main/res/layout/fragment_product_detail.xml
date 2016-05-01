@@ -37,7 +37,7 @@
                 android:id="@+id/productImageViewLarge"
                 android:scaleType="fitCenter"
                 android:layout_below="@+id/titletextview"
-                android:layout_marginTop="05dp"
+                android:layout_marginTop="-200dp"
                 />
 
             <HorizontalScrollView
@@ -93,7 +93,7 @@
                 android:stepSize="1"
                 android:layout_below="@+id/soldbytextview"
                 android:layout_alignStart="@+id/soldbytextview"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="05dp"
                 android:theme="@style/RatingBar"
                 />
 
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/soldbytextview"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:textSize="18sp"
                 />
 
@@ -114,7 +114,7 @@
                 android:textSize="18sp"
                 android:layout_alignStart="@+id/ratingBar"
                 android:layout_below="@+id/ratingBar"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 />
             <TextView
                 android:id="@+id/discountPriceTextView"
@@ -183,7 +183,15 @@
                 android:layout_alignStart="@+id/sku"
                 />
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginTop="20dp"
+                android:text="Available only on Cash on Delivery"
+                android:id="@+id/info"
+                android:layout_below="@+id/categoryTextView"
+                />
 
             <ExpandableListView
                 android:id="@+id/lvExp"

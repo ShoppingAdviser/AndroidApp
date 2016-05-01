@@ -36,7 +36,7 @@ public class CustomDialog extends Dialog implements android.view.View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_yes:
-                c.sendOrderEmail();
+                c.formEmialstring();
                 break;
             case R.id.btn_no:
                 dismiss();

@@ -43,8 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         EditText emailTxt = (EditText) findViewById(R.id.etEmail);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);
-        emailTxt.setText("taskeenfathima28@gmail.com");
-        pwdTxt.setText("taskeen28");
+        emailTxt.setText("");
+        pwdTxt.setText("");
 
         final Button registerbutton = (Button) findViewById(R.id.bRegister);
         registerbutton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             // Do something with msg.obj
-            Toast.makeText(RegisterActivity.this, "Registration successful!" + msg.obj.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
 finish();
         }
     };

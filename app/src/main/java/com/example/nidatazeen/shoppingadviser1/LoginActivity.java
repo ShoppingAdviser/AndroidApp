@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity
 
         EditText emailTxt = (EditText) findViewById(R.id.etUsername);
         EditText pwdTxt = (EditText) findViewById(R.id.etPassword);
-        emailTxt.setText("taskeenfathima28@gmail.com");
-        pwdTxt.setText("taskeen28");
+        emailTxt.setText("");
+        pwdTxt.setText("");
 
         Button loginbutton = (Button) findViewById(R.id.button3);
         loginbutton.setOnClickListener(new View.OnClickListener() {
