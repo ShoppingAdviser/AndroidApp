@@ -355,7 +355,7 @@ products.setProductqty(cursor.getString(18));
         return query(selection, selectionArgs, columns);
     }
 
-    private List<ModelProducts> query(String selection, String[] selectionArgs, String[] columns) {
+    private List<ModelProducts>  query(String selection, String[] selectionArgs, String[] columns) {
 
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(TABLE_PRODUCTS);

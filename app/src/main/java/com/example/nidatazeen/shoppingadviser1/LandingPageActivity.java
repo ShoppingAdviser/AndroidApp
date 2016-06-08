@@ -570,11 +570,39 @@ public class LandingPageActivity extends AppCompatActivity
 
         }
     }
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
 
+            InputStream is = getAssets().open("jsonresponse.txt");
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
+    }
     public void parse() {
         long value = 0;
 
+        //Real time data as on website from API
         String strJson = jsonstr.replace("&amp;", " &");
+
+        //Uncomment if you want to read from file. Delete the app after uncommenting
+//        String strJson = loadJSONFromAsset().replace("&amp;", " &");//jsonstr.replace("&amp;", " &");
+
 
         JSONArray arr = null;
         JSONArray prodImages=null;
@@ -686,7 +714,7 @@ public class LandingPageActivity extends AppCompatActivity
         }
         catch (JSONException e)
         {
-            //   Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
+//               Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
             ShowDialog();
 
             e.printStackTrace();
