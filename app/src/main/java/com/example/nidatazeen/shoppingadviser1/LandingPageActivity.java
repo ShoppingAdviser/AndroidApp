@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -59,6 +60,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -67,6 +71,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +96,7 @@ public class LandingPageActivity extends AppCompatActivity
     int pagecount;
     int currentpage=1;
     boolean issearchclicked = false;
+    boolean readFromFile = false;
 
     private Handler activityHandler = new Handler() {
         //     @Override
@@ -410,16 +416,22 @@ public class LandingPageActivity extends AppCompatActivity
 
     public void fillData () {
         productsArrayList = db.getAllProducts();
-        mGridData.clear();
-        for (int i = 0; i < productsArrayList.size(); i++) {
-            GridItem item = new GridItem();
-            item.setTitle(productsArrayList.get(i).getProductTitle());
-            item.setDiscountPrice(productsArrayList.get(i).getProductDiscountPrice());
-            item.setPrice(productsArrayList.get(i).getProductPrice());
-            item.setImage(productsArrayList.get(i).getProductImageUrl());
-            mGridData.add(item);
+        if(productsArrayList.size() != 0) {
+            mGridData.clear();
+            for (int i = 0; i < productsArrayList.size(); i++) {
+                GridItem item = new GridItem();
+                item.setTitle(productsArrayList.get(i).getProductTitle());
+                item.setDiscountPrice(productsArrayList.get(i).getProductDiscountPrice());
+                item.setPrice(productsArrayList.get(i).getProductPrice());
+                item.setImage(productsArrayList.get(i).getProductImageUrl());
+                mGridData.add(item);
+            }
+            setUpGrid();
+        } else {
+            readFromFile = true;
+            parse();
         }
-        setUpGrid();
+
     }
     public boolean searchclicked(){
 
@@ -592,16 +604,20 @@ public class LandingPageActivity extends AppCompatActivity
             return null;
         }
         return json;
-
     }
+
     public void parse() {
         long value = 0;
+        String strJson = "";
 
+        if (!readFromFile)
         //Real time data as on website from API
-        String strJson = jsonstr.replace("&amp;", " &");
+        strJson = jsonstr.replace("&amp;", " &");
 
-        //Uncomment if you want to read from file. Delete the app after uncommenting
-//        String strJson = loadJSONFromAsset().replace("&amp;", " &");//jsonstr.replace("&amp;", " &");
+        else
+
+        //to read from file.
+        strJson = loadJSONFromAsset().replace("&amp;", " &");//jsonstr.replace("&amp;", " &");
 
 
         JSONArray arr = null;
@@ -718,6 +734,29 @@ public class LandingPageActivity extends AppCompatActivity
             ShowDialog();
 
             e.printStackTrace();
+        }
+        exportDB();
+    }
+
+
+    private void exportDB() {
+        File sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        File data = Environment.getDataDirectory();
+        FileChannel source = null;
+        FileChannel destination = null;
+        String currentDBPath = "/data/" + getApplicationContext().getPackageName() + "/databases/" + "dbManager";
+        String backupDBPath = "dbManager";
+        File currentDB = new File(data, currentDBPath);
+        File backupDB = new File(sd, backupDBPath);
+        try {
+            source = new FileInputStream(currentDB).getChannel();
+            destination = new FileOutputStream(backupDB).getChannel();
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+            destination.close();
+            Toast.makeText(this, "DB Exported to " + backupDB.toString(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Log.e("", "Error exporting DB", e);
         }
     }
 }
