@@ -1,19 +1,17 @@
 package com.example.nidatazeen.shoppingadviser1;
 
 import android.content.Context;
-import android.widget.BaseAdapter;
-
-import java.util.List;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class ProductAdapter extends BaseAdapter {
 
@@ -67,14 +65,7 @@ item.productQuantityValue = (EditText)convertView.findViewById(R.id.editqtyText)
         item.productTitle.setText(curProduct.getProductTitle());
         item.productsku.setText("SKU : "+ curProduct.getProductSKU());
 item.productQuantityValue.setText(curProduct.getProductqty());
-//        if(!mShowCheckbox) {
-//            item.productCheckbox.setVisibility(View.GONE);
-//        } else {
-//            if(curProduct.getSelected() == 1)
-//            item.productCheckbox.setChecked(true);
-//            else
-//            item.productCheckbox.setChecked(false);
-//        }
+
         return convertView;
         }
 

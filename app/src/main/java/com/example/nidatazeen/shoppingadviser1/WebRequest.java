@@ -3,27 +3,17 @@ package com.example.nidatazeen.shoppingadviser1;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceActivity;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class WebRequest extends AsyncTask<String, Void, String> {
 
@@ -57,15 +47,6 @@ public class WebRequest extends AsyncTask<String, Void, String> {
         this.handler.sendMessage(msg);
     }
 
-
-
-
-
-    /**
-     * Uses the logging framework to display the output of the fetch
-     * operation in the log fragment.
-     */
-
     /** Initiates the fetch operation. */
     private String loadFromNetwork(String urlString) throws IOException {
         InputStream stream = null;
@@ -82,13 +63,7 @@ public class WebRequest extends AsyncTask<String, Void, String> {
         return str;
     }
 
-    /**
-     * Given a string representation of a URL, sets up a connection and gets
-     * an input stream.
-     * @param urlString A string representation of a URL.
-     * @return An InputStream retrieved from a successful HttpURLConnection.
-     * @throws java.io.IOException
-     */
+
     private InputStream downloadUrl(String urlString) throws IOException {
         // BEGIN_INCLUDE(get_inputstream)
         URL url = new URL(urlString);

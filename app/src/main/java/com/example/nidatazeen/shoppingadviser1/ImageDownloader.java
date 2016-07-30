@@ -1,12 +1,9 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,13 +82,7 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
         // END_INCLUDE(get_inputstream)
     }
 
-    /** Reads an InputStream and converts it to a String.
-     * @param stream InputStream containing HTML from targeted site.
-     * @param len Length of string that this method returns.
-     * @return String concatenated according to len parameter.
-     * @throws java.io.IOException
-     * @throws java.io.UnsupportedEncodingException
-     */
+
     private String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");

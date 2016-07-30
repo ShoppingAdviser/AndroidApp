@@ -1,81 +1,52 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.Color;
-import android.os.AsyncTask;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filterable;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-//import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Filter;
+
+
 
 public class LandingPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,GeneralDialogFragment.OnDialogFragmentClickListener {
@@ -120,8 +91,6 @@ public class LandingPageActivity extends AppCompatActivity
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
-        //setSupportActionBar(toolbar);
 
         SharedPreferences shoppingAdviserPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = shoppingAdviserPreferences.edit();
@@ -175,9 +144,6 @@ public class LandingPageActivity extends AppCompatActivity
             }
         });
 
-           /* Singleton.getInstance().setString("Singleton");
-            Intent intent = new Intent(getApplicationContext(),ProductDetailActivity.class);
-            this.startActivity(intent);*/
         Button viewcartbtn = (Button)findViewById(R.id.ViewcartButton);
         viewcartbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,11 +275,9 @@ public class LandingPageActivity extends AppCompatActivity
             mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    //ViewGroup.LayoutParams layoutParams = mGridView.getLayoutParams();
+
                     mGridView.setLayoutParams(mGridView.getLayoutParams());
-                    //            mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    //            View lastChild = mGridView.getChildAt(mGridView.getChildCount() - 1);
-                    //            mGridView.setLayoutParams(new RelativeLayout.LayoutParams(1000, lastChild.getBottom()));
+
                 }
             });
             mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -336,7 +300,7 @@ public class LandingPageActivity extends AppCompatActivity
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         // End has been reached
-//                    Toast.makeText(LandingPageActivity.this, "totalItemCount "+totalItemCount,Toast.LENGTH_LONG).show();
+//
 
 
                     }
@@ -344,7 +308,7 @@ public class LandingPageActivity extends AppCompatActivity
 
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                Toast.makeText(LandingPageActivity.this, "scrollState "+scrollState,Toast.LENGTH_LONG).show();
+//
 
                 }
             });
@@ -427,10 +391,11 @@ public class LandingPageActivity extends AppCompatActivity
                 mGridData.add(item);
             }
             setUpGrid();
-        } else {
-            readFromFile = true;
-            parse();
         }
+//        else {
+//            readFromFile = true;
+//            parse();
+//        }
 
     }
     public boolean searchclicked(){
@@ -514,11 +479,8 @@ public class LandingPageActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_first_fragment) {
-            // Handle thintent = new Intent().setClass(this, Tab1Activity.class);e camera action
-            Intent thintent = new Intent().setClass(this, MyAccountsActivity.class);
-            startActivity(thintent);
-        } else if (id == R.id.nav_second_fragment) {
+
+        if (id == R.id.nav_second_fragment) {
             Intent aboutUsintent = new Intent().setClass(this, AboutUsActivity.class);
             startActivity(aboutUsintent);
 
@@ -634,7 +596,7 @@ public class LandingPageActivity extends AppCompatActivity
 
             //Iterate the jsonArray and print the info of JSONObjects
             for (int i = 0; i < jsonArray.length(); i++) {
-                //for (int i = 0; i < 30; i++) {
+
                 identifier = db.getProductsCount();
 
                 GridItem item = new GridItem();
@@ -730,7 +692,6 @@ public class LandingPageActivity extends AppCompatActivity
         }
         catch (JSONException e)
         {
-//               Toast.makeText(LandingPageActivity.this, "error", Toast.LENGTH_LONG).show();
             ShowDialog();
 
             e.printStackTrace();
@@ -754,7 +715,7 @@ public class LandingPageActivity extends AppCompatActivity
             destination.transferFrom(source, 0, source.size());
             source.close();
             destination.close();
-            Toast.makeText(this, "DB Exported to " + backupDB.toString(), Toast.LENGTH_LONG).show();
+
         } catch (IOException e) {
             Log.e("", "Error exporting DB", e);
         }

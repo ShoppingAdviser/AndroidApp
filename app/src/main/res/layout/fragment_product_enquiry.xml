@@ -6,8 +6,6 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-
     <!--Put form controls here-->
 
     <TextView
@@ -49,7 +47,7 @@
         android:id="@+id/EditEnquiry"
         android:layout_height="wrap_content"
         android:hint="Details about your enquiry"
-        android:lines="10"
+        android:lines="5"
         android:layout_width="fill_parent"
         android:layout_below="@+id/EditEmail"
         android:layout_alignParentStart="true">

@@ -27,9 +27,11 @@
         android:id="@+id/enquirybtn"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:backgroundTint="#08a0c6"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/questionmark"
+        app:backgroundTint="#000000"
+        android:src="@drawable/enquiry"
+
         />
+
 
 </android.support.design.widget.CoordinatorLayout>

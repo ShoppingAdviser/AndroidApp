@@ -49,19 +49,6 @@
         android:textSize="16sp"
         />
 
-    <!--<Button-->
-        <!--android:id="@+id/addToCartButton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/price"-->
-        <!--android:background="#2482ed"-->
-        <!--android:layout_marginLeft="100dp"-->
-        <!--android:text="Add to Cart"-->
-        <!--android:textSize="10sp"-->
-        <!--android:textColor="#FFF"-->
-        <!--android:focusable="false"-->
-        <!--android:focusableInTouchMode="false"-->
-        <!--/>-->
 </RelativeLayout>
 
     <!--android:background="@drawable/grid_color_selector"-->

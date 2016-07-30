@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.support.annotation.IntegerRes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,12 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     private static final String KEY_PRODUCT_SELECTED = "productisselected";
     private static final String KEY_PRODUCT_QUANTITY = "productquantity";
 
-    //    private DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-//
-//        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-//        //3rd argument to be passed is CursorFactory ins+
-//        // tance
-//    }
+
     public DatabaseHandler(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -244,12 +238,6 @@ if(cursor.getCount() == 0) {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-//                ModelProducts products = new ModelProducts(cursor.getString(0),
-//                        cursor.getString(1), cursor.getString(2),
-//                        cursor.getString(3),Integer.parseInt(cursor.getString(4)),
-//                        Integer.parseInt(cursor.getString(5)),cursor.getString(6),cursor.getString(7),cursor.getString(8),
-//                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12), cursor.getString(13), cursor.getString(14));
-
                 ModelProducts products = new ModelProducts();
                 products.setProductTitle(cursor.getString(0));
                 products.setProductDescription(cursor.getString(1));
@@ -329,23 +317,7 @@ products.setProductqty(cursor.getString(18));
         // return count
         return cnt;
     }
-   /* @Override
-   public synchronized void close() {
-       if (instance != null)
-           db.close();
-   }
 
-    private static synchronized DatabaseHandler getInstance(Context context) {
-        SQLiteDatabase db;
-        private static Context context;
-
-       if (instance == null) {
-            instance = new DatabaseHandler(context, DATABASE_NAME, null, DATABASE_VERSION);
-            db = instance.getWritableDatabase();
-        }
-
-        return instance;
-   }*/
 
 
     public List<ModelProducts> getWordMatches(String query, String[] columns) {
@@ -372,11 +344,7 @@ products.setProductqty(cursor.getString(18));
         }
         if (cursor.moveToFirst()) {
             do {
-//                ModelProducts products = new ModelProducts(cursor.getString(0),
-//                        cursor.getString(1), cursor.getString(2),
-//                        cursor.getString(3),Integer.parseInt(cursor.getString(4)),
-//                        Integer.parseInt(cursor.getString(5)),cursor.getString(6),cursor.getString(7),cursor.getString(8),
-//                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12), cursor.getString(13), cursor.getString(14));
+
 
                 ModelProducts products = new ModelProducts();
                 products.setProductTitle(cursor.getString(0));

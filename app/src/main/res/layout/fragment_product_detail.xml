@@ -26,19 +26,19 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/titletextview"
                 android:layout_marginLeft="0dp"/>
-            <!--android:layout_toEndOf="@+id/productImageViewLarge" -->
             <!--/>-->
 
             <ImageView
+
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:id="@+id/productImageViewLarge"
                 android:scaleType="fitCenter"
                 android:layout_below="@+id/titletextview"
-                android:layout_marginTop="-200dp"
                 />
+            <!--android:layout_marginTop="-200dp"-->
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -50,12 +50,11 @@
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal" >
-
+                    android:orientation="horizontal">
 
                     <GridView
                         android:layout_width="1100dp"
-                        android:layout_height="400dp"
+                        android:layout_height="250dp"
                         android:verticalSpacing="0dp"
                         android:horizontalSpacing="10dp"
                         android:gravity="center"
@@ -168,7 +167,7 @@
                 android:id="@+id/sku"
                 android:text = "sku"
                 android:layout_below="@+id/buyNowbtn"/>
-              <!--  android:layout_alignStart="@+id/qtyTextView"-->
+            <!--  android:layout_alignStart="@+id/qtyTextView"-->
 
 
 

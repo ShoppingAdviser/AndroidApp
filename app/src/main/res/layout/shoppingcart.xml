@@ -13,7 +13,7 @@
         android:choiceMode="multipleChoice">
 
     </ListView>
-    <LinearLayout android:id="@+id/LinearLayout01"
+    <RelativeLayout android:id="@+id/LinearLayout01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -22,19 +22,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/ButtonRemoveFromCart"
             android:text="Clear Cart"
-            android:layout_gravity="left"
             >
 
         </Button>
         <Button android:id="@+id/checkoutbtn"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_gravity="end"
+            android:layout_alignParentRight="true"
             android:text="Proceed to Checkout"></Button>
 
         <!--     android:layout_toStartOf="@+id/cartsoldbytextview" /> -->
-    </LinearLayout>
+    </RelativeLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

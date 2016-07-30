@@ -1,22 +1,16 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.AvoidXfermode;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.media.Rating;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +22,10 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -191,9 +178,6 @@ urlcount = imageurlcount();
                                     int position, long id) {
                 ImageView imageView = (ImageView) findViewById(R.id.productImageViewLarge);
                 Picasso.with(getApplicationContext()).load(imgurllist[position]).into(imageView);
-
-                Toast.makeText(ProductDetailActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -374,9 +358,6 @@ buyNowbutton.setText(txt);
 
                 holder = new ViewHolder();
                 holder.icon = (ImageView) convertView.findViewById(R.id.newimage);
-                //      holder.icon.setImageResource(R.drawable.sample_2);
-//                holder.icon.setImageResource(mThumbIds[position]);
-
 
                 if(imgurllist!=null) {
                     Picasso.with(mContext).load(imgurllist[position]).into(holder.icon);
@@ -388,9 +369,6 @@ buyNowbutton.setText(txt);
                 holder = (ViewHolder) convertView.getTag();
             }
 
-//            imgurllist.setLayoutParams(new GridView.LayoutParams(
-//                    (int)mContext.getResources().getDimension(R.dimen.width),
-//                    (int)mContext.getResources().getDimension(R.dimen.height)));
 
             return convertView;
 
@@ -418,8 +396,6 @@ buyNowbutton.setText(txt);
             this._listDataHeader = listDataHeader;
             this._listDataChild = listChildData;
         }
-
-
 
         @Override
         public Object getChild(int groupPosition, int childPosititon) {

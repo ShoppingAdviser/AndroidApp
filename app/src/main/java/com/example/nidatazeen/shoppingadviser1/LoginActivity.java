@@ -1,12 +1,8 @@
 package com.example.nidatazeen.shoppingadviser1;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -64,25 +60,7 @@ if (loginusername.compareToIgnoreCase(c.getName()) == 0) {
 finish();
 }
                     }
-//                    String userNameStr = shoppingAdviserPreferences.getString("username", "username");
-//                    String pwdNameStr = shoppingAdviserPreferences.getString("password", "password");
                     String passwordEntered = pwdTxt.getText().toString();
-
-//                    if (isValidEmail(usrTxt.getText())&& loginusername.compareToIgnoreCase(userNameStr) == 0)
-//                    { if (pwdNameStr.compareToIgnoreCase(passwordEntered) == 0) {
-//                        //call that function and pass true to it
-
-//                        editor.commit();
-//                        Toast.makeText(LoginActivity.this, "Welcome Registered user!", Toast.LENGTH_LONG).show();
-//                        finish();
-//                    } else {
-//                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    } else {
-//                        Toast.makeText(LoginActivity.this, "Invalid Username/Password", Toast.LENGTH_LONG).show();
-//                    }
-
 
                 }
             }
@@ -98,15 +76,4 @@ finish();
         }
     }
 
-
-
-
-//FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-  //      fab.setOnClickListener(new View.OnClickListener() {
-    //        @Override
-      //      public void onClick(View view) {
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-          //              .setAction("Action", null).show();
-          //  }
-        //});
         }

@@ -80,37 +80,7 @@
             android:layout_below="@+id/cartproductImage"
             android:layout_alignEnd="@+id/cartcontinueButton" />
 
-        <!--<CheckBox-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/CheckBoxSelected"-->
-            <!--android:focusable="false"-->
-            <!--android:layout_toEndOf="@+id/editqtyText"-->
-            <!--android:clickable="false"-->
-            <!--android:layout_marginLeft="70dp"-->
-            <!--android:layout_gravity="left"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_below="@+id/cartproductImage">-->
-        <!--</CheckBox>-->
 
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="ContinueShopping"-->
-            <!--android:id="@+id/cartcontinueButton"-->
-            <!--android:layout_marginTop="50dp"-->
-            <!--android:layout_below="@+id/carttotalTextView" />-->
-       <!--&lt;!&ndash;     android:layout_toStartOf="@+id/cartsoldbytextview" /> &ndash;&gt;-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Checkout"-->
-            <!--android:id="@+id/cartcheckoutButton"-->
-            <!--android:layout_marginTop="50dp"-->
-            <!--android:layout_marginLeft="200dp"-->
-            <!--android:layout_below="@+id/carttotalTextView" />-->
-
-        <!--&lt;!&ndash;       android:layout_toEndOf="@+id/cartStateTextView" />&ndash;&gt;-->
 
 
     </RelativeLayout>

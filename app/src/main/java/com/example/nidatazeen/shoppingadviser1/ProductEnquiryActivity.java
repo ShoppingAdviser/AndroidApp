@@ -71,8 +71,6 @@ public class ProductEnquiryActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     public final static boolean isValidEmail (CharSequence target) {
